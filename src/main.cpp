@@ -31,7 +31,7 @@ static float deltaTime = 0.0f;
 static float lastFrame = 0.0f;
 
 // lighting
-static glm::vec3 lightPos(-1.5f, 1.0f, 3.0f);
+static glm::vec3 lightPos(-0.5f, 1.0f, 1.0f);
 
 int main() {
   // glfw: initialize and configure
@@ -144,10 +144,34 @@ int main() {
   // second, configure the light's VAO (VBO stays the same; the vertices are the
   // same for the light object which is also a 3D cube)
   unsigned int lightVAO, redCubeVAO, sphereVAO;
-  glGenVertexArrays(1, &lightVAO);
-  glBindVertexArray(lightVAO);
   glGenVertexArrays(1, &redCubeVAO);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
   glBindVertexArray(redCubeVAO);
+  // position attribute
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                        reinterpret_cast<void *>(0));
+  glEnableVertexAttribArray(0);
+  // normal attribute
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                        reinterpret_cast<void *>(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
+
+
+  glGenVertexArrays(1, &lightVAO);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  glBindVertexArray(lightVAO);
+  // position attribute
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                        reinterpret_cast<void *>(0));
+  glEnableVertexAttribArray(0);
+  // normal attribute
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                        reinterpret_cast<void *>(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
+
+
   // glGenVertexArrays(1, &sphereVAO);
   // glBindVertexArray(sphereVAO);
 
@@ -205,8 +229,8 @@ int main() {
     lightingShader.use();
     lightingShader.setVec3("light.position", lightPos);
     lightingShader.setVec3("viewPos", camera.Position);
-    shininess = 10.0f;
-    diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
+    shininess = 40.0f;
+    diffuse = glm::vec3(1.0f, 0.0f, 0.0f);
     ambient = glm::vec3(1.0f, 0.0f, 0.0f);
     specular = glm::vec3(1.0f, 0.0f, 0.0f);
 
@@ -215,7 +239,7 @@ int main() {
     lightingShader.setMat4("projection", projection);
     lightingShader.setMat4("view", view);
     model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.5f, -0.5f, -0.9f));
+    model = glm::translate(model, glm::vec3(0.5f, -0.5f, -0.1f));
     model = glm::rotate(model, deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
     lightingShader.setMat4("model", model);
     //render the red cube
@@ -244,8 +268,8 @@ int main() {
   // optional: de-allocate all resources once they've outlived their purpose:
   // ------------------------------------------------------------------------
   glDeleteVertexArrays(1, &blueCubeVAO);
-  glDeleteVertexArrays(1, &lightVAO);
   glDeleteVertexArrays(1, &redCubeVAO);
+  glDeleteVertexArrays(1, &lightVAO);
   glDeleteBuffers(1, &VBO);
 
   // glfw: terminate, clearing all previously allocated GLFW resources.
