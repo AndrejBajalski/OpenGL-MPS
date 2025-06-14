@@ -4,7 +4,7 @@
 		"generator" : 
 		{
 			"multiConfig" : false,
-			"name" : "Ninja"
+			"name" : "MinGW Makefiles"
 		},
 		"paths" : 
 		{
@@ -35,7 +35,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cache-v2-56997f0e34831630448e.json",
+			"jsonFile" : "cache-v2-ab8bdd1c9768682dd811.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cmakeFiles-v1-e7c4659e08aff38ca897.json",
+			"jsonFile" : "cmakeFiles-v1-d738b1e9cff615048ed6.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{
@@ -66,7 +66,7 @@
 	{
 		"cache-v2" : 
 		{
-			"jsonFile" : "cache-v2-56997f0e34831630448e.json",
+			"jsonFile" : "cache-v2-ab8bdd1c9768682dd811.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -76,7 +76,7 @@
 		},
 		"cmakeFiles-v1" : 
 		{
-			"jsonFile" : "cmakeFiles-v1-e7c4659e08aff38ca897.json",
+			"jsonFile" : "cmakeFiles-v1-d738b1e9cff615048ed6.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{

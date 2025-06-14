@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#define PI 3.14159265359f
 const std::string program_name = ("Colour");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -19,19 +19,15 @@ void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 am
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
 // camera
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 static float lastX = SCR_WIDTH / 2.0f;
 static float lastY = SCR_HEIGHT / 2.0f;
 static bool firstMouse = true;
-
 // timing
 static float deltaTime = 0.0f;
-static float lastFrame = 0.0f;
-
 // lighting
-static glm::vec3 lightPos(-0.5f, 1.0f, 1.0f);
+static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 
 int main() {
   // glfw: initialize and configure
@@ -121,17 +117,48 @@ int main() {
       -0.5f, 0.5f,  -0.5f, 0.0f,  1.0f,  0.0f,  0.5f,  0.5f,  -0.5f,
       0.0f,  1.0f,  0.0f,  0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
       0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  -0.5f, 0.5f,  0.5f,
-      0.0f,  1.0f,  0.0f,  -0.5f, 0.5f,  -0.5f, 0.0f,  1.0f,  0.0f};
+      0.0f,  1.0f,  0.0f,  -0.5f, 0.5f,  -0.5f, 0.0f,  1.0f,  0.0f
+  };
+  //Generate sphere vertices
+  std::vector<float> sphere_vertices;
+  int sectorCount = 64, stackCount = 64;
+  float radius = 0.4f;
+  float x, y, z, xy;                              // vertex position
+  float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
+  float s, t;                                     // vertex texCoord
+  float sectorStep = 2 * PI / sectorCount;
+  float stackStep = PI / stackCount;
+  float sectorAngle, stackAngle;
+  for(int i = 0; i <= stackCount; ++i) {
+    stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+    xy = radius * cosf(stackAngle);             // r * cos(u)
+    z = radius * sinf(stackAngle);              // r * sin(u)
+    // add (sectorCount+1) vertices per stack
+    // first and last vertices have same position and normal, but different tex coords
+    for(int j = 0; j <= sectorCount; ++j) {
+      sectorAngle = j * sectorStep;           // starting from 0 to 2pi
+      // vertex position (x, y, z)
+      x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+      y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+      sphere_vertices.push_back(x);
+      sphere_vertices.push_back(y);
+      sphere_vertices.push_back(z);
+      // normalized vertex normal (nx, ny, nz)
+      nx = x * lengthInv;
+      ny = y * lengthInv;
+      nz = z * lengthInv;
+      sphere_vertices.push_back(nx);
+      sphere_vertices.push_back(ny);
+      sphere_vertices.push_back(nz);
+    }
+  }
   // first, configure the cube's VAO (and VBO)
-  unsigned int VBO, blueCubeVAO;
+  unsigned int VBO, sphereVBO, blueCubeVAO;
   glGenVertexArrays(1, &blueCubeVAO);
   glGenBuffers(1, &VBO);
-
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
   glBindVertexArray(blueCubeVAO);
-
   // position attribute
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                         reinterpret_cast<void *>(0));
@@ -143,7 +170,8 @@ int main() {
 
   // second, configure the light's VAO (VBO stays the same; the vertices are the
   // same for the light object which is also a 3D cube)
-  unsigned int lightVAO, redCubeVAO, sphereVAO;
+  unsigned int redCubeVAO, sphereVAO;
+
   glGenVertexArrays(1, &redCubeVAO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -157,30 +185,20 @@ int main() {
                         reinterpret_cast<void *>(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
 
-
-  glGenVertexArrays(1, &lightVAO);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  glBindVertexArray(lightVAO);
+  //sphere VAO
+  glGenBuffers(1, &sphereVBO);
+  glGenVertexArrays(1, &sphereVAO);
+  glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere_vertices.size(), sphere_vertices.data(), GL_STATIC_DRAW);
+  glBindVertexArray(sphereVAO);
   // position attribute
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                         reinterpret_cast<void *>(0));
   glEnableVertexAttribArray(0);
-  // normal attribute
+  //normal attribute
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                         reinterpret_cast<void *>(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
-
-
-  // glGenVertexArrays(1, &sphereVAO);
-  // glBindVertexArray(sphereVAO);
-
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  // note that we update the lamp's position attribute's stride to reflect the
-  // updated buffer data
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
-                        reinterpret_cast<void *>(0));
-  glEnableVertexAttribArray(0);
 
   // render loop
   // -----------
@@ -188,9 +206,7 @@ int main() {
     // per-frame time logic
     // --------------------
     float currentFrame = static_cast<float>(glfwGetTime());
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
-
+    lightPos.x = glm::sin(currentFrame)*3;
     // input
     // -----
     processInput(window);
@@ -209,8 +225,8 @@ int main() {
     //material properties
     glm::vec3 ambient = glm::vec3(0.0f, 0.0f, 1.0f);
     glm::vec3 diffuse = glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::vec3 specular = glm::vec3(0.0f, 0.0f, 1.0f);
-    float shininess = 30.0f;
+    glm::vec3 specular = glm::vec3(0.25f, 0.5f, 1.0f);
+    float shininess = 100.0f;
     illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
     // view/projection transformations
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
@@ -229,10 +245,10 @@ int main() {
     lightingShader.use();
     lightingShader.setVec3("light.position", lightPos);
     lightingShader.setVec3("viewPos", camera.Position);
-    shininess = 40.0f;
-    diffuse = glm::vec3(1.0f, 0.0f, 0.0f);
-    ambient = glm::vec3(1.0f, 0.0f, 0.0f);
-    specular = glm::vec3(1.0f, 0.0f, 0.0f);
+    shininess = 1.0f;
+    diffuse = glm::vec3(0.6f, 0.0f, 0.0f);
+    ambient = glm::vec3(0.8f, 0.0f, 0.0f);
+    specular = glm::vec3(0.0f, 0.0f, 0.0f);
 
     illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
 
@@ -240,24 +256,33 @@ int main() {
     lightingShader.setMat4("view", view);
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.5f, -0.5f, -0.1f));
-    model = glm::rotate(model, deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, currentFrame, glm::vec3(1.0f, 0.3f, 0.9f));
     lightingShader.setMat4("model", model);
     //render the red cube
     glBindVertexArray(redCubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
-    // also draw the lamp object
-    lampShader.use();
-    lampShader.setMat4("projection", projection);
-    lampShader.setMat4("view", view);
+    //sphere
+    lightingShader.use();
+    lightingShader.setVec3("light.position", lightPos);
+    lightingShader.setVec3("viewPos", camera.Position);
+    shininess = 1.0f;
+    diffuse = glm::vec3(0.0f, 1.0f, 0.0f);
+    ambient = glm::vec3(0.0f, 1.0f, 0.0f);
+    specular = glm::vec3(0.0f, 0.0f, 0.3f);
+
+    illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
+
+    lightingShader.setMat4("projection", projection);
+    lightingShader.setMat4("view", view);
     model = glm::mat4(1.0f);
-    model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-    lampShader.setMat4("model", model);
-
-    glBindVertexArray(lightVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-
+    float factor = (glm::sin(currentFrame)+3.0f)/2.0f;
+    model = glm::translate(model, glm::vec3(0.0f, -0.5f, 1.0f));
+    model = glm::scale(model, glm::vec3(factor, factor, factor));
+    lightingShader.setMat4("model", model);
+    //render the sphere
+    glBindVertexArray(sphereVAO);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, sectorCount*stackCount);
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
     // etc.)
     // -------------------------------------------------------------------------------
@@ -269,7 +294,7 @@ int main() {
   // ------------------------------------------------------------------------
   glDeleteVertexArrays(1, &blueCubeVAO);
   glDeleteVertexArrays(1, &redCubeVAO);
-  glDeleteVertexArrays(1, &lightVAO);
+  glDeleteVertexArrays(1, &sphereVAO);
   glDeleteBuffers(1, &VBO);
 
   // glfw: terminate, clearing all previously allocated GLFW resources.
