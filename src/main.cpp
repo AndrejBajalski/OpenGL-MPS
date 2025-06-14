@@ -152,8 +152,44 @@ int main() {
       sphere_vertices.push_back(nz);
     }
   }
+  //generate indices for EBO
+  std::vector<int> indices;
+  std::vector<int> lineIndices;
+  int k1, k2;
+  for(int i = 0; i < stackCount; ++i)
+  {
+    k1 = i * (sectorCount + 1);     // beginning of current stack
+    k2 = k1 + sectorCount + 1;      // beginning of next stack
+    for(int j = 0; j < sectorCount; ++j, ++k1, ++k2)
+    {
+      // 2 triangles per sector excluding first and last stacks
+      // k1 => k2 => k1+1
+      if(i != 0)
+      {
+        indices.push_back(k1);
+        indices.push_back(k2);
+        indices.push_back(k1 + 1);
+      }
+      // k1+1 => k2 => k2+1
+      if(i != (stackCount-1))
+      {
+        indices.push_back(k1 + 1);
+        indices.push_back(k2);
+        indices.push_back(k2 + 1);
+      }
+      // store indices for lines
+      // vertical lines for all stacks, k1 => k2
+      lineIndices.push_back(k1);
+      lineIndices.push_back(k2);
+      if(i != 0)  // horizontal lines except 1st stack, k1 => k+1
+      {
+        lineIndices.push_back(k1);
+        lineIndices.push_back(k1 + 1);
+      }
+    }
+  }
   // first, configure the cube's VAO (and VBO)
-  unsigned int VBO, sphereVBO, blueCubeVAO;
+  unsigned int VBO, sphereVBO, blueCubeVAO, EBO;
   glGenVertexArrays(1, &blueCubeVAO);
   glGenBuffers(1, &VBO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -187,11 +223,16 @@ int main() {
 
   //sphere VAO
   glGenBuffers(1, &sphereVBO);
+  glGenBuffers(1, &EBO);
   glGenVertexArrays(1, &sphereVAO);
+  //VBO
   glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere_vertices.size(), sphere_vertices.data(), GL_STATIC_DRAW);
+  //EBO
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
+  //VAO
   glBindVertexArray(sphereVAO);
-  // position attribute
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                         reinterpret_cast<void *>(0));
   glEnableVertexAttribArray(0);
@@ -202,6 +243,8 @@ int main() {
 
   // render loop
   // -----------
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   while (!glfwWindowShouldClose(window)) {
     // per-frame time logic
     // --------------------
@@ -220,6 +263,7 @@ int main() {
     lightingShader.use();
     lightingShader.setVec3("light.position", lightPos);
     lightingShader.setVec3("viewPos", camera.Position);
+    lightingShader.setFloat("alpha", 1.0f);
     // light properties
     glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
     //material properties
@@ -245,6 +289,7 @@ int main() {
     lightingShader.use();
     lightingShader.setVec3("light.position", lightPos);
     lightingShader.setVec3("viewPos", camera.Position);
+    lightingShader.setFloat("alpha", 1.0f);
     shininess = 1.0f;
     diffuse = glm::vec3(0.6f, 0.0f, 0.0f);
     ambient = glm::vec3(0.8f, 0.0f, 0.0f);
@@ -266,6 +311,7 @@ int main() {
     lightingShader.use();
     lightingShader.setVec3("light.position", lightPos);
     lightingShader.setVec3("viewPos", camera.Position);
+    lightingShader.setFloat("alpha", 0.4f);
     shininess = 1.0f;
     diffuse = glm::vec3(0.0f, 1.0f, 0.0f);
     ambient = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -282,7 +328,8 @@ int main() {
     lightingShader.setMat4("model", model);
     //render the sphere
     glBindVertexArray(sphereVAO);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, sectorCount*stackCount);
+    glDrawElements(GL_TRIANGLES, (unsigned int) indices.size(), GL_UNSIGNED_INT, indices.data());
+    // glDrawArrays(GL_TRIANGLE_STRIP, 0, sectorCount*stackCount);
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
     // etc.)
     // -------------------------------------------------------------------------------
