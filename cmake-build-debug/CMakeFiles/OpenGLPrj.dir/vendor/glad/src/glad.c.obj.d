@@ -1,5 +1,5 @@
 CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: \
- C:\Users\admin\OneDrive\Desktop\FINKI\Treta\ godina\Kompjuterska\ grafika\OpenGLPrj\vendor\glad\src\glad.c \
+ C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\vendor\glad\src\glad.c \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stdio.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/corecrt.h \
@@ -14,7 +14,7 @@ CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/string.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/crtdefs.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/sec_api/string_s.h \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glad/include/glad/glad.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/glad/glad.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/windows.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/sdkddkver.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/excpt.h \
@@ -206,7 +206,7 @@ CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/winsvc.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/mcx.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/imm.h \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glad/include/KHR/khrplatform.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/KHR/khrplatform.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdint.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stdint.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/inttypes.h

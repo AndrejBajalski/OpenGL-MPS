@@ -98,14 +98,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "OpenGLPrj::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-OpenGLPrj-Debug-f02c872cccb48d969c21.json",
+					"jsonFile" : "target-OpenGLPrj-Debug-0c1d9f3bace474683c5b.json",
 					"name" : "OpenGLPrj",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "glfw::@31bd9730e6b8c71cc656",
-					"jsonFile" : "target-glfw-Debug-7cb7b4945ad79f3aabea.json",
+					"jsonFile" : "target-glfw-Debug-ca401eb4ca072250a76a.json",
 					"name" : "glfw",
 					"projectIndex" : 1
 				},
@@ -122,8 +122,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/cmake-build-debug",
-		"source" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj"
+		"build" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug",
+		"source" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS"
 	},
 	"version" : 
 	{

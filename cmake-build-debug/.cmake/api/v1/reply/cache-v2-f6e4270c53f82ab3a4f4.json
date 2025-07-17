@@ -67,7 +67,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/cmake-build-debug"
+			"value" : "c:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -587,7 +587,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -671,7 +671,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj"
+			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1331,7 +1331,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/cmake-build-debug/vendor/glfw"
+			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/vendor/glfw"
 		},
 		{
 			"name" : "GLFW_BUILD_DOCS",
@@ -1403,7 +1403,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glfw"
+			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glfw"
 		},
 		{
 			"name" : "GLFW_USE_HYBRID_HPG",
@@ -1451,7 +1451,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/cmake-build-debug"
+			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug"
 		},
 		{
 			"name" : "OpenGLPrj_IS_TOP_LEVEL",
@@ -1475,7 +1475,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj"
+			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS"
 		},
 		{
 			"name" : "VULKAN_INCLUDE_DIR",

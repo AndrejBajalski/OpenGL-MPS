@@ -105,15 +105,15 @@
 			[
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glfw/include"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glfw/include"
 				},
 				{
 					"backtrace" : 7,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glfw/src"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glfw/src"
 				},
 				{
 					"backtrace" : 7,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/cmake-build-debug/vendor/glfw/src"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/vendor/glfw/src"
 				}
 			],
 			"language" : "C",

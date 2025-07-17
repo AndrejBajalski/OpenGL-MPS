@@ -70,30 +70,30 @@
 				},
 				{
 					"backtrace" : 3,
-					"define" : "PROJECT_SOURCE_DIR=\"C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj\""
+					"define" : "PROJECT_SOURCE_DIR=\"C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS\""
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/include"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glad/include"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glfw/include"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glfw/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glm"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/stb"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb"
 				}
 			],
 			"language" : "CXX",
@@ -119,30 +119,30 @@
 				},
 				{
 					"backtrace" : 3,
-					"define" : "PROJECT_SOURCE_DIR=\"C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj\""
+					"define" : "PROJECT_SOURCE_DIR=\"C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS\""
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/include"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glad/include"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glfw/include"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glfw/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glm"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/stb"
+					"path" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb"
 				}
 			],
 			"language" : "C",

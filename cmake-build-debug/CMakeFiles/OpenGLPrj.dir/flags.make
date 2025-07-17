@@ -3,13 +3,13 @@
 
 # compile C with C:/Program Files/JetBrains/CLion 2024.3.4/bin/mingw/bin/gcc.exe
 # compile CXX with C:/Program Files/JetBrains/CLion 2024.3.4/bin/mingw/bin/g++.exe
-C_DEFINES = -DGLFW_INCLUDE_NONE -DPROJECT_SOURCE_DIR="\"C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj\""
+C_DEFINES = -DGLFW_INCLUDE_NONE -DPROJECT_SOURCE_DIR=\"C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS\"
 
 C_INCLUDES = @CMakeFiles/OpenGLPrj.dir/includes_C.rsp
 
 C_FLAGS = -g -fdiagnostics-color=always
 
-CXX_DEFINES = -DGLFW_INCLUDE_NONE -DPROJECT_SOURCE_DIR="\"C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj\""
+CXX_DEFINES = -DGLFW_INCLUDE_NONE -DPROJECT_SOURCE_DIR=\"C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS\"
 
 CXX_INCLUDES = @CMakeFiles/OpenGLPrj.dir/includes_CXX.rsp
 

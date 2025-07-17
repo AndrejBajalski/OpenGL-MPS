@@ -52,10 +52,10 @@ RM = "C:\Program Files\JetBrains\CLion 2024.3.4\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj"
+CMAKE_SOURCE_DIR = C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug"
+CMAKE_BINARY_DIR = C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/OpenGLPrj.dir/depend.make
@@ -70,63 +70,63 @@ include CMakeFiles/OpenGLPrj.dir/flags.make
 
 CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj: CMakeFiles/OpenGLPrj.dir/flags.make
 CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj: CMakeFiles/OpenGLPrj.dir/includes_CXX.rsp
-CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj: C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/src/Camera.cpp
+CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Camera.cpp
 CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj: CMakeFiles/OpenGLPrj.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj -MF CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.obj.d -o CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.obj -c "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\Camera.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj -MF CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.obj.d -o CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Camera.cpp
 
 CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\Camera.cpp" > CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.i
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Camera.cpp > CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.i
 
 CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\Camera.cpp" -o CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.s
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Camera.cpp -o CMakeFiles\OpenGLPrj.dir\src\Camera.cpp.s
 
 CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: CMakeFiles/OpenGLPrj.dir/flags.make
 CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: CMakeFiles/OpenGLPrj.dir/includes_CXX.rsp
-CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/src/Shader.cpp
+CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Shader.cpp
 CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: CMakeFiles/OpenGLPrj.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj -MF CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.obj.d -o CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.obj -c "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\Shader.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj -MF CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.obj.d -o CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Shader.cpp
 
 CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\Shader.cpp" > CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.i
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Shader.cpp > CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.i
 
 CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\Shader.cpp" -o CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.s
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Shader.cpp -o CMakeFiles\OpenGLPrj.dir\src\Shader.cpp.s
 
 CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj: CMakeFiles/OpenGLPrj.dir/flags.make
 CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj: CMakeFiles/OpenGLPrj.dir/includes_CXX.rsp
-CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj: C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/src/main.cpp
+CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/main.cpp
 CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj: CMakeFiles/OpenGLPrj.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj -MF CMakeFiles\OpenGLPrj.dir\src\main.cpp.obj.d -o CMakeFiles\OpenGLPrj.dir\src\main.cpp.obj -c "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj -MF CMakeFiles\OpenGLPrj.dir\src\main.cpp.obj.d -o CMakeFiles\OpenGLPrj.dir\src\main.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\main.cpp
 
 CMakeFiles/OpenGLPrj.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGLPrj.dir/src/main.cpp.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\main.cpp" > CMakeFiles\OpenGLPrj.dir\src\main.cpp.i
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\main.cpp > CMakeFiles\OpenGLPrj.dir\src\main.cpp.i
 
 CMakeFiles/OpenGLPrj.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGLPrj.dir/src/main.cpp.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\src\main.cpp" -o CMakeFiles\OpenGLPrj.dir\src\main.cpp.s
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\main.cpp -o CMakeFiles\OpenGLPrj.dir\src\main.cpp.s
 
 CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: CMakeFiles/OpenGLPrj.dir/flags.make
 CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: CMakeFiles/OpenGLPrj.dir/includes_C.rsp
-CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glad/src/glad.c
+CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/src/glad.c
 CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj: CMakeFiles/OpenGLPrj.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj -MF CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.obj.d -o CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.obj -c "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\vendor\glad\src\glad.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj -MF CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.obj.d -o CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\vendor\glad\src\glad.c
 
 CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\vendor\glad\src\glad.c" > CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.i
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\vendor\glad\src\glad.c > CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.i
 
 CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\vendor\glad\src\glad.c" -o CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.s
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\vendor\glad\src\glad.c -o CMakeFiles\OpenGLPrj.dir\vendor\glad\src\glad.c.s
 
 # Object files for target OpenGLPrj
 OpenGLPrj_OBJECTS = \
@@ -147,9 +147,9 @@ OpenGLPrj/bin/OpenGLPrj.exe: vendor/glfw/src/libglfw3.a
 OpenGLPrj/bin/OpenGLPrj.exe: CMakeFiles/OpenGLPrj.dir/linkLibs.rsp
 OpenGLPrj/bin/OpenGLPrj.exe: CMakeFiles/OpenGLPrj.dir/objects1.rsp
 OpenGLPrj/bin/OpenGLPrj.exe: CMakeFiles/OpenGLPrj.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable OpenGLPrj\bin\OpenGLPrj.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable OpenGLPrj\bin\OpenGLPrj.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\OpenGLPrj.dir\link.txt --verbose=$(VERBOSE)
-	"C:\Program Files\JetBrains\CLion 2024.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/res" "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/cmake-build-debug/OpenGLPrj/bin/../res"
+	"C:\Program Files\JetBrains\CLion 2024.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/res C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/OpenGLPrj/bin/../res
 
 # Rule to build all files generated by this target.
 CMakeFiles/OpenGLPrj.dir/build: OpenGLPrj/bin/OpenGLPrj.exe
@@ -160,6 +160,6 @@ CMakeFiles/OpenGLPrj.dir/clean:
 .PHONY : CMakeFiles/OpenGLPrj.dir/clean
 
 CMakeFiles/OpenGLPrj.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj" "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj" "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug" "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug" "C:\Users\admin\OneDrive\Desktop\FINKI\Treta godina\Kompjuterska grafika\OpenGLPrj\cmake-build-debug\CMakeFiles\OpenGLPrj.dir\DependInfo.cmake" "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles\OpenGLPrj.dir\DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/OpenGLPrj.dir/depend
 

@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/vendor/glad/src/glad.c" "CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj.d"
-  "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/src/Camera.cpp" "CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj.d"
-  "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/src/Shader.cpp" "CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj.d"
-  "C:/Users/admin/OneDrive/Desktop/FINKI/Treta godina/Kompjuterska grafika/OpenGLPrj/src/main.cpp" "CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj.d"
+  "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/src/glad.c" "CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj.d"
+  "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Camera.cpp" "CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj.d"
+  "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Shader.cpp" "CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj.d"
+  "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/main.cpp" "CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj" "gcc" "CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -1,7 +1,7 @@
 CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: \
- C:\Users\admin\OneDrive\Desktop\FINKI\Treta\ godina\Kompjuterska\ grafika\OpenGLPrj\src\Shader.cpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/include/Shader.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glad/include/glad/glad.h \
+ C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Shader.cpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/glad/glad.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/windows.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/_mingw.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/_mingw_mac.h \
@@ -208,7 +208,7 @@ CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/winsvc.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/mcx.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/imm.h \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glad/include/KHR/khrplatform.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/KHR/khrplatform.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdint.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stdint.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/fstream \
@@ -323,149 +323,147 @@ CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/c++io.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/fstream.tcc \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/common.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/qualifier.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/setup.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/common.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/qualifier.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/setup.hpp \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cassert \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/assert.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstddef \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../simd/platform.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/simd/platform.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstdint \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/_fixes.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/_fixes.hpp \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cmath \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/math.h \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/func_common.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../vector_relational.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../detail/setup.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../detail/func_vector_relational.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../detail/func_vector_relational_simd.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/compute_common.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_common.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vector_relational.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/setup.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_vector_relational.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_vector_relational_simd.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/compute_common.hpp \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/limits \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/type_vec2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/type_vec2.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/./compute_vector_relational.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/./setup.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/type_vec3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/type_vec3.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/type_vec4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/type_vec4.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/type_vec4_simd.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/_vectorize.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/func_common_simd.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../simd/common.h \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/matrix.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/setup.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/vec2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_bool2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_bool2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_float2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_float2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_double2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_double2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_int2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_int2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_uint2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_uint2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/vec3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_bool3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_bool3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_float3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_float3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_double3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_double3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_int3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_int3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_uint3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_uint3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/vec4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_bool4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_bool4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_float4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_float4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_double4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_double4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/setup.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_int4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_int4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_uint4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/vector_uint4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat2x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double2x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat2x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat2x2.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double2x2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float2x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float2x2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat2x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double2x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat2x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat2x3.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double2x3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float2x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float2x3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat2x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double2x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat2x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat2x4.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double2x4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float2x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float2x4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat3x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double3x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat3x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat3x2.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double3x2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float3x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float3x2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat3x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double3x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat3x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat3x3.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double3x3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float3x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float3x3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat3x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double3x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat3x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat3x4.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double3x4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float3x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float3x4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat4x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double4x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat4x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat4x2.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double4x2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float4x2.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float4x2_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat4x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double4x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat4x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat4x3.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double4x3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float4x3.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float4x3_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/mat4x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double4x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat4x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat4x4.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/../detail/type_mat4x4_simd.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_double4x4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float4x4.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/./ext/matrix_float4x4_precision.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/func_matrix.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../geometric.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../detail/func_geometric.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glm/glm/exponential.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glm/glm/detail/type_vec1.hpp \
- C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glm/glm/detail/type_vec1.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glm/glm/detail/func_exponential.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glm/glm/detail/func_exponential_simd.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glm/glm/simd/exponential.h \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../detail/func_geometric_simd.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/Treta\ godina/Kompjuterska\ grafika/OpenGLPrj/vendor/glm/glm/simd/geometric.h \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/func_matrix_simd.inl \
- C:/Users/admin/OneDrive/Desktop/FINKI/TRETAG~1/KOMPJU~1/OPENGL~1/vendor/glm/glm/detail/../simd/matrix.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec2.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/compute_vector_relational.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec3.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec4.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec4_simd.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/_vectorize.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_common_simd.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/simd/common.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/matrix.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vec2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_bool2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_bool2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_float2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_float2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_double2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_double2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_int2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_int2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vec3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_bool3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_bool3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_float3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_float3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_double3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_double3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_int3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_int3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vec4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_bool4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_bool4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_float4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_float4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_double4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_double4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/setup.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_int4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_int4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat2x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double2x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat2x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat2x2.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double2x2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float2x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float2x2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat2x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double2x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat2x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat2x3.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double2x3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float2x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float2x3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat2x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double2x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat2x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat2x4.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double2x4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float2x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float2x4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat3x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double3x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat3x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat3x2.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double3x2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float3x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float3x2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat3x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double3x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat3x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat3x3.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double3x3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float3x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float3x3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat3x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double3x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat3x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat3x4.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double3x4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float3x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float3x4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat4x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double4x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat4x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat4x2.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double4x2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float4x2.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float4x2_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat4x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double4x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat4x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat4x3.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double4x3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float4x3.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float4x3_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/mat4x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double4x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat4x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat4x4.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat4x4_simd.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_double4x4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float4x4.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float4x4_precision.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_matrix.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/geometric.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_geometric.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/exponential.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec1.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec1.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_exponential.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_exponential_simd.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/simd/exponential.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_geometric_simd.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/simd/geometric.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_matrix_simd.inl \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/simd/matrix.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstring \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iostream \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/sstream \
