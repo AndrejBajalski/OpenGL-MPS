@@ -72,7 +72,7 @@
 					[
 						0
 					],
-					"name" : "OpenGLPrj",
+					"name" : "OpenGL-MPS",
 					"targetIndexes" : 
 					[
 						0
@@ -97,15 +97,15 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "OpenGLPrj::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-OpenGLPrj-Debug-0c1d9f3bace474683c5b.json",
-					"name" : "OpenGLPrj",
+					"id" : "OpenGL-MPS::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL-MPS-Debug-b66ed08981cf09bbc8dd.json",
+					"name" : "OpenGL-MPS",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "glfw::@31bd9730e6b8c71cc656",
-					"jsonFile" : "target-glfw-Debug-ca401eb4ca072250a76a.json",
+					"jsonFile" : "target-glfw-Debug-fd873313d1776ecdd688.json",
 					"name" : "glfw",
 					"projectIndex" : 1
 				},

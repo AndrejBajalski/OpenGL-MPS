@@ -161,17 +161,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named OpenGLPrj
+# Target rules for targets named OpenGL-MPS
 
 # Build rule for target.
-OpenGLPrj: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 OpenGLPrj
-.PHONY : OpenGLPrj
+OpenGL-MPS: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 OpenGL-MPS
+.PHONY : OpenGL-MPS
 
 # fast build rule for target.
-OpenGLPrj/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/build
-.PHONY : OpenGLPrj/fast
+OpenGL-MPS/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/build
+.PHONY : OpenGL-MPS/fast
 
 #=============================================================================
 # Target rules for targets named uninstall
@@ -204,7 +204,7 @@ src/Camera.obj: src/Camera.cpp.obj
 
 # target to build an object file
 src/Camera.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Camera.cpp.obj
 .PHONY : src/Camera.cpp.obj
 
 src/Camera.i: src/Camera.cpp.i
@@ -212,7 +212,7 @@ src/Camera.i: src/Camera.cpp.i
 
 # target to preprocess a source file
 src/Camera.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Camera.cpp.i
 .PHONY : src/Camera.cpp.i
 
 src/Camera.s: src/Camera.cpp.s
@@ -220,15 +220,39 @@ src/Camera.s: src/Camera.cpp.s
 
 # target to generate assembly for a file
 src/Camera.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/Camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Camera.cpp.s
 .PHONY : src/Camera.cpp.s
+
+src/Particle.obj: src/Particle.cpp.obj
+.PHONY : src/Particle.obj
+
+# target to build an object file
+src/Particle.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj
+.PHONY : src/Particle.cpp.obj
+
+src/Particle.i: src/Particle.cpp.i
+.PHONY : src/Particle.i
+
+# target to preprocess a source file
+src/Particle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.i
+.PHONY : src/Particle.cpp.i
+
+src/Particle.s: src/Particle.cpp.s
+.PHONY : src/Particle.s
+
+# target to generate assembly for a file
+src/Particle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.s
+.PHONY : src/Particle.cpp.s
 
 src/Shader.obj: src/Shader.cpp.obj
 .PHONY : src/Shader.obj
 
 # target to build an object file
 src/Shader.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj
 .PHONY : src/Shader.cpp.obj
 
 src/Shader.i: src/Shader.cpp.i
@@ -236,7 +260,7 @@ src/Shader.i: src/Shader.cpp.i
 
 # target to preprocess a source file
 src/Shader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.i
 .PHONY : src/Shader.cpp.i
 
 src/Shader.s: src/Shader.cpp.s
@@ -244,39 +268,39 @@ src/Shader.s: src/Shader.cpp.s
 
 # target to generate assembly for a file
 src/Shader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/Shader.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.s
 .PHONY : src/Shader.cpp.s
 
-src/main.obj: src/main.cpp.obj
-.PHONY : src/main.obj
+src/SimulationMain.obj: src/SimulationMain.cpp.obj
+.PHONY : src/SimulationMain.obj
 
 # target to build an object file
-src/main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/main.cpp.obj
-.PHONY : src/main.cpp.obj
+src/SimulationMain.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj
+.PHONY : src/SimulationMain.cpp.obj
 
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+src/SimulationMain.i: src/SimulationMain.cpp.i
+.PHONY : src/SimulationMain.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/SimulationMain.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.i
+.PHONY : src/SimulationMain.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+src/SimulationMain.s: src/SimulationMain.cpp.s
+.PHONY : src/SimulationMain.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/SimulationMain.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.s
+.PHONY : src/SimulationMain.cpp.s
 
 vendor/glad/src/glad.obj: vendor/glad/src/glad.c.obj
 .PHONY : vendor/glad/src/glad.obj
 
 # target to build an object file
 vendor/glad/src/glad.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj
 .PHONY : vendor/glad/src/glad.c.obj
 
 vendor/glad/src/glad.i: vendor/glad/src/glad.c.i
@@ -284,7 +308,7 @@ vendor/glad/src/glad.i: vendor/glad/src/glad.c.i
 
 # target to preprocess a source file
 vendor/glad/src/glad.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.i
 .PHONY : vendor/glad/src/glad.c.i
 
 vendor/glad/src/glad.s: vendor/glad/src/glad.c.s
@@ -292,7 +316,7 @@ vendor/glad/src/glad.s: vendor/glad/src/glad.c.s
 
 # target to generate assembly for a file
 vendor/glad/src/glad.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/vendor/glad/src/glad.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.s
 .PHONY : vendor/glad/src/glad.c.s
 
 # Help Target
@@ -308,17 +332,20 @@ help:
 	@echo ... list_install_components
 	@echo ... rebuild_cache
 	@echo ... uninstall
-	@echo ... OpenGLPrj
+	@echo ... OpenGL-MPS
 	@echo ... glfw
 	@echo ... src/Camera.obj
 	@echo ... src/Camera.i
 	@echo ... src/Camera.s
+	@echo ... src/Particle.obj
+	@echo ... src/Particle.i
+	@echo ... src/Particle.s
 	@echo ... src/Shader.obj
 	@echo ... src/Shader.i
 	@echo ... src/Shader.s
-	@echo ... src/main.obj
-	@echo ... src/main.i
-	@echo ... src/main.s
+	@echo ... src/SimulationMain.obj
+	@echo ... src/SimulationMain.i
+	@echo ... src/SimulationMain.s
 	@echo ... vendor/glad/src/glad.obj
 	@echo ... vendor/glad/src/glad.i
 	@echo ... vendor/glad/src/glad.s

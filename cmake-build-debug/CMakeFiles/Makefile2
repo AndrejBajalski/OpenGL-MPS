@@ -62,7 +62,7 @@ CMAKE_BINARY_DIR = C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debu
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/OpenGLPrj.dir/all
+all: CMakeFiles/OpenGL-MPS.dir/all
 all: vendor/glfw/all
 .PHONY : all
 
@@ -71,7 +71,7 @@ preinstall: vendor/glfw/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/OpenGLPrj.dir/clean
+clean: CMakeFiles/OpenGL-MPS.dir/clean
 clean: vendor/glfw/clean
 .PHONY : clean
 
@@ -107,30 +107,30 @@ vendor/glfw/src/clean: vendor/glfw/src/CMakeFiles/glfw.dir/clean
 .PHONY : vendor/glfw/src/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/OpenGLPrj.dir
+# Target rules for target CMakeFiles/OpenGL-MPS.dir
 
 # All Build rule for target.
-CMakeFiles/OpenGLPrj.dir/all: vendor/glfw/src/CMakeFiles/glfw.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target OpenGLPrj"
-.PHONY : CMakeFiles/OpenGLPrj.dir/all
+CMakeFiles/OpenGL-MPS.dir/all: vendor/glfw/src/CMakeFiles/glfw.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6 "Built target OpenGL-MPS"
+.PHONY : CMakeFiles/OpenGL-MPS.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/OpenGLPrj.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles 21
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/OpenGLPrj.dir/all
+CMakeFiles/OpenGL-MPS.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles 22
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/OpenGL-MPS.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/OpenGLPrj.dir/rule
+.PHONY : CMakeFiles/OpenGL-MPS.dir/rule
 
 # Convenience name for target.
-OpenGLPrj: CMakeFiles/OpenGLPrj.dir/rule
-.PHONY : OpenGLPrj
+OpenGL-MPS: CMakeFiles/OpenGL-MPS.dir/rule
+.PHONY : OpenGL-MPS
 
 # clean rule for target.
-CMakeFiles/OpenGLPrj.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGLPrj.dir\build.make CMakeFiles/OpenGLPrj.dir/clean
-.PHONY : CMakeFiles/OpenGLPrj.dir/clean
+CMakeFiles/OpenGL-MPS.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/clean
+.PHONY : CMakeFiles/OpenGL-MPS.dir/clean
 
 #=============================================================================
 # Target rules for target vendor/glfw/CMakeFiles/uninstall.dir
@@ -165,7 +165,7 @@ vendor/glfw/CMakeFiles/uninstall.dir/clean:
 vendor/glfw/src/CMakeFiles/glfw.dir/all:
 	$(MAKE) $(MAKESILENT) -f vendor\glfw\src\CMakeFiles\glfw.dir\build.make vendor/glfw/src/CMakeFiles/glfw.dir/depend
 	$(MAKE) $(MAKESILENT) -f vendor\glfw\src\CMakeFiles\glfw.dir\build.make vendor/glfw/src/CMakeFiles/glfw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 "Built target glfw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22 "Built target glfw"
 .PHONY : vendor/glfw/src/CMakeFiles/glfw.dir/all
 
 # Build rule for subdir invocation for target.

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(OpenGLPrj)
+project(OpenGL-MPS)
 
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
@@ -28,6 +28,7 @@ include_directories(include/
 file(GLOB VENDORS_SOURCES vendor/glad/src/glad.c)
 file(GLOB PROJECT_HEADERS include/*.hpp)
 file(GLOB PROJECT_SOURCES src/*.cpp)
+list(REMOVE_ITEM PROJECT_SOURCES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 file(GLOB PROJECT_SHADERS ${SHADERS_RELATIVE_SRC_PATH}/*.comp
                           ${SHADERS_RELATIVE_SRC_PATH}/*.frag
                           ${SHADERS_RELATIVE_SRC_PATH}/*.geom
@@ -58,7 +59,10 @@ add_definitions(-DGLFW_INCLUDE_NONE
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${PROJECT_SHADERS} ${PROJECT_TEXTURES} ${PROJECT_CONFIGS}
-                               ${VENDORS_SOURCES})
+                               ${VENDORS_SOURCES}
+        src/Particle.cpp
+        include/Particle.hpp
+        src/SimulationMain.cpp)
 target_link_libraries(${PROJECT_NAME}
 		      glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}

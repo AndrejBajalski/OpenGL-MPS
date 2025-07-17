@@ -683,7 +683,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Program Files (x86)/OpenGLPrj"
+			"value" : "C:/Program Files (x86)/OpenGL-MPS"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -903,7 +903,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "OpenGLPrj"
+			"value" : "OpenGL-MPS"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1442,7 +1442,7 @@
 			"value" : ""
 		},
 		{
-			"name" : "OpenGLPrj_BINARY_DIR",
+			"name" : "OpenGL-MPS_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1454,7 +1454,7 @@
 			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug"
 		},
 		{
-			"name" : "OpenGLPrj_IS_TOP_LEVEL",
+			"name" : "OpenGL-MPS_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1466,7 +1466,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "OpenGLPrj_SOURCE_DIR",
+			"name" : "OpenGL-MPS_SOURCE_DIR",
 			"properties" : 
 			[
 				{

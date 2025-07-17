@@ -1,4 +1,4 @@
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/CMakeFiles/OpenGLPrj.dir
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/CMakeFiles/list_install_components.dir
