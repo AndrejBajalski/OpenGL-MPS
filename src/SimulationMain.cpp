@@ -209,21 +209,24 @@ int main() {
     lightingShader.setVec3("light.position", lightPos);
     lightingShader.setVec3("viewPos", camera.Position);
     lightingShader.setFloat("alpha", 0.4f);
-    float shininess = 1.0f;
+    float shininess = 10.0f;
     glm::vec3 diffuse = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 ambient = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 specular = glm::vec3(0.0f, 0.0f, 0.3f);
+    glm::vec3 specular = glm::vec3(0.0f, 1.0f, 0.0f);
 
     illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
 
     lightingShader.setMat4("projection", projection);
     lightingShader.setMat4("view", view);
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, -0.5f, 1.0f));
-    lightingShader.setMat4("model", model);
-    //render the sphere
-    glBindVertexArray(sphereVAO);
-    glDrawElements(GL_TRIANGLES, (unsigned int) indices.size(), GL_UNSIGNED_INT, indices.data());
+    for (int i=0; i<10; i++) {
+      float offset = i/10.0f;
+      model = glm::translate(model, glm::vec3(0.0f, offset, 0.0f));
+      lightingShader.setMat4("model", model);
+      //render the sphere
+      glBindVertexArray(sphereVAO);
+      glDrawElements(GL_TRIANGLES, (unsigned int) indices.size(), GL_UNSIGNED_INT, indices.data());
+    }
     // glDrawArrays(GL_TRIANGLE_STRIP, 0, sectorCount*stackCount);
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
     // etc.)
