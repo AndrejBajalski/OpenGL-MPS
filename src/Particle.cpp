@@ -31,9 +31,10 @@ Particle Particle::generateParticleAsSphere() {
     float stackStep = PI / stackCount;
     float sectorAngle, stackAngle;
     for(int i = 0; i <= stackCount; ++i) {
-        stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
-        xy = radius * cosf(stackAngle);             // r * cos(u)
-        z = radius * sinf(stackAngle);              // r * sin(u)
+        stackAngle = PI / 2 - i * stackStep;
+        double r = radius;// starting from pi/2 to -pi/2
+        xy = r * cosf(stackAngle);             // r * cos(u)
+        z = r * sinf(stackAngle);              // r * sin(u)
         // add (sectorCount+1) vertices per stack
         // first and last vertices have same position and normal, but different tex coords
         for(int j = 0; j <= sectorCount; ++j) {

@@ -149,7 +149,7 @@
 			"language" : "C",
 			"sourceIndexes" : 
 			[
-				19
+				17
 			]
 		}
 	],
@@ -219,35 +219,33 @@
 			"sourceIndexes" : 
 			[
 				8,
-				9,
-				10,
-				11
+				9
 			]
 		},
 		{
 			"name" : "textures",
 			"sourceIndexes" : 
 			[
-				12,
-				13
+				10,
+				11
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
+				12,
+				13,
 				14,
 				15,
-				16,
-				17,
-				18
+				16
 			]
 		},
 		{
 			"name" : "vendors",
 			"sourceIndexes" : 
 			[
-				19
+				17
 			]
 		}
 	],
@@ -296,16 +294,6 @@
 			"backtrace" : 1,
 			"path" : "include/Shader.hpp",
 			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "res/shaders/lamp.frag",
-			"sourceGroupIndex" : 2
-		},
-		{
-			"backtrace" : 1,
-			"path" : "res/shaders/lamp.vert",
-			"sourceGroupIndex" : 2
 		},
 		{
 			"backtrace" : 1,

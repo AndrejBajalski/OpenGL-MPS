@@ -35,7 +35,7 @@
 
 /* for three-dimensional simulation */
 #define DIM                  3
-#define PARTICLE_DISTANCE    0.042
+#define PARTICLE_DISTANCE    0.1
 #define DT                   0.002
 #define OUTPUT_INTERVAL      10
 
@@ -154,20 +154,18 @@ int main() {
   // ------------------------------------
   std::string shader_location("../res/shaders/");
   std::string material_shader("material");
-  std::string lamp_shader("lamp");
 
   // build and compile our shader zprogram
   // ------------------------------------
-  Shader lightingShader(
+  Shader particleShader(
       shader_location + material_shader + std::string(".vert"),
       shader_location + material_shader + std::string(".frag"));
-  Shader lampShader(shader_location + lamp_shader + std::string(".vert"),
-                    shader_location + lamp_shader + std::string(".frag"));
+
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
   // first, configure the cube's VAO (and VBO)
-  unsigned int VBO, sphereVBO, sphereVAO, EBO;
+  unsigned int sphereVBO, sphereVAO, EBO;
   // second, configure the light's VAO (VBO stays the same; the vertices are the
   // same for the light object which is also a 3D cube)
 
@@ -177,10 +175,10 @@ int main() {
   glGenVertexArrays(1, &sphereVAO);
   //VBO
   glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * particles[0].sphere_vertices.size(), particles[0].sphere_vertices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * particles[338].sphere_vertices.size(), particles[338].sphere_vertices.data(), GL_STATIC_DRAW);
   //EBO
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, particles[0].indices.size() * sizeof(int), particles[0].indices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, particles[338].indices.size() * sizeof(int), particles[338].indices.data(), GL_STATIC_DRAW);
   //VAO
   glBindVertexArray(sphereVAO);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
@@ -195,66 +193,66 @@ int main() {
   // -----------
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_DEPTH_TEST);
+
+  double startTimeFrame = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
-    // per-frame time logic
-    // --------------------
-    float currentFrame = static_cast<float>(glfwGetTime());
+  /*---------------------------GAME LOOP----------------------------*/
+    double currentFrame = glfwGetTime();
     lightPos.x = glm::sin(currentFrame)*3;
     // input
     // -----
     processInput(window);
-
-    // render
-    // ------
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // light properties
     // view/projection transformations
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
-    lightingShader.setMat4("projection", projection);
-    lightingShader.setMat4("view", view);
-    // world transformation
+    particleShader.use();
+    particleShader.setMat4("projection", projection);
+    particleShader.setMat4("view", view);
+    particleShader.setInt("particleType", 0);
     glm::mat4 model = glm::mat4(1.0f);
-    lightingShader.setMat4("model", model);
-
+    Particle particle = particles[0];
+    model = glm::translate(model, glm::vec3(particle.PositionX, particle.PositionY, particle.PositionZ));
+    particleShader.use();
+    particleShader.setMat4("model", model);
+    printf(" Position: %.4f, %.4f, %.4f\n", particle.PositionX, particle.PositionY, particle.PositionZ);
+    printf("Camera position: %.4f, %.4f, %.4f", camera.Position.x, camera.Position.y, camera.Position.z);
+    glBindVertexArray(sphereVAO);
+    glDrawElements(GL_TRIANGLES, (unsigned int) particles[0].indices.size(), GL_UNSIGNED_INT, particles[0].indices.data());
     //sphere
-    for (int i=0; i<particles.size(); i++) {
-      lightingShader.use();
-      lightingShader.setVec3("light.position", lightPos);
-      lightingShader.setVec3("viewPos", camera.Position);
-      lightingShader.setFloat("alpha", 0.4f);
-      float shininess = 1.0f;
-      glm::vec3 diffuse = glm::vec3(0.0f, 1.0f, 0.0f);
-      glm::vec3 ambient = glm::vec3(0.0f, 1.0f, 0.0f);
-      glm::vec3 specular = glm::vec3(0.0f, 0.0f, 0.3f);
-      glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
-
-      illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
-
-      lightingShader.setMat4("projection", projection);
-      lightingShader.setMat4("view", view);
-      model = glm::mat4(1.0f);
-      model = glm::translate(model, glm::vec3(particles[i].PositionX, particles[i].PositionY, particles[i].PositionZ));
-      lightingShader.setMat4("model", model);
-      //render the sphere
-      glBindVertexArray(sphereVAO);
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-      glDrawElements(GL_TRIANGLES, (unsigned int) particles[0].indices.size(), GL_UNSIGNED_INT, particles[0].indices.data());
-    }
+    // for (int i=0; i<particles.size(); i++) {
+    //   glm::mat4 model = glm::mat4(1.0f);
+    //   Particle particle = particles[i];
+    //   model = glm::translate(model, glm::vec3(particle.PositionX, particle.PositionY, particle.PositionZ));
+    //   particleShader.use();
+    //   particleShader.setMat4("model", model);
+    //   //coloring
+    //   int type = particle.type;
+    //   particleShader.setInt("particleType", type);
+    //   std::cout<<"Particle Number "<<i<<" Particle Type: "<<particle.type;
+    //   printf(" Position: %.4f, %.4f, %.4f\n", particle.PositionX, particle.PositionY, particle.PositionZ);
+    //   //render the sphere
+    //   glBindVertexArray(sphereVAO);
+    //   glDrawElements(GL_TRIANGLES, (unsigned int) particles[0].indices.size(), GL_UNSIGNED_INT, particles[0].indices.data());
+    // }
     // glDrawArrays(GL_TRIANGLE_STRIP, 0, sectorCount*stackCount);
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
     // etc.)
+    //   break;
     // -------------------------------------------------------------------------------
     glfwSwapBuffers(window);
     glfwPollEvents();
+    // if (currentFrame - startTimeFrame > 5.0)
   }
 
   // optional: de-allocate all resources once they've outlived their purpose:
   // ------------------------------------------------------------------------
   glDeleteVertexArrays(1, &sphereVAO);
-  glDeleteBuffers(1, &VBO);
+  glDeleteBuffers(1, &sphereVBO);
 
   // glfw: terminate, clearing all previously allocated GLFW resources.
   // ------------------------------------------------------------------
@@ -268,51 +266,52 @@ void initializeParticleSettings() {
 
 /*--------------------------------------EMPS IMPLEMENTATION-------------------------------------------------*/
 void initializeParticlePositionAndVelocity_for3dim( void ){
-  Particle particle = Particle(8, 8, 0.05, PARTICLE_DISTANCE);
+  Particle particle = Particle(8, 8, 0.005, PARTICLE_DISTANCE);
   int iX, iY, iZ;
   int nX, nY, nZ;
   double x, y, z;
   int i = 0;
   int flagOfParticleGeneration;
 
-  nX = (int)(1.0/PARTICLE_DISTANCE)+5;
-  nY = (int)(0.6/PARTICLE_DISTANCE)+5;
-  nZ = (int)(0.3/PARTICLE_DISTANCE)+5;
-  for(iX= -4;iX<nX;iX++){
-    for(iY= -4;iY<nY;iY++){
-      for(iZ= -4;iZ<nZ;iZ++){
+  nX = (int)(0.9/PARTICLE_DISTANCE);
+  nY = (int)(0.7/PARTICLE_DISTANCE);
+  nZ = (int)(0.5/PARTICLE_DISTANCE);
+  for(iX= -nX;iX<nX;iX++){
+    for(iY= -nY;iY<nY;iY++){
+      for(iZ= -nZ;iZ<nZ;iZ++){
         x = PARTICLE_DISTANCE * iX;
         y = PARTICLE_DISTANCE * iY;
         z = PARTICLE_DISTANCE * iZ;
         flagOfParticleGeneration = OFF;
+        int type = 999;
 
         /* dummy wall region */
-        if( (((x>-4.0*PARTICLE_DISTANCE+EPS)&&(x<=1.00+4.0*PARTICLE_DISTANCE+EPS))&&( (y>0.0-4.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-4.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+4.0*PARTICLE_DISTANCE+EPS ))){
-          particle.setParticleType(DUMMY_WALL);
+        if( (((x>-0.9)&&(x<=0.9))&&( (y>-0.7&&y<=0.7)))&&( (z>-0.5)&&(z<=0.5 ))){
+          type = DUMMY_WALL;
           flagOfParticleGeneration = OFF;
         }
-        /* wall region */
-        if( (((x>-2.0*PARTICLE_DISTANCE+EPS)&&(x<=1.00+2.0*PARTICLE_DISTANCE+EPS))&&( (y>0.0-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-2.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+2.0*PARTICLE_DISTANCE+EPS ))){
-          particle.setParticleType(WALL);
+        if( (((x>-0.8&&x<-0.6)||(x>0.6&&x<0.8))&&( (y>-0.6 )&&(y<=0.6)))&&( (z>-0.5)&&(z<=0.5))){
+          type = WALL;
           flagOfParticleGeneration = ON;
         }
         /* wall region */
-        if( (((x>-4.0*PARTICLE_DISTANCE+EPS)&&(x<=1.00+4.0*PARTICLE_DISTANCE+EPS))&&( (y>0.6-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-4.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+4.0*PARTICLE_DISTANCE+EPS ))){
-          particle.setParticleType(WALL);
-          flagOfParticleGeneration = ON;
-        }
+        // if( (((x>-16.0*PARTICLE_DISTANCE+EPS)&&(x<=16*PARTICLE_DISTANCE+EPS))&&( (y>0.6-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-4.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+4.0*PARTICLE_DISTANCE+EPS ))){
+        //   particle.setParticleType(WALL);
+        //   flagOfParticleGeneration = ON;
+        // }
         /* empty region */
-        if( (((x>0.0+EPS)&&(x<=1.00+EPS))&&( y>0.0+EPS ))&&( (z>0.0+EPS )&&(z<=0.3+EPS ))){
-          flagOfParticleGeneration = OFF;
-        }
+        // if( (((x>0.0+EPS)&&(x<=1.00+EPS))&&( y>0.0+EPS ))&&( (z>0.0+EPS )&&(z<=0.3+EPS ))){
+        //   flagOfParticleGeneration = OFF;
+        // }
         /* fluid region */
-        if( (((x>0.0+EPS)&&(x<=0.25+EPS))&&( (y>0.0+EPS)&&(y<0.5+EPS) ))&&( (z>0.0+EPS )&&(z<=0.3+EPS ))){
-          particle.setParticleType(FLUID);
+        if( (((x>-0.6)&&(x<=0.6))&&( (y>-0.5)&&(y<0.5) ))&&( (z>0.0)&&(z<=0.3))){
+          type = FLUID;
           flagOfParticleGeneration = ON;
         }
-        if( flagOfParticleGeneration == ON){
+        if( flagOfParticleGeneration == ON ){
+          particle.setParticleType(static_cast<PARTICLE_TYPE>(type));
           particle.setPosition(x, y, z);
-          particle.setVelocity(x, y, z);
+          particle.setVelocity(0.0, 0.0, 0.0);
           particles.push_back(particle);
           i++;
         }
