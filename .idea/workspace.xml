@@ -33,26 +33,22 @@
   <component name="ChangeListManager">
     <list default="true" id="8a01ab82-5d65-4e2d-af2b-320751d3ca54" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-0ff658d5db13896e7fb3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2025-07-17T08-09-44-0389.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-OpenGL-MPS-Debug-b66ed08981cf09bbc8dd.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2025-07-18T06-22-42-0946.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdC/a.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdCXX/a.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj.d" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/bin/OpenGL-MPS.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/bin/OpenGL-MPS.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.frag" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.vert" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/vendor/glfw/src/CMakeFiles/glfw.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/vendor/glfw/src/CMakeFiles/glfw.dir/compiler_depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shaders/lamp.frag" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shaders/lamp.vert" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/res/shaders/material.frag" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/material.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/shaders/material.vert" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/material.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Particle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Particle.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulationMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationMain.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +63,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="transformations-helm" />
+        <entry key="$PROJECT_DIR$" value="example-simulation" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -454,7 +450,7 @@
     "RunOnceActivity.west.config.association.type.startup.service": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "example-simulation",
+    "git-widget-placeholder": "example-simulation-2",
     "last_opened_file_path": "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -511,7 +507,7 @@
       <workItem from="1749888304272" duration="6940000" />
       <workItem from="1752725480960" duration="12846000" />
       <workItem from="1752739763157" duration="2451000" />
-      <workItem from="1752798639197" duration="13797000" />
+      <workItem from="1752798639197" duration="15480000" />
     </task>
     <servers />
   </component>
@@ -533,16 +529,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/SimulationMain.cpp</url>
-          <line>219</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -1,6 +1,3 @@
-//
-// Created by admin on 7/17/2025.
-//
 #include <OpenGLPrj.hpp>
 
 #include <GLFW/glfw3.h>
@@ -11,91 +8,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-/*=====================================================================
-  emps.c
-
-    Sample program of the explicit MPS method
-
-    Moving Particle Semi-implicit Method, Academic Press, 2018
-    ISBN: 9780128127797
-
-=======================================================================*/
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-
-#include "Particle.hpp"
 #define PI 3.14159265359f
-/* for two-dimensional simulation */
-// #define DIM                  2
-// #define PARTICLE_DISTANCE    0.025
-// #define DT                   0.001
-// #define OUTPUT_INTERVAL      20
-
-/* for three-dimensional simulation */
-#define DIM                  3
-#define PARTICLE_DISTANCE    0.1
-#define DT                   0.002
-#define OUTPUT_INTERVAL      10
-
-#define ARRAY_SIZE           5000
-#define FINISH_TIME          1.5
-#define KINEMATIC_VISCOSITY  (1.0E-6)
-#define SPEED_OF_SOUND       10.0
-#define FLUID_DENSITY        1000.0
-#define GRAVITY_X  0.0
-#define GRAVITY_Y  -9.8
-#define GRAVITY_Z  0.0
-#define RADIUS_FOR_NUMBER_DENSITY  (2.1*PARTICLE_DISTANCE)
-#define RADIUS_FOR_GRADIENT        (2.1*PARTICLE_DISTANCE)
-#define RADIUS_FOR_LAPLACIAN       (2.1*PARTICLE_DISTANCE)
-#define COLLISION_DISTANCE         (0.5*PARTICLE_DISTANCE)
-#define EPS                        (0.01 * PARTICLE_DISTANCE)
-#define COEFFICIENT_OF_RESTITUTION 0.2
-#define ON              1
-#define OFF             0
-
-std::vector<Particle> particles;
-std::vector<double> particlePositions;
-
-int    FileNumber;
-double Time;
-int    NumberOfParticles;
-double Re_forParticleNumberDensity,Re2_forParticleNumberDensity;
-double Re_forGradient,     Re2_forGradient;
-double Re_forLaplacian,    Re2_forLaplacian;
-double N0_forParticleNumberDensity;
-double N0_forGradient;
-double N0_forLaplacian;
-double Lambda;
-double collisionDistance,collisionDistance2;
-double FluidDensity;
-
-void initializeParticlePositionAndVelocity_for2dim( void );
-void initializeParticlePositionAndVelocity_for3dim( void );
-void calculateConstantParameter( void );
-void calculateNZeroAndLambda( void );
-double weight( double distance, double re );
-void mainLoopOfSimulation( void );
-void calculateGravity( void );
-void calculateViscosity( void );
-void moveParticle( void );
-void collision( void );
-void calculatePressure_forExplicitMPS( void );
-void calculateParticleNumberDensity( void );
-void calculatePressureGradient_forExplicitMPS( void );
-void moveParticleUsingPressureGradient( void );
 const std::string program_name = ("Colour");
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess);
-
-
 // settings
-const unsigned int SCR_WIDTH = 1500;
-const unsigned int SCR_HEIGHT = 800;
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
 // camera
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 static float lastX = SCR_WIDTH / 2.0f;
@@ -107,8 +30,6 @@ static float deltaTime = 0.0f;
 static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 
 int main() {
-  initializeParticlePositionAndVelocity_for3dim();
-  // calculateConstantParameter();
   // glfw: initialize and configure
   // ------------------------------
   glfwInit();
@@ -133,7 +54,7 @@ int main() {
   }
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-  // glfwSetCursorPosCallback(window, mouse_callback);
+  glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetScrollCallback(window, scroll_callback);
 
   // tell GLFW to capture our mouse
@@ -153,19 +74,92 @@ int main() {
   // build and compile our shader program
   // ------------------------------------
   std::string shader_location("../res/shaders/");
+
   std::string material_shader("material");
+  std::string lamp_shader("lamp");
 
   // build and compile our shader zprogram
   // ------------------------------------
-  Shader particleShader(
+  Shader lightingShader(
       shader_location + material_shader + std::string(".vert"),
       shader_location + material_shader + std::string(".frag"));
-
+  Shader lampShader(shader_location + lamp_shader + std::string(".vert"),
+                    shader_location + lamp_shader + std::string(".frag"));
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
+  //Generate sphere vertices
+  std::vector<float> sphere_vertices;
+  int sectorCount = 64, stackCount = 64;
+  float radius = 0.01f;
+  float x, y, z, xy;                              // vertex position
+  float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
+  float s, t;                                     // vertex texCoord
+  float sectorStep = 2 * PI / sectorCount;
+  float stackStep = PI / stackCount;
+  float sectorAngle, stackAngle;
+  for(int i = 0; i <= stackCount; ++i) {
+    stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+    xy = radius * cosf(stackAngle);             // r * cos(u)
+    z = radius * sinf(stackAngle);              // r * sin(u)
+    // add (sectorCount+1) vertices per stack
+    // first and last vertices have same position and normal, but different tex coords
+    for(int j = 0; j <= sectorCount; ++j) {
+      sectorAngle = j * sectorStep;           // starting from 0 to 2pi
+      // vertex position (x, y, z)
+      x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+      y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+      sphere_vertices.push_back(x);
+      sphere_vertices.push_back(y);
+      sphere_vertices.push_back(z);
+      // normalized vertex normal (nx, ny, nz)
+      nx = x * lengthInv;
+      ny = y * lengthInv;
+      nz = z * lengthInv;
+      sphere_vertices.push_back(nx);
+      sphere_vertices.push_back(ny);
+      sphere_vertices.push_back(nz);
+    }
+  }
+  //generate indices for EBO
+  std::vector<int> indices;
+  std::vector<int> lineIndices;
+  int k1, k2;
+  for(int i = 0; i < stackCount; ++i)
+  {
+    k1 = i * (sectorCount + 1);     // beginning of current stack
+    k2 = k1 + sectorCount + 1;      // beginning of next stack
+    for(int j = 0; j < sectorCount; ++j, ++k1, ++k2)
+    {
+      // 2 triangles per sector excluding first and last stacks
+      // k1 => k2 => k1+1
+      if(i != 0)
+      {
+        indices.push_back(k1);
+        indices.push_back(k2);
+        indices.push_back(k1 + 1);
+      }
+      // k1+1 => k2 => k2+1
+      if(i != (stackCount-1))
+      {
+        indices.push_back(k1 + 1);
+        indices.push_back(k2);
+        indices.push_back(k2 + 1);
+      }
+      // store indices for lines
+      // vertical lines for all stacks, k1 => k2
+      lineIndices.push_back(k1);
+      lineIndices.push_back(k2);
+      if(i != 0)  // horizontal lines except 1st stack, k1 => k+1
+      {
+        lineIndices.push_back(k1);
+        lineIndices.push_back(k1 + 1);
+      }
+    }
+  }
   // first, configure the cube's VAO (and VBO)
-  unsigned int sphereVBO, sphereVAO, EBO;
+  unsigned int VBO, sphereVBO, sphereVAO, EBO;
+
   // second, configure the light's VAO (VBO stays the same; the vertices are the
   // same for the light object which is also a 3D cube)
 
@@ -175,10 +169,10 @@ int main() {
   glGenVertexArrays(1, &sphereVAO);
   //VBO
   glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * particles[338].sphere_vertices.size(), particles[338].sphere_vertices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere_vertices.size(), sphere_vertices.data(), GL_STATIC_DRAW);
   //EBO
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, particles[338].indices.size() * sizeof(int), particles[338].indices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
   //VAO
   glBindVertexArray(sphereVAO);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
@@ -193,207 +187,61 @@ int main() {
   // -----------
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glEnable(GL_DEPTH_TEST);
-
-  double startTimeFrame = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
-  /*---------------------------GAME LOOP----------------------------*/
-    double currentFrame = glfwGetTime();
+    // per-frame time logic
+    // --------------------
+    float currentFrame = static_cast<float>(glfwGetTime());
     lightPos.x = glm::sin(currentFrame)*3;
     // input
     // -----
     processInput(window);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // render
+    // ------
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // light properties
-    // view/projection transformations
+    glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
-    particleShader.use();
-    particleShader.setMat4("projection", projection);
-    particleShader.setMat4("view", view);
-    particleShader.setInt("particleType", 0);
-    glm::mat4 model = glm::mat4(1.0f);
-    Particle particle = particles[0];
-    model = glm::translate(model, glm::vec3(particle.PositionX, particle.PositionY, particle.PositionZ));
-    particleShader.use();
-    particleShader.setMat4("model", model);
-    printf(" Position: %.4f, %.4f, %.4f\n", particle.PositionX, particle.PositionY, particle.PositionZ);
-    printf("Camera position: %.4f, %.4f, %.4f", camera.Position.x, camera.Position.y, camera.Position.z);
-    glBindVertexArray(sphereVAO);
-    glDrawElements(GL_TRIANGLES, (unsigned int) particles[0].indices.size(), GL_UNSIGNED_INT, particles[0].indices.data());
     //sphere
-    // for (int i=0; i<particles.size(); i++) {
-    //   glm::mat4 model = glm::mat4(1.0f);
-    //   Particle particle = particles[i];
-    //   model = glm::translate(model, glm::vec3(particle.PositionX, particle.PositionY, particle.PositionZ));
-    //   particleShader.use();
-    //   particleShader.setMat4("model", model);
-    //   //coloring
-    //   int type = particle.type;
-    //   particleShader.setInt("particleType", type);
-    //   std::cout<<"Particle Number "<<i<<" Particle Type: "<<particle.type;
-    //   printf(" Position: %.4f, %.4f, %.4f\n", particle.PositionX, particle.PositionY, particle.PositionZ);
-    //   //render the sphere
-    //   glBindVertexArray(sphereVAO);
-    //   glDrawElements(GL_TRIANGLES, (unsigned int) particles[0].indices.size(), GL_UNSIGNED_INT, particles[0].indices.data());
-    // }
+    lightingShader.use();
+    lightingShader.setVec3("light.position", lightPos);
+    lightingShader.setVec3("viewPos", camera.Position);
+    lightingShader.setFloat("alpha", 0.4f);
+    float shininess = 1.0f;
+    glm::vec3 diffuse = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 ambient = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 specular = glm::vec3(0.0f, 0.0f, 0.3f);
+
+    illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
+
+    lightingShader.setMat4("projection", projection);
+    lightingShader.setMat4("view", view);
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, -0.5f, 1.0f));
+    lightingShader.setMat4("model", model);
+    //render the sphere
+    glBindVertexArray(sphereVAO);
+    glDrawElements(GL_TRIANGLES, (unsigned int) indices.size(), GL_UNSIGNED_INT, indices.data());
     // glDrawArrays(GL_TRIANGLE_STRIP, 0, sectorCount*stackCount);
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
     // etc.)
-    //   break;
     // -------------------------------------------------------------------------------
     glfwSwapBuffers(window);
     glfwPollEvents();
-    // if (currentFrame - startTimeFrame > 5.0)
   }
 
   // optional: de-allocate all resources once they've outlived their purpose:
   // ------------------------------------------------------------------------
   glDeleteVertexArrays(1, &sphereVAO);
-  glDeleteBuffers(1, &sphereVBO);
+  glDeleteBuffers(1, &VBO);
 
   // glfw: terminate, clearing all previously allocated GLFW resources.
   // ------------------------------------------------------------------
   glfwTerminate();
   return 0;
 }
-
-void initializeParticleSettings() {
-
-}
-
-/*--------------------------------------EMPS IMPLEMENTATION-------------------------------------------------*/
-void initializeParticlePositionAndVelocity_for3dim( void ){
-  Particle particle = Particle(8, 8, 0.005, PARTICLE_DISTANCE);
-  int iX, iY, iZ;
-  int nX, nY, nZ;
-  double x, y, z;
-  int i = 0;
-  int flagOfParticleGeneration;
-
-  nX = (int)(0.9/PARTICLE_DISTANCE);
-  nY = (int)(0.7/PARTICLE_DISTANCE);
-  nZ = (int)(0.5/PARTICLE_DISTANCE);
-  for(iX= -nX;iX<nX;iX++){
-    for(iY= -nY;iY<nY;iY++){
-      for(iZ= -nZ;iZ<nZ;iZ++){
-        x = PARTICLE_DISTANCE * iX;
-        y = PARTICLE_DISTANCE * iY;
-        z = PARTICLE_DISTANCE * iZ;
-        flagOfParticleGeneration = OFF;
-        int type = 999;
-
-        /* dummy wall region */
-        if( (((x>-0.9)&&(x<=0.9))&&( (y>-0.7&&y<=0.7)))&&( (z>-0.5)&&(z<=0.5 ))){
-          type = DUMMY_WALL;
-          flagOfParticleGeneration = OFF;
-        }
-        if( (((x>-0.8&&x<-0.6)||(x>0.6&&x<0.8))&&( (y>-0.6 )&&(y<=0.6)))&&( (z>-0.5)&&(z<=0.5))){
-          type = WALL;
-          flagOfParticleGeneration = ON;
-        }
-        /* wall region */
-        // if( (((x>-16.0*PARTICLE_DISTANCE+EPS)&&(x<=16*PARTICLE_DISTANCE+EPS))&&( (y>0.6-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-4.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+4.0*PARTICLE_DISTANCE+EPS ))){
-        //   particle.setParticleType(WALL);
-        //   flagOfParticleGeneration = ON;
-        // }
-        /* empty region */
-        // if( (((x>0.0+EPS)&&(x<=1.00+EPS))&&( y>0.0+EPS ))&&( (z>0.0+EPS )&&(z<=0.3+EPS ))){
-        //   flagOfParticleGeneration = OFF;
-        // }
-        /* fluid region */
-        if( (((x>-0.6)&&(x<=0.6))&&( (y>-0.5)&&(y<0.5) ))&&( (z>0.0)&&(z<=0.3))){
-          type = FLUID;
-          flagOfParticleGeneration = ON;
-        }
-        if( flagOfParticleGeneration == ON ){
-          particle.setParticleType(static_cast<PARTICLE_TYPE>(type));
-          particle.setPosition(x, y, z);
-          particle.setVelocity(0.0, 0.0, 0.0);
-          particles.push_back(particle);
-          i++;
-        }
-      }
-    }
-  }
-  NumberOfParticles = i;
-  // for(i=0;i<particles.size();i++) { particle.VelocityX=0.0; particle.VelocityY=0.0; particle.VelocityZ=0.0; }
-}
-
-void calculateConstantParameter( void ){
-
-  Re_forParticleNumberDensity  = RADIUS_FOR_NUMBER_DENSITY;
-  Re_forGradient       = RADIUS_FOR_GRADIENT;
-  Re_forLaplacian      = RADIUS_FOR_LAPLACIAN;
-  Re2_forParticleNumberDensity = Re_forParticleNumberDensity*Re_forParticleNumberDensity;
-  Re2_forGradient      = Re_forGradient*Re_forGradient;
-  Re2_forLaplacian     = Re_forLaplacian*Re_forLaplacian;
-  calculateNZeroAndLambda();
-  FluidDensity       = FLUID_DENSITY;
-  collisionDistance  = COLLISION_DISTANCE;
-  collisionDistance2 = collisionDistance*collisionDistance;
-  FileNumber=0;
-  Time=0.0;
-}
-
-void calculateNZeroAndLambda( void ){
-  int iX, iY, iZ;
-  int iZ_start, iZ_end;
-  double xj, yj, zj, distance, distance2;
-  double xi, yi, zi;
-
-  if( DIM == 2 ){
-    iZ_start = 0; iZ_end = 1;
-  }else{
-    iZ_start = -4; iZ_end = 5;
-  }
-
-  N0_forParticleNumberDensity = 0.0;
-  N0_forGradient      = 0.0;
-  N0_forLaplacian     = 0.0;
-  Lambda              = 0.0;
-  xi = 0.0;  yi = 0.0;  zi = 0.0;
-
-  for(iX= -4;iX<5;iX++){
-    for(iY= -4;iY<5;iY++){
-      for(iZ= iZ_start;iZ<iZ_end;iZ++){
-        if( ((iX==0)&&(iY==0)) && (iZ==0) )continue;
-        xj = PARTICLE_DISTANCE * (double)(iX);
-        yj = PARTICLE_DISTANCE * (double)(iY);
-        zj = PARTICLE_DISTANCE * (double)(iZ);
-        distance2 = (xj-xi)*(xj-xi)+(yj-yi)*(yj-yi)+(zj-zi)*(zj-zi);
-        distance = sqrt(distance2);
-        N0_forParticleNumberDensity += weight(distance, Re_forParticleNumberDensity);
-        N0_forGradient      += weight(distance, Re_forGradient);
-        N0_forLaplacian     += weight(distance, Re_forLaplacian);
-        Lambda              += distance2 * weight(distance, Re_forLaplacian);
-      }
-    }
-  }
-  Lambda = Lambda/N0_forLaplacian;
-}
-
-
-double weight( double distance, double re ){
-  double weightIJ;
-
-  if( distance >= re ){
-    weightIJ = 0.0;
-  }else{
-    weightIJ = (re/distance) - 1.0;
-  }
-  return weightIJ;
-}
-
-
-
-
-
-/*--------------------------------------END OF EMPS IMPLEMENTATION METHODS----------------------------------*/
-
-
 
 // process all input: query GLFW whether relevant keys are pressed/released this
 // frame and react accordingly
@@ -416,6 +264,7 @@ void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 am
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
+
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     camera.ProcessKeyboard(FORWARD, deltaTime);
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -433,6 +282,27 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
   // make sure the viewport matches the new window dimensions; note that width
   // and height will be significantly larger than specified on retina displays.
   glViewport(0, 0, width, height);
+}
+
+// glfw: whenever the mouse moves, this callback is called
+// -------------------------------------------------------
+void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
+  float xpos = static_cast<float>(xposd);
+  float ypos = static_cast<float>(yposd);
+  if (firstMouse) {
+    lastX = xpos;
+    lastY = ypos;
+    firstMouse = false;
+  }
+
+  float xoffset = xpos - lastX;
+  float yoffset =
+      lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+  lastX = xpos;
+  lastY = ypos;
+
+  camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
