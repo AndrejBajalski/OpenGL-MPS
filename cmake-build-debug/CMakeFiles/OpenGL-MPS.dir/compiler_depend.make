@@ -487,7 +487,11 @@ CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj: C:/Users/admin/OneDrive/Dokument
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stdlib.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/vadefs.h \
-  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle.hpp
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle.hpp \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h
+
+CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/ParticleType.cpp \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h
 
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Shader.cpp \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/adxintrin.h \
@@ -1294,7 +1298,9 @@ CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj: C:/Users/admin/OneDrive/Do
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Camera.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/OpenGLPrj.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle.hpp \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/emps.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/KHR/khrplatform.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/glad/glad.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glfw/include/GLFW/glfw3.h \
@@ -1496,6 +1502,82 @@ CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj: C:/Users/admin/OneDrive/Do
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vec4.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vector_relational.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb/stb_image.h
+
+CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/emps.cpp \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward/binders.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/alloc_traits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/allocator.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/concept_check.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/cpp_type_traits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/exception.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/exception_defines.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/functexcept.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/functional_hash.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/hash_bytes.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/invoke.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/memoryfwd.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/move.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/new_allocator.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/predefined_ops.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/ptr_traits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/range_access.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/refwrap.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/requires_hosted.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/std_abs.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_algobase.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_bvector.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_construct.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_function.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator_base_funcs.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator_base_types.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_pair.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_uninitialized.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_vector.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/utility.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/vector.tcc \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cmath \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstdlib \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/debug/assertions.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/debug/debug.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ext/alloc_traits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ext/numeric_traits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ext/type_traits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/initializer_list \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/math.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/new \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/stdlib.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/type_traits \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/vector \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/c++allocator.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/limits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/mm_malloc.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/syslimits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/_mingw.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/_mingw_mac.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/_mingw_off_t.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/_mingw_secapi.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/corecrt.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/crtdefs.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/errno.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/limits.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/malloc.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/math.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stdio.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stdlib.h \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/swprintf.inl \
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/vadefs.h \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle.hpp \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/emps.hpp
 
 CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/src/glad.c \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/adxintrin.h \
@@ -1940,9 +2022,9 @@ C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stralign.h:
 
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_quat.inl:
-
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/quaternion_common.inl:
+
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_quat.inl:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_construct.h:
 
@@ -2364,9 +2446,11 @@ C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_float3x3.hpp:
 
-C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/winreg.h:
-
 C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/reason.h:
+
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/ParticleType.cpp:
+
+C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/winreg.h:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/sal.h:
 
@@ -2486,9 +2570,11 @@ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/func_trigonom
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/setup.hpp:
 
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/matrix_transform.inl:
-
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_half.hpp:
+
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h:
+
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/matrix_transform.inl:
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_mat2x2.inl:
 
@@ -2522,13 +2608,13 @@ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec2.inl
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec3.hpp:
 
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/quaternion_common_simd.inl:
+C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h:
 
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec3.inl:
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/quaternion_common_simd.inl:
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_quat_simd.inl:
 
-C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h:
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec3.inl:
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_vec4.hpp:
 
@@ -2754,11 +2840,13 @@ C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp:
 
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/emps.hpp:
+
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_float.hpp:
 
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_quat.hpp:
-
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/quaternion_common.hpp:
+
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_quat.hpp:
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/quaternion_double_precision.hpp:
 
@@ -2799,5 +2887,7 @@ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/quaternion.inl:
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/quaternion_simd.inl:
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/type_ptr.hpp:
+
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/emps.cpp:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/inttypes.h:

@@ -4,6 +4,7 @@
 #include<math.h>
 #include <vector>
 #include <Particle.hpp>
+#include <ParticleType.h>
 #define PI 3.14159265358979323846
 
 int Particle::sectorCount;
@@ -23,7 +24,7 @@ Particle::Particle(int sectorCount, int stackCount, float radius, double particl
     Particle::stackCount = stackCount;
     Particle::radius = radius;
     Particle::particleDistance = particleDistance;
-    Particle::type = GHOST;
+    Particle::type = ParticleType::GHOST;
     generateParticleAsSphere();
 }
 
@@ -94,7 +95,7 @@ Particle Particle::generateParticleAsSphere() {
     return *this;
 }
 
-void Particle::setParticleType(PARTICLE_TYPE type) {
+void Particle::setParticleType(enum ParticleType type) {
     this->type = type;
 }
 void Particle::setRadius(double radius) {

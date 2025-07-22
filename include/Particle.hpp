@@ -6,15 +6,16 @@
 #define PARTICLE_H
 
 #include <vector>
+#include "ParticleType.h"
 
-enum PARTICLE_TYPE { GHOST=-1, GHOST_OR_DUMMY=-1, FLUID=0, WALL=2, DUMMY_WALL=3 };
+// enum PARTICLE_TYPE { GHOST=-1, GHOST_OR_DUMMY=-1, FLUID=0, WALL=2, DUMMY_WALL=3 };
 
 class Particle {
 public:
     static std::vector<float> sphere_vertices;
     static std::vector<int> indices;
     static std::vector<int> lineIndices;
-    PARTICLE_TYPE type = FLUID;
+    ParticleType type = ParticleType::FLUID;
     static float radius;
     static double particleDistance;
     static int sectorCount, stackCount;
@@ -37,7 +38,7 @@ public:
     Particle();
     Particle(int sectorCount, int stackCount, float radius, double particleDistance);
     Particle generateParticleAsSphere();
-    void setParticleType(PARTICLE_TYPE type);
+    void setParticleType(enum ParticleType type);
     static void setRadius(double radius);
     static void setSectorAndStackCount(int sectorCount, int stackCount);
     static void setParticleDistance(double particleDistance);

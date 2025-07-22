@@ -1,15 +1,14 @@
 #include <OpenGLPrj.hpp>
-
 #include <GLFW/glfw3.h>
-
 #include <Camera.hpp>
 #include <Shader.hpp>
-
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include "emps.hpp"
+#include <ParticleType.h>
 #include "Particle.hpp"
+
 #define PI 3.14159265359f
 #define PARTICLE_DISTANCE    0.1
 
@@ -20,6 +19,8 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess);
+glm::vec3 getColorForParticleType(enum ParticleType type);
+
 // settings
 const unsigned int SCR_WIDTH = 1200;
 const unsigned int SCR_HEIGHT = 1000;
@@ -96,7 +97,8 @@ int main() {
   int sectorCount=16, stackCount=16;
   float radius = 0.01f;
   Particle particle = Particle(sectorCount, stackCount, radius, PARTICLE_DISTANCE);
-  particle.setParticleType(FLUID);
+  particle.setParticleType(ParticleType::FLUID);
+
   // first, configure the cube's VAO (and VBO)
   unsigned int VBO, sphereVBO, sphereVAO, EBO;
 
@@ -150,9 +152,10 @@ int main() {
     lightingShader.setVec3("viewPos", camera.Position);
     lightingShader.setFloat("alpha", 0.4f);
     float shininess = 10.0f;
-    glm::vec3 diffuse = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 ambient = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 specular = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 color = getColorForParticleType(particle.type);
+    glm::vec3 diffuse = color;
+    glm::vec3 ambient = color;
+    glm::vec3 specular = color;
     illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
     lightingShader.setMat4("projection", projection);
     lightingShader.setMat4("view", view);
@@ -165,7 +168,6 @@ int main() {
       glBindVertexArray(sphereVAO);
       glDrawElements(GL_TRIANGLES, (unsigned int) Particle::indices.size(), GL_UNSIGNED_INT, Particle::indices.data());
     }
-    // glDrawArrays(GL_TRIANGLE_STRIP, 0, sectorCount*stackCount);
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
     // etc.)
     // -------------------------------------------------------------------------------
@@ -201,7 +203,15 @@ void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 am
   // specular lighting doesn't have full effect on this object's material
   lightingShader.setFloat("material.shininess", shininess);
 }
-
+glm::vec3 getColorForParticleType(ParticleType type) {
+  switch (type) {
+    case ParticleType::GHOST: return glm::vec3(0.1f);
+    case ParticleType::FLUID: return glm::vec3(0.0f, 0.0f, 1.0f);
+    case ParticleType::WALL: return glm::vec3(1.0f, 1.0f, 0.0f);
+    default: return glm::vec3(0.0f);
+  }
+  return glm::vec3(0.0f, 0.0f, 1.0f);
+}
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);

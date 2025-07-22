@@ -98,11 +98,26 @@ CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Particle.cpp -o CMakeFiles\OpenGL-MPS.dir\src\Particle.cpp.s
 
+CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
+CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
+CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/ParticleType.cpp
+CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\ParticleType.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\ParticleType.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\ParticleType.cpp
+
+CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\ParticleType.cpp > CMakeFiles\OpenGL-MPS.dir\src\ParticleType.cpp.i
+
+CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\ParticleType.cpp -o CMakeFiles\OpenGL-MPS.dir\src\ParticleType.cpp.s
+
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Shader.cpp
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\Shader.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\Shader.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Shader.cpp
 
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.i: cmake_force
@@ -117,7 +132,7 @@ CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj: CMakeFiles/OpenGL-MPS.dir/
 CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
 CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/SimulationMain.cpp
 CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\SimulationMain.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\SimulationMain.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\SimulationMain.cpp
 
 CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.i: cmake_force
@@ -128,11 +143,26 @@ CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\SimulationMain.cpp -o CMakeFiles\OpenGL-MPS.dir\src\SimulationMain.cpp.s
 
+CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
+CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
+CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/emps.cpp
+CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\emps.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\emps.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\emps.cpp
+
+CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\emps.cpp > CMakeFiles\OpenGL-MPS.dir\src\emps.cpp.i
+
+CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\emps.cpp -o CMakeFiles\OpenGL-MPS.dir\src\emps.cpp.s
+
 CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
 CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj: CMakeFiles/OpenGL-MPS.dir/includes_C.rsp
 CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/src/glad.c
 CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj -MF CMakeFiles\OpenGL-MPS.dir\vendor\glad\src\glad.c.obj.d -o CMakeFiles\OpenGL-MPS.dir\vendor\glad\src\glad.c.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\vendor\glad\src\glad.c
 
 CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.i: cmake_force
@@ -147,8 +177,10 @@ CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.s: cmake_force
 OpenGL__MPS_OBJECTS = \
 "CMakeFiles/OpenGL-MPS.dir/src/Camera.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj" \
+"CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj" \
+"CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj"
 
 # External object files for target OpenGL-MPS
@@ -156,15 +188,17 @@ OpenGL__MPS_EXTERNAL_OBJECTS =
 
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/Camera.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj
+OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj
+OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/build.make
 OpenGL-MPS/bin/OpenGL-MPS.exe: vendor/glfw/src/libglfw3.a
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/linkLibs.rsp
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/objects1.rsp
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable OpenGL-MPS\bin\OpenGL-MPS.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable OpenGL-MPS\bin\OpenGL-MPS.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\OpenGL-MPS.dir\link.txt --verbose=$(VERBOSE)
 	"C:\Program Files\JetBrains\CLion 2024.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/res C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/cmake-build-debug/OpenGL-MPS/bin/../res
 

@@ -62,7 +62,10 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${VENDORS_SOURCES}
         src/Particle.cpp
         include/Particle.hpp
-        src/SimulationMain.cpp)
+        src/SimulationMain.cpp
+        include/emps.hpp
+        src/ParticleType.cpp
+        include/ParticleType.h)
 target_link_libraries(${PROJECT_NAME}
 		      glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}

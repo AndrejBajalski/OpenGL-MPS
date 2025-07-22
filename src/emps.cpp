@@ -7,95 +7,9 @@
     ISBN: 9780128127797
 
 =======================================================================*/
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
+#include <emps.hpp>
 
-/* for two-dimensional simulation */
-// #define DIM                  2
-// #define PARTICLE_DISTANCE    0.025
-// #define DT                   0.001
-// #define OUTPUT_INTERVAL      20
-
-/* for three-dimensional simulation */
-
-#define DIM                  3
-#define PARTICLE_DISTANCE    0.042
-#define DT                   0.002
-#define OUTPUT_INTERVAL      10
-
-
-#define ARRAY_SIZE           5000
-#define FINISH_TIME          1.5
-#define KINEMATIC_VISCOSITY  (1.0E-6)
-#define SPEED_OF_SOUND       10.0
-#define FLUID_DENSITY        1000.0
-#define GRAVITY_X  0.0
-#define GRAVITY_Y  -9.8
-#define GRAVITY_Z  0.0
-#define RADIUS_FOR_NUMBER_DENSITY  (2.1*PARTICLE_DISTANCE)
-#define RADIUS_FOR_GRADIENT        (2.1*PARTICLE_DISTANCE)
-#define RADIUS_FOR_LAPLACIAN       (2.1*PARTICLE_DISTANCE)
-#define COLLISION_DISTANCE         (0.5*PARTICLE_DISTANCE)
-#define EPS                        (0.01 * PARTICLE_DISTANCE)
-#define COEFFICIENT_OF_RESTITUTION 0.2
-#define ON              1
-#define OFF             0
-#define GHOST  -1
-#define FLUID   0
-#define WALL    2
-#define DUMMY_WALL  3
-#define GHOST_OR_DUMMY  -1
-
-
-void initializeParticlePositionAndVelocity_for2dim( void );
-void initializeParticlePositionAndVelocity_for3dim( void );
-void calculateConstantParameter( void );
-void calculateNZeroAndLambda( void );
-double weight( double distance, double re );
-void mainLoopOfSimulation( void );
-void calculateGravity( void );
-void calculateViscosity( void );
-void moveParticle( void );
-void collision( void );
-void calculatePressure_forExplicitMPS( void );
-void calculateParticleNumberDensity( void );
-void calculatePressureGradient_forExplicitMPS( void );
-void moveParticleUsingPressureGradient( void );
-void writeData_inProfFormat( void );
-void writeData_inVtuFormat( void );
-static double AccelerationX[ARRAY_SIZE];
-static double AccelerationY[ARRAY_SIZE];
-static double AccelerationZ[ARRAY_SIZE];
-static int    ParticleType[ARRAY_SIZE];
-static double PositionX[ARRAY_SIZE];
-static double PositionY[ARRAY_SIZE];
-static double PositionZ[ARRAY_SIZE];
-static double VelocityX[ARRAY_SIZE];
-static double VelocityY[ARRAY_SIZE];
-static double VelocityZ[ARRAY_SIZE];
-static double Pressure[ARRAY_SIZE];
-static double ParticleNumberDensity[ARRAY_SIZE];
-static int    BoundaryCondition[ARRAY_SIZE];
-static double SourceTerm[ARRAY_SIZE];
-static int    FlagForCheckingBoundaryCondition[ARRAY_SIZE];
-static double CoefficientMatrix[ARRAY_SIZE * ARRAY_SIZE];
-static double MinimumPressure[ARRAY_SIZE];
-int    FileNumber;
-double Time;
-int    NumberOfParticles;
-double Re_forParticleNumberDensity,Re2_forParticleNumberDensity;
-double Re_forGradient,     Re2_forGradient;
-double Re_forLaplacian,    Re2_forLaplacian;
-double N0_forParticleNumberDensity;
-double N0_forGradient;
-double N0_forLaplacian;
-double Lambda;
-double collisionDistance,collisionDistance2;
-double FluidDensity;
-
-
-int main( void ) {
+int simulate( void ) {
 
   printf("\n*** START EMPS-SIMULATION ***\n");
   if( DIM == 2 ){
@@ -129,17 +43,17 @@ void initializeParticlePositionAndVelocity_for2dim( void ){
       flagOfParticleGeneration = OFF;
 
       if( ((x>-4.0*PARTICLE_DISTANCE+EPS)&&(x<=1.00+4.0*PARTICLE_DISTANCE+EPS))&&( (y>0.0-4.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)) ){  /* dummy wall region */
-	ParticleType[i]=DUMMY_WALL;
+	particleType[i]= ParticleType::DUMMY_WALL;
 	flagOfParticleGeneration = ON;
       }
 
       if( ((x>-2.0*PARTICLE_DISTANCE+EPS)&&(x<=1.00+2.0*PARTICLE_DISTANCE+EPS))&&( (y>0.0-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)) ){ /* wall region */
-	ParticleType[i]=WALL;
+	particleType[i]=ParticleType::WALL;
 	flagOfParticleGeneration = ON;
       }
 
       if( ((x>-4.0*PARTICLE_DISTANCE+EPS)&&(x<=1.00+4.0*PARTICLE_DISTANCE+EPS))&&( (y>0.6-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)) ){  /* wall region */
-	ParticleType[i]=WALL;
+	particleType[i]=ParticleType::WALL;
 	flagOfParticleGeneration = ON;
       }
 
@@ -148,7 +62,7 @@ void initializeParticlePositionAndVelocity_for2dim( void ){
       }
 
       if( ((x>0.0+EPS)&&(x<=0.25+EPS)) &&((y>0.0+EPS)&&(y<=0.50+EPS)) ){  /* fluid region */
-	ParticleType[i]=FLUID;
+	particleType[i]=ParticleType::FLUID;
 	flagOfParticleGeneration = ON;
       }
 
@@ -163,8 +77,8 @@ void initializeParticlePositionAndVelocity_for2dim( void ){
 }
 
 
-void initializeParticlePositionAndVelocity_for3dim( void ){
-  Particle particle = Particle(8, 8, 0.005, PARTICLE_DISTANCE);
+static void initializeParticlePositionAndVelocity_for3dim( void ){
+  Particle particle = Particle(16, 16, 0.01f, PARTICLE_DISTANCE);
   int iX, iY, iZ;
   int nX, nY, nZ;
   double x, y, z;
@@ -181,20 +95,20 @@ void initializeParticlePositionAndVelocity_for3dim( void ){
         y = PARTICLE_DISTANCE * iY;
         z = PARTICLE_DISTANCE * iZ;
         flagOfParticleGeneration = OFF;
-        int type = 999;
+        ParticleType type = ParticleType::GHOST;
 
         /* dummy wall region */
         if( (((x>-0.9)&&(x<=0.9))&&( (y>-0.7&&y<=0.7)))&&( (z>-0.5)&&(z<=0.5 ))){
-          type = DUMMY_WALL;
+          type = ParticleType::WALL;
           flagOfParticleGeneration = OFF;
         }
         if( (((x>-0.8&&x<-0.6)||(x>0.6&&x<0.8))&&( (y>-0.6 )&&(y<=0.6)))&&( (z>-0.5)&&(z<=0.5))){
-          type = WALL;
+          type = ParticleType::WALL;
           flagOfParticleGeneration = ON;
         }
         /* wall region */
         // if( (((x>-16.0*PARTICLE_DISTANCE+EPS)&&(x<=16*PARTICLE_DISTANCE+EPS))&&( (y>0.6-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-4.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+4.0*PARTICLE_DISTANCE+EPS ))){
-        //   particle.setParticleType(WALL);
+        //   particle.setParticleType(ParticleType::WALL);
         //   flagOfParticleGeneration = ON;
         // }
         /* empty region */
@@ -203,14 +117,14 @@ void initializeParticlePositionAndVelocity_for3dim( void ){
         // }
         /* fluid region */
         if( (((x>-0.6)&&(x<=0.6))&&( (y>-0.5)&&(y<0.5) ))&&( (z>0.0)&&(z<=0.3))){
-          type = FLUID;
+          type = ParticleType::FLUID;
           flagOfParticleGeneration = ON;
         }
         if( flagOfParticleGeneration == ON ){
-          particle.setParticleType(static_cast<PARTICLE_TYPE>(type));
+          particle.setParticleType(type);
           particle.setPosition(x, y, z);
           particle.setVelocity(0.0, 0.0, 0.0);
-          particles.push_back(particle);
+          particles[i] = particle;
           i++;
         }
       }
@@ -319,7 +233,7 @@ void calculateGravity( void ){
   int i;
 
   for(i=0;i<NumberOfParticles;i++){
-    if(ParticleType[i] == FLUID){
+    if(particleType[i] == ParticleType::FLUID){
       AccelerationX[i]=GRAVITY_X;
       AccelerationY[i]=GRAVITY_Y;
       AccelerationZ[i]=GRAVITY_Z;
@@ -342,11 +256,11 @@ void calculateViscosity( void ){
 
   a = (KINEMATIC_VISCOSITY)*(2.0*DIM)/(N0_forLaplacian*Lambda);
   for(i=0;i<NumberOfParticles;i++){
-    if(ParticleType[i] != FLUID) continue;
+    if(particleType[i] != ParticleType::FLUID) continue;
     viscosityTermX = 0.0;  viscosityTermY = 0.0;  viscosityTermZ = 0.0;
 
     for(j=0;j<NumberOfParticles;j++){
-      if( (j==i) || (ParticleType[j]==GHOST) ) continue;
+      if( (j==i) || (particleType[j]==ParticleType::GHOST) ) continue;
       xij = PositionX[j] - PositionX[i];
       yij = PositionY[j] - PositionY[i];
       zij = PositionZ[j] - PositionZ[i];
@@ -373,7 +287,7 @@ void moveParticle( void ){
   int i;
 
   for(i=0;i<NumberOfParticles;i++){
-    if(ParticleType[i] == FLUID){
+    if(particleType[i] == ParticleType::FLUID){
       VelocityX[i] += AccelerationX[i]*DT;
       VelocityY[i] += AccelerationY[i]*DT;
       VelocityZ[i] += AccelerationZ[i]*DT;
@@ -407,13 +321,13 @@ void collision( void ){
     VelocityAfterCollisionZ[i] = VelocityZ[i];
   }
   for(i=0;i<NumberOfParticles;i++){
-    if(ParticleType[i] == FLUID){
+    if(particleType[i] == ParticleType::FLUID){
       mi = FluidDensity;
       velocity_ix = VelocityX[i];
       velocity_iy = VelocityY[i];
       velocity_iz = VelocityZ[i];
       for(j=0;j<NumberOfParticles;j++){
-	if( (j==i) || (ParticleType[j]==GHOST) ) continue;
+	if( (j==i) || (particleType[j]==ParticleType::GHOST) ) continue;
 	xij = PositionX[j] - PositionX[i];
 	yij = PositionY[j] - PositionY[i];
 	zij = PositionZ[j] - PositionZ[i];
@@ -441,7 +355,7 @@ void collision( void ){
     }
   }
   for(i=0;i<NumberOfParticles;i++){
-    if(ParticleType[i] == FLUID){
+    if(particleType[i] == ParticleType::FLUID){
       PositionX[i] += (VelocityAfterCollisionX[i]-VelocityX[i])*DT;
       PositionY[i] += (VelocityAfterCollisionY[i]-VelocityY[i])*DT;
       PositionZ[i] += (VelocityAfterCollisionZ[i]-VelocityZ[i])*DT;
@@ -468,7 +382,7 @@ void calculatePressure_forExplicitMPS( void ){
   n0 = N0_forParticleNumberDensity;
 
   for(iParticle=0; iParticle < NumberOfParticles; iParticle++){
-    if ( (ParticleType[iParticle]==GHOST) || (ParticleType[iParticle] == DUMMY_WALL) ){
+    if ( (particleType[iParticle]==ParticleType::GHOST) || (particleType[iParticle] == ParticleType::DUMMY_WALL) ){
       Pressure[iParticle] = 0.0;
     }else{
       ni  = ParticleNumberDensity[iParticle];
@@ -491,9 +405,9 @@ void calculateParticleNumberDensity( void ){
 
   for(i=0;i<NumberOfParticles;i++){
     ParticleNumberDensity[i] = 0.0;
-    if(ParticleType[i] == GHOST) continue;
+    if(particleType[i] == ParticleType::GHOST) continue;
     for(j=0;j<NumberOfParticles;j++){
-      if( (j==i) || (ParticleType[j]==GHOST) ) continue;
+      if( (j==i) || (particleType[j]==ParticleType::GHOST) ) continue;
       xij = PositionX[j] - PositionX[i];
       yij = PositionY[j] - PositionY[i];
       zij = PositionZ[j] - PositionZ[i];
@@ -516,12 +430,12 @@ void calculatePressureGradient_forExplicitMPS( void ){
 
   a =DIM/N0_forGradient;
   for(i=0;i<NumberOfParticles;i++){
-    if(ParticleType[i] != FLUID) continue;
+    if(particleType[i] != ParticleType::FLUID) continue;
     gradientX = 0.0;  gradientY = 0.0;  gradientZ = 0.0;
     for(j=0;j<NumberOfParticles;j++){
       if( j==i ) continue;
-      if( ParticleType[j]==GHOST ) continue;
-      if( ParticleType[j]==DUMMY_WALL ) continue;
+      if( particleType[j]==ParticleType::GHOST ) continue;
+      if( particleType[j]==ParticleType::DUMMY_WALL ) continue;
       xij = PositionX[j] - PositionX[i];
       yij = PositionY[j] - PositionY[i];
       zij = PositionZ[j] - PositionZ[i];
@@ -549,7 +463,7 @@ void moveParticleUsingPressureGradient( void ){
   int i;
 
   for(i=0;i<NumberOfParticles;i++){
-    if(ParticleType[i] == FLUID){
+    if(particleType[i] == ParticleType::FLUID){
       VelocityX[i] +=AccelerationX[i]*DT;
       VelocityY[i] +=AccelerationY[i]*DT;
       VelocityZ[i] +=AccelerationZ[i]*DT;
@@ -576,7 +490,7 @@ void writeData_inProfFormat( void ){
   fprintf(fp,"%d\n",NumberOfParticles);
   for(i=0;i<NumberOfParticles;i++) {
     fprintf(fp,"%d %lf %lf %lf %lf %lf %lf %lf %lf\n"
-	    ,ParticleType[i], PositionX[i], PositionY[i], PositionZ[i]
+	    ,(int)particleType[i], PositionX[i], PositionY[i], PositionZ[i]
 	    ,VelocityX[i], VelocityY[i], VelocityZ[i], Pressure[i], ParticleNumberDensity[i]);
   }
   fclose(fp);
@@ -606,7 +520,7 @@ void writeData_inVtuFormat( void ){
   fprintf(fp,"<PointData>\n");
   fprintf(fp,"<DataArray NumberOfComponents='1' type='Int32' Name='ParticleType' format='ascii'>\n");
   for(i=0;i<NumberOfParticles;i++){
-    fprintf(fp,"%d\n",ParticleType[i]);
+    fprintf(fp,"%d\n",(int)particleType[i]);
   }
   fprintf(fp,"</DataArray>\n");
   fprintf(fp,"<DataArray NumberOfComponents='1' type='Float32' Name='Velocity' format='ascii'>\n");
