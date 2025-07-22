@@ -8,18 +8,22 @@
 
 int Particle::sectorCount;
 int Particle::stackCount;
-double Particle::radius;
+float Particle::radius;
 double Particle::particleDistance;
+std::vector<float> Particle::sphere_vertices;
+std::vector<int> Particle::lineIndices;
+std::vector<int> Particle::indices;
 
 Particle::Particle() {
     generateParticleAsSphere();
 }
 
-Particle::Particle(int sectorCount, int stackCount, double radius, double particleDistance) {
+Particle::Particle(int sectorCount, int stackCount, float radius, double particleDistance) {
     Particle::sectorCount = sectorCount;
     Particle::stackCount = stackCount;
     Particle::radius = radius;
     Particle::particleDistance = particleDistance;
+    Particle::type = GHOST;
     generateParticleAsSphere();
 }
 

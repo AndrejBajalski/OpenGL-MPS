@@ -11,11 +11,11 @@ enum PARTICLE_TYPE { GHOST=-1, GHOST_OR_DUMMY=-1, FLUID=0, WALL=2, DUMMY_WALL=3 
 
 class Particle {
 public:
-    std::vector<double> sphere_vertices;
-    std::vector<int> indices;
-    std::vector<int> lineIndices;
+    static std::vector<float> sphere_vertices;
+    static std::vector<int> indices;
+    static std::vector<int> lineIndices;
     PARTICLE_TYPE type = FLUID;
-    static double radius;
+    static float radius;
     static double particleDistance;
     static int sectorCount, stackCount;
     double AccelerationX;
@@ -35,7 +35,7 @@ public:
     double MinimumPressure;
 
     Particle();
-    Particle(int sectorCount, int stackCount, double radius, double particleDistance);
+    Particle(int sectorCount, int stackCount, float radius, double particleDistance);
     Particle generateParticleAsSphere();
     void setParticleType(PARTICLE_TYPE type);
     static void setRadius(double radius);

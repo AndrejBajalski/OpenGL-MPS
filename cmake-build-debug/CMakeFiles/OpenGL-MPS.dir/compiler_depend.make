@@ -1293,6 +1293,7 @@ CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj: C:/Users/admin/OneDrive/Do
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/wow64apiset.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Camera.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/OpenGLPrj.hpp \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/KHR/khrplatform.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/glad/glad.h \
