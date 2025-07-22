@@ -17,8 +17,8 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess);
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1200;
+const unsigned int SCR_HEIGHT = 1000;
 // camera
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 static float lastX = SCR_WIDTH / 2.0f;
@@ -198,7 +198,7 @@ int main() {
 
     // render
     // ------
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // light properties
     glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -221,7 +221,7 @@ int main() {
     glm::mat4 model = glm::mat4(1.0f);
     for (int i=0; i<10; i++) {
       float offset = i/10.0f;
-      model = glm::translate(model, glm::vec3(0.0f, offset, 0.0f));
+      model = glm::translate(model, glm::vec3(0.0f, offset, offset));
       lightingShader.setMat4("model", model);
       //render the sphere
       glBindVertexArray(sphereVAO);
