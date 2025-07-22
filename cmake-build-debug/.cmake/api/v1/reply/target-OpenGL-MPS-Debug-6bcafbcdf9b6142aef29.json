@@ -36,7 +36,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 69,
+				"line" : 76,
 				"parent" : 0
 			},
 			{
@@ -252,13 +252,6 @@
 			[
 				20
 			]
-		},
-		{
-			"name" : "Header Files",
-			"sourceIndexes" : 
-			[
-				21
-			]
 		}
 	],
 	"sources" : 
@@ -374,11 +367,6 @@
 			"compileGroupIndex" : 1,
 			"path" : "vendor/glad/src/glad.c",
 			"sourceGroupIndex" : 5
-		},
-		{
-			"backtrace" : 1,
-			"path" : "include/ParticleType.h",
-			"sourceGroupIndex" : 6
 		}
 	],
 	"type" : "EXECUTABLE"

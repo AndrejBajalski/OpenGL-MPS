@@ -60,12 +60,19 @@ add_definitions(-DGLFW_INCLUDE_NONE
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${PROJECT_SHADERS} ${PROJECT_TEXTURES} ${PROJECT_CONFIGS}
                                ${VENDORS_SOURCES}
-        src/Particle.cpp
-        include/Particle.hpp
-        src/SimulationMain.cpp
         include/emps.hpp
-        src/ParticleType.cpp
-        include/ParticleType.h)
+        src/emps.cpp
+)
+#add_executable(OpenGL-MPS-2
+#        res/shaders/material.frag
+#        res/shaders/material.vert
+#        src/Particle.cpp
+#        src/emps.cpp
+#        src/Shader.cpp
+#        src/Camera.cpp
+#        src/ParticleType.cpp
+#        src/SimulationMain.cpp
+#)
 target_link_libraries(${PROJECT_NAME}
 		      glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}

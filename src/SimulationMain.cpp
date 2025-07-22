@@ -10,7 +10,6 @@
 #include "Particle.hpp"
 
 #define PI 3.14159265359f
-#define PARTICLE_DISTANCE    0.1
 
 const std::string program_name = ("Colour");
 
@@ -94,17 +93,16 @@ int main() {
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
   //Generate sphere vertices
-  int sectorCount=16, stackCount=16;
-  float radius = 0.01f;
-  Particle particle = Particle(sectorCount, stackCount, radius, PARTICLE_DISTANCE);
-  particle.setParticleType(ParticleType::FLUID);
-
+  // Particle particle = Particle(sectorCount, stackCount, radius, PARTICLE_DISTANCE);
+  // particle.setParticleType(ParticleType::FLUID);
+  EmpsSingleton* empsPtr = EmpsSingleton::getInstance();
+  empsPtr->initializeParticlePositionAndVelocity_for3dim();
+  int np = empsPtr->NumberOfParticles;
+  std::cout << "Number of particles: "<< np << std::endl;
   // first, configure the cube's VAO (and VBO)
   unsigned int VBO, sphereVBO, sphereVAO, EBO;
-
   // second, configure the light's VAO (VBO stays the same; the vertices are the
   // same for the light object which is also a 3D cube)
-
   //sphere VAO
   glGenBuffers(1, &sphereVBO);
   glGenBuffers(1, &EBO);
@@ -152,17 +150,20 @@ int main() {
     lightingShader.setVec3("viewPos", camera.Position);
     lightingShader.setFloat("alpha", 0.4f);
     float shininess = 10.0f;
-    glm::vec3 color = getColorForParticleType(particle.type);
-    glm::vec3 diffuse = color;
-    glm::vec3 ambient = color;
-    glm::vec3 specular = color;
-    illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
     lightingShader.setMat4("projection", projection);
     lightingShader.setMat4("view", view);
-    glm::mat4 model = glm::mat4(1.0f);
-    for (int i=0; i<10; i++) {
-      float offset = i/10.0f;
-      model = glm::translate(model, glm::vec3(0.0f, offset, offset));
+    for (int i=0; i<np/10; i++) {
+      Particle *particle = &empsPtr->particles[i];
+      glm::vec3 color = getColorForParticleType(particle->type);
+      glm::vec3 diffuse = color;
+      glm::vec3 ambient = color;
+      glm::vec3 specular = color;
+      illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
+      double x = particle->PositionX;
+      double y = particle->PositionY;
+      double z = particle->PositionZ;
+      glm::mat4 model = glm::mat4(1.0f);
+      model = glm::translate(model, glm::vec3(x, y, z));
       lightingShader.setMat4("model", model);
       //render the sphere
       glBindVertexArray(sphereVAO);
