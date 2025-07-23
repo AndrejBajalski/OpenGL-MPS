@@ -18,6 +18,8 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess);
+void generateInstanceBuffers(int n, unsigned int VAO);
+void cleanup();
 glm::vec3 getColorForParticleType(enum ParticleType type);
 
 // settings
@@ -32,6 +34,7 @@ static bool firstMouse = true;
 static float deltaTime = 0.0f;
 // lighting
 static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
+glm::mat4 *instanceTransformations;
 
 int main() {
   // glfw: initialize and configure
@@ -78,7 +81,6 @@ int main() {
   // build and compile our shader program
   // ------------------------------------
   std::string shader_location("../res/shaders/");
-
   std::string material_shader("material");
   std::string lamp_shader("lamp");
 
@@ -99,6 +101,7 @@ int main() {
   empsPtr->initializeParticlePositionAndVelocity_for3dim();
   int np = empsPtr->NumberOfParticles;
   std::cout << "Number of particles: "<< np << std::endl;
+  instanceTransformations = new glm::mat4[np];
   // first, configure the cube's VAO (and VBO)
   unsigned int VBO, sphereVBO, sphereVAO, EBO;
   // second, configure the light's VAO (VBO stays the same; the vertices are the
@@ -110,23 +113,19 @@ int main() {
   //VBO
   glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * Particle::sphere_vertices.size(), Particle::sphere_vertices.data(), GL_STATIC_DRAW);
-  //EBO
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, Particle::indices.size() * sizeof(int), Particle::indices.data(), GL_STATIC_DRAW);
   //VAO
   glBindVertexArray(sphereVAO);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(double),
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                         reinterpret_cast<void *>(0));
   glEnableVertexAttribArray(0);
   //normal attribute
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(double),
-                        reinterpret_cast<void *>(3 * sizeof(double)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                        reinterpret_cast<void *>(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
 
-  // render loop
-  // -----------
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   lightingShader.setFloat("material.shininess", 10.0f);
   glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
   glm::mat4 view = camera.GetViewMatrix();
@@ -137,55 +136,57 @@ int main() {
   lightingShader.setFloat("alpha", 0.4f);
   lightingShader.setMat4("projection", projection);
   lightingShader.setMat4("view", view);
+
+//fill instanceBuffer with model transformation matrices
+  for (int i=0; i<np; i++) {
+    Particle *particle = &empsPtr->particles[i];
+    glm::vec3 color = getColorForParticleType(particle->type);
+    double x = particle->PositionX;
+    double y = particle->PositionY;
+    double z = particle->PositionZ;
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(x, y, z));
+    instanceTransformations[i] = model;
+  }
+//create necessary buffers for instanced rendering
+  generateInstanceBuffers(np, sphereVAO);
+//EBO
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, Particle::indices.size() * sizeof(int), Particle::indices.data(), GL_STATIC_DRAW);
+
+//game loop
+//----------------------------------------------------------------------------------------------------
   while (!glfwWindowShouldClose(window)) {
     // per-frame time logic
     // --------------------
-    float currentFrame = static_cast<float>(glfwGetTime());
+    const auto currentFrame = static_cast<float>(glfwGetTime());
     lightPos.x = glm::sin(currentFrame)*3;
-    // input
-    // -----
     processInput(window);
-
-    // render
-    // ------
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // light properties
-    for (int i=0; i<np/10; i++) {
-      Particle *particle = &empsPtr->particles[i];
-      glm::vec3 color = getColorForParticleType(particle->type);
-      double x = particle->PositionX;
-      double y = particle->PositionY;
-      double z = particle->PositionZ;
-      glm::mat4 model = glm::mat4(1.0f);
-      model = glm::translate(model, glm::vec3(x, y, z));
-      lightingShader.setMat4("model", model);
-      lightingShader.setVec3("color", color);
-      //render the sphere
-      glBindVertexArray(sphereVAO);
-      glDrawElements(GL_TRIANGLES, (unsigned int) Particle::indices.size(), GL_UNSIGNED_INT, Particle::indices.data());
-    }
-    // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
-    // etc.)
-    // -------------------------------------------------------------------------------
+    glBindVertexArray(sphereVAO);
+    glDrawElementsInstanced(GL_TRIANGLES, (unsigned int) Particle::indices.size(), GL_UNSIGNED_INT, 0, np);
+    glBindVertexArray(0);
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
-
   // optional: de-allocate all resources once they've outlived their purpose:
   // ------------------------------------------------------------------------
   glDeleteVertexArrays(1, &sphereVAO);
   glDeleteBuffers(1, &VBO);
-
   // glfw: terminate, clearing all previously allocated GLFW resources.
   // ------------------------------------------------------------------
   glfwTerminate();
   return 0;
 }
+//end of game loop
+//----------------------------------------------------------------------------------------------------------
 
-// process all input: query GLFW whether relevant keys are pressed/released this
-// frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
+
+
+//method definitions
+//----------------------------------------------------------------------------------------------------------
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess) {
   // material properties
   // lightingShader.setVec3("material.ambient", ambient);
@@ -250,4 +251,31 @@ void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
   camera.ProcessMouseScroll(static_cast<float>(yoffset));
+}
+void generateInstanceBuffers(int n, unsigned int VAO) {
+  //instanceMatrix VBO
+  unsigned int instanceVBO;
+  glGenBuffers(1, &instanceVBO);
+  glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * n, &instanceTransformations[0], GL_STATIC_DRAW);
+  //instanceMatrix VAO
+  glBindVertexArray(VAO);
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(0));
+  glEnableVertexAttribArray(3);
+  glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4)));
+  glEnableVertexAttribArray(4);
+  glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4) * 2));
+  glEnableVertexAttribArray(5);
+  glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4) * 3));
+  //attribute divisor
+  glVertexAttribDivisor(2, 1);
+  glVertexAttribDivisor(3, 1);
+  glVertexAttribDivisor(4, 1);
+  glVertexAttribDivisor(5, 1);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void cleanup() {
+  delete[] instanceTransformations;
 }
