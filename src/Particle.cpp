@@ -13,7 +13,7 @@ float Particle::radius;
 double Particle::particleDistance;
 std::vector<float> Particle::sphere_vertices;
 std::vector<int> Particle::lineIndices;
-std::vector<int> Particle::indices;
+std::vector<unsigned int> Particle::indices;
 
 Particle::Particle() {
     generateParticleAsSphere();

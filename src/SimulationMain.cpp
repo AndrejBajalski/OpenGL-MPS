@@ -35,6 +35,7 @@ static float deltaTime = 0.0f;
 // lighting
 static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 glm::mat4 *instanceTransformations;
+glm::vec3 *instanceColors;
 
 int main() {
   // glfw: initialize and configure
@@ -102,14 +103,18 @@ int main() {
   int np = empsPtr->NumberOfParticles;
   std::cout << "Number of particles: "<< np << std::endl;
   instanceTransformations = new glm::mat4[np];
+  instanceColors = new glm::vec3[np];
   // first, configure the cube's VAO (and VBO)
-  unsigned int VBO, sphereVBO, sphereVAO, EBO;
+  unsigned int VBO, sphereVBO, sphereVAO, colorVBO, colorVAO, EBO;
   // second, configure the light's VAO (VBO stays the same; the vertices are the
   // same for the light object which is also a 3D cube)
   //sphere VAO
   glGenBuffers(1, &sphereVBO);
+  glGenBuffers(1, &colorVBO);
   glGenBuffers(1, &EBO);
   glGenVertexArrays(1, &sphereVAO);
+  glGenVertexArrays(1, &colorVAO);
+//particle
   //VBO
   glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * Particle::sphere_vertices.size(), Particle::sphere_vertices.data(), GL_STATIC_DRAW);
@@ -126,16 +131,9 @@ int main() {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  lightingShader.setFloat("material.shininess", 10.0f);
-  glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
-  glm::mat4 view = camera.GetViewMatrix();
-  //sphere
   lightingShader.use();
-  lightingShader.setVec3("light.position", lightPos);
-  lightingShader.setVec3("viewPos", camera.Position);
+  lightingShader.setFloat("material.shininess", 10.0f);
   lightingShader.setFloat("alpha", 0.4f);
-  lightingShader.setMat4("projection", projection);
-  lightingShader.setMat4("view", view);
 
 //fill instanceBuffer with model transformation matrices
   for (int i=0; i<np; i++) {
@@ -147,13 +145,27 @@ int main() {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(x, y, z));
     instanceTransformations[i] = model;
+    instanceColors[i] = getColorForParticleType(particle->type);
   }
 //create necessary buffers for instanced rendering
   generateInstanceBuffers(np, sphereVAO);
+//color
+  //VBO
+  glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*np, &instanceColors[0], GL_DYNAMIC_DRAW);
+  //VAO
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), reinterpret_cast<void *>(0));
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glVertexAttribDivisor(2, 1);
 //EBO
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, Particle::indices.size() * sizeof(int), Particle::indices.data(), GL_STATIC_DRAW);
-
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, Particle::indices.size() * sizeof(unsigned int), Particle::indices.data(), GL_STATIC_DRAW);
+//bug check
+  GLenum err;
+  while ((err = glGetError()) != GL_NO_ERROR) {
+    std::cerr << "OpenGL Error after setup: " << err << std::endl;
+  }
 //game loop
 //----------------------------------------------------------------------------------------------------
   while (!glfwWindowShouldClose(window)) {
@@ -164,9 +176,16 @@ int main() {
     processInput(window);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // light properties
+    // projections
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
+    glm::mat4 view = camera.GetViewMatrix();
+    lightingShader.setMat4("projection", projection);
+    lightingShader.setMat4("view", view);
+    lightingShader.setVec3("light.position", lightPos);
+    lightingShader.setVec3("viewPos", camera.Position);
+    // draw
     glBindVertexArray(sphereVAO);
-    glDrawElementsInstanced(GL_TRIANGLES, (unsigned int) Particle::indices.size(), GL_UNSIGNED_INT, 0, np);
+    glDrawElementsInstanced(GL_TRIANGLES, static_cast<int>(Particle::indices.size()), GL_UNSIGNED_INT, nullptr, np);
     glBindVertexArray(0);
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -260,19 +279,19 @@ void generateInstanceBuffers(int n, unsigned int VAO) {
   glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * n, &instanceTransformations[0], GL_STATIC_DRAW);
   //instanceMatrix VAO
   glBindVertexArray(VAO);
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(0));
   glEnableVertexAttribArray(3);
-  glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4)));
+  glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(0));
   glEnableVertexAttribArray(4);
-  glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4) * 2));
+  glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4)));
   glEnableVertexAttribArray(5);
-  glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4) * 3));
+  glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4) * 2));
+  glEnableVertexAttribArray(6);
+  glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), reinterpret_cast<void *>(sizeof(glm::vec4) * 3));
   //attribute divisor
-  glVertexAttribDivisor(2, 1);
   glVertexAttribDivisor(3, 1);
   glVertexAttribDivisor(4, 1);
   glVertexAttribDivisor(5, 1);
+  glVertexAttribDivisor(6, 1);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

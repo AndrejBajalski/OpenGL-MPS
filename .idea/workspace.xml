@@ -35,21 +35,27 @@
   <component name="ChangeListManager">
     <list default="true" id="8a01ab82-5d65-4e2d-af2b-320751d3ca54" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2025-07-22T09-19-42-0020.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2025-07-23T02-11-23-0996.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdC/a.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.30.5/CompilerIdCXX/a.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/compiler_depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/OpenGL-MPS.dir/src/SimulationMain.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/bin/OpenGL-MPS.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/bin/OpenGL-MPS.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.frag" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.vert" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/res/shaders/material.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/Particle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/include/Particle.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/emps.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/include/emps.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/shaders/material.frag" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/material.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/shaders/material.vert" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/material.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Particle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Particle.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulationMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationMain.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,6 +123,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.OpenGL-MPS">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="OpenGL-MPS" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/cmake-build-debug/OpenGL-MPS/bin/OpenGL-MPS.exe" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -160,7 +171,7 @@
       <workItem from="1752798639197" duration="16528000" />
       <workItem from="1753146949807" duration="1000" />
       <workItem from="1753233075585" duration="5078000" />
-      <workItem from="1753238394065" duration="1016000" />
+      <workItem from="1753238394065" duration="5413000" />
     </task>
     <servers />
   </component>

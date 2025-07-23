@@ -13,7 +13,7 @@
 class Particle {
 public:
     static std::vector<float> sphere_vertices;
-    static std::vector<int> indices;
+    static std::vector<unsigned int> indices;
     static std::vector<int> lineIndices;
     ParticleType type = ParticleType::FLUID;
     static float radius;

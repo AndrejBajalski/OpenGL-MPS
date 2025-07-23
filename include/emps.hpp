@@ -184,7 +184,7 @@ void initializeParticlePositionAndVelocity_for3dim( void ){
         }
         if( (((x>-0.8&&x<-0.6)||(x>0.6&&x<0.8))&&( (y>-0.6 )&&(y<=0.6)))&&( (z>-0.5)&&(z<=0.5))){
           type = ParticleType::WALL;
-          flagOfParticleGeneration = OFF;
+          flagOfParticleGeneration = ON;
         }
         /* wall region */
         // if( (((x>-16.0*PARTICLE_DISTANCE+EPS)&&(x<=16*PARTICLE_DISTANCE+EPS))&&( (y>0.6-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-4.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+4.0*PARTICLE_DISTANCE+EPS ))){
