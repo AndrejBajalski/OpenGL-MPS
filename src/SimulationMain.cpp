@@ -127,6 +127,16 @@ int main() {
   // -----------
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  lightingShader.setFloat("material.shininess", 10.0f);
+  glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
+  glm::mat4 view = camera.GetViewMatrix();
+  //sphere
+  lightingShader.use();
+  lightingShader.setVec3("light.position", lightPos);
+  lightingShader.setVec3("viewPos", camera.Position);
+  lightingShader.setFloat("alpha", 0.4f);
+  lightingShader.setMat4("projection", projection);
+  lightingShader.setMat4("view", view);
   while (!glfwWindowShouldClose(window)) {
     // per-frame time logic
     // --------------------
@@ -141,30 +151,16 @@ int main() {
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // light properties
-    glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
-    glm::mat4 view = camera.GetViewMatrix();
-    //sphere
-    lightingShader.use();
-    lightingShader.setVec3("light.position", lightPos);
-    lightingShader.setVec3("viewPos", camera.Position);
-    lightingShader.setFloat("alpha", 0.4f);
-    float shininess = 10.0f;
-    lightingShader.setMat4("projection", projection);
-    lightingShader.setMat4("view", view);
     for (int i=0; i<np/10; i++) {
       Particle *particle = &empsPtr->particles[i];
       glm::vec3 color = getColorForParticleType(particle->type);
-      glm::vec3 diffuse = color;
-      glm::vec3 ambient = color;
-      glm::vec3 specular = color;
-      illuminate(lightColor, lightingShader, ambient, diffuse, specular, shininess);
       double x = particle->PositionX;
       double y = particle->PositionY;
       double z = particle->PositionZ;
       glm::mat4 model = glm::mat4(1.0f);
       model = glm::translate(model, glm::vec3(x, y, z));
       lightingShader.setMat4("model", model);
+      lightingShader.setVec3("color", color);
       //render the sphere
       glBindVertexArray(sphereVAO);
       glDrawElements(GL_TRIANGLES, (unsigned int) Particle::indices.size(), GL_UNSIGNED_INT, Particle::indices.data());
@@ -191,18 +187,11 @@ int main() {
 // frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess) {
-  glm::vec3 diffuseColor =
-        lightColor * glm::vec3(0.5f); // decrease the influence
-  glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-  lightingShader.setVec3("light.ambient", ambientColor);
-  lightingShader.setVec3("light.diffuse", diffuseColor);
-  lightingShader.setVec3("light.specular", specular);
   // material properties
-  lightingShader.setVec3("material.ambient", ambient);
-  lightingShader.setVec3("material.diffuse", diffuse);
-  lightingShader.setVec3("material.specular", specular);
+  // lightingShader.setVec3("material.ambient", ambient);
+  // lightingShader.setVec3("material.diffuse", diffuse);
+  // lightingShader.setVec3("material.specular", specular);
   // specular lighting doesn't have full effect on this object's material
-  lightingShader.setFloat("material.shininess", shininess);
 }
 glm::vec3 getColorForParticleType(ParticleType type) {
   switch (type) {
