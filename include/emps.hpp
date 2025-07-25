@@ -156,16 +156,16 @@ void initializeParticlePositionAndVelocity_for2dim( void ){
 
 
 void initializeParticlePositionAndVelocity_for3dim( void ){
-  Particle particle = Particle(16, 16, 0.01f, PARTICLE_DISTANCE);
+  Particle particle = Particle(8, 8, 0.01f, PARTICLE_DISTANCE);
   int iX, iY, iZ;
   int nX, nY, nZ;
   double x, y, z;
   int i = 0;
   int flagOfParticleGeneration;
 
-  nX = (int)(0.7/PARTICLE_DISTANCE);
-  nY = (int)(0.5/PARTICLE_DISTANCE);
-  nZ = (int)(0.3/PARTICLE_DISTANCE);
+  nX = (int)(0.9/PARTICLE_DISTANCE);
+  nY = (int)(0.7/PARTICLE_DISTANCE);
+  nZ = (int)(0.15/PARTICLE_DISTANCE);
   int maxSize = nX*nY*nZ*8;
   particles = new Particle[maxSize];
   for(iX= -nX;iX<nX;iX++){
@@ -177,29 +177,25 @@ void initializeParticlePositionAndVelocity_for3dim( void ){
         flagOfParticleGeneration = OFF;
         ParticleType type = ParticleType::GHOST;
 
-        /* dummy wall region */
-        if( (((x>-0.9)&&(x<=0.9))&&( (y>-0.7&&y<=0.7)))&&( (z>-0.5)&&(z<=0.5 ))){
-          type = ParticleType::WALL;
-          flagOfParticleGeneration = OFF;
-        }
-        if( (((x>-0.8&&x<-0.6)||(x>0.6&&x<0.8))&&( (y>-0.6 )&&(y<=0.6)))&&( (z>-0.5)&&(z<=0.5))){
-          type = ParticleType::WALL;
-          flagOfParticleGeneration = ON;
-        }
-        /* wall region */
-        // if( (((x>-16.0*PARTICLE_DISTANCE+EPS)&&(x<=16*PARTICLE_DISTANCE+EPS))&&( (y>0.6-2.0*PARTICLE_DISTANCE+EPS )&&(y<=0.6+EPS)))&&( (z>0.0-4.0*PARTICLE_DISTANCE+EPS)&&(z<=0.3+4.0*PARTICLE_DISTANCE+EPS ))){
-        //   particle.setParticleType(ParticleType::WALL);
-        //   flagOfParticleGeneration = ON;
-        // }
-        /* empty region */
-        // if( (((x>0.0+EPS)&&(x<=1.00+EPS))&&( y>0.0+EPS ))&&( (z>0.0+EPS )&&(z<=0.3+EPS ))){
-        //   flagOfParticleGeneration = OFF;
-        // }
         /* fluid region */
         if( (((x>-0.6)&&(x<=0.6))&&( (y>-0.5)&&(y<0.5) ))&&( (z>0.0)&&(z<=0.3))){
           type = ParticleType::FLUID;
           flagOfParticleGeneration = ON;
         }
+        /* dummy wall region */
+        else if( (((x>-0.8&&x<-0.6)||(x>0.6&&x<0.8))&&( (y>-0.6 )&&(y<=0.6)))&&( (z>-0.5)&&(z<=0.5))){
+          type = ParticleType::WALL;
+          flagOfParticleGeneration = ON;
+        }
+        /* wall region (floor)*/
+        else if( (((x>-0.8)&&(x<=0.8))&&( (y>-0.7 )&&(y<=-0.5)))&&((z>-0.5)&&(z<=0.5))){
+          particle.setParticleType(ParticleType::WALL);
+          flagOfParticleGeneration = ON;
+        }
+        /* empty region */
+        // if( (((x>0.0+EPS)&&(x<=1.00+EPS))&&( y>0.0+EPS ))&&( (z>0.0+EPS )&&(z<=0.3+EPS ))){
+        //   flagOfParticleGeneration = OFF;
+        // }
         if( flagOfParticleGeneration == ON ){
           particle.setParticleType(type);
           particle.setPosition(x, y, z);

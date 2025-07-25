@@ -11,7 +11,7 @@
 
 #define PI 3.14159265359f
 
-const std::string program_name = ("Colour");
+const std::string program_name = ("EMPS method");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
@@ -100,6 +100,7 @@ int main() {
   // particle.setParticleType(ParticleType::FLUID);
   EmpsSingleton* empsPtr = EmpsSingleton::getInstance();
   empsPtr->initializeParticlePositionAndVelocity_for3dim();
+  empsPtr->calculateConstantParameter();
   int np = empsPtr->NumberOfParticles;
   std::cout << "Number of particles: "<< np << std::endl;
   instanceTransformations = new glm::mat4[np];
