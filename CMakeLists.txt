@@ -62,6 +62,8 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${VENDORS_SOURCES}
         include/emps.hpp
         src/emps.cpp
+        include/PointParticleGenerator.h
+        src/PointParticleGenerator.cpp
 )
 #add_executable(OpenGL-MPS-2
 #        res/shaders/material.frag
