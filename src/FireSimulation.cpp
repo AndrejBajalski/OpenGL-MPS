@@ -15,8 +15,8 @@
 const std::string program_name = ("EMPS method");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void mouse_callback(GLFWwindow *window, double xpos, double ypos);
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+// void mouse_callback(GLFWwindow *window, double xpos, double ypos);
+// void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess);
 void generateInstanceBuffers(int n, unsigned int VAO);
@@ -62,8 +62,8 @@ int main() {
   }
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-  glfwSetCursorPosCallback(window, mouse_callback);
-  glfwSetScrollCallback(window, scroll_callback);
+  // glfwSetCursorPosCallback(window, mouse_callback);
+  // glfwSetScrollCallback(window, scroll_callback);
 
   // tell GLFW to capture our mouse
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -125,10 +125,9 @@ int main() {
     glm::mat4 view = camera.GetViewMatrix();
     lightingShader.setMat4("projection", projection);
     lightingShader.setMat4("view", view);
-    lightingShader.setVec3("light.position", lightPos);
-    lightingShader.setVec3("viewPos", camera.Position);
-    // draw
+    // update
     generator.update();
+    // draw
     generator.draw();
     //
     glfwSwapBuffers(window);
@@ -181,27 +180,27 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
-void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
-  float xpos = static_cast<float>(xposd);
-  float ypos = static_cast<float>(yposd);
-  if (firstMouse) {
-    lastX = xpos;
-    lastY = ypos;
-    firstMouse = false;
-  }
-
-  float xoffset = xpos - lastX;
-  float yoffset =
-      lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-  lastX = xpos;
-  lastY = ypos;
-
-  camera.ProcessMouseMovement(xoffset, yoffset);
-}
+// void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
+//   float xpos = static_cast<float>(xposd);
+//   float ypos = static_cast<float>(yposd);
+//   if (firstMouse) {
+//     lastX = xpos;
+//     lastY = ypos;
+//     firstMouse = false;
+//   }
+//
+//   float xoffset = xpos - lastX;
+//   float yoffset =
+//       lastY - ypos; // reversed since y-coordinates go from bottom to top
+//
+//   lastX = xpos;
+//   lastY = ypos;
+//
+//   camera.ProcessMouseMovement(xoffset, yoffset);
+// }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-  camera.ProcessMouseScroll(static_cast<float>(yoffset));
-}
+// void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+//   camera.ProcessMouseScroll(static_cast<float>(yoffset));
+// }

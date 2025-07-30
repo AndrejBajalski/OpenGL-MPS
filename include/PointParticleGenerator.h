@@ -16,7 +16,7 @@
 class PointParticleGenerator
 {
     std::vector<Particle2d> particles;
-    unsigned int VAO, VBO;
+    unsigned int VAO, VBO, colorVBO, positionVBO, colorVAO;
     Shader shader;
     void initGlConfigurations();
     public:
@@ -25,8 +25,9 @@ class PointParticleGenerator
     void init();
     void update();
     void draw();
-    void generateInstanceBuffers(int nParticles, unsigned int VAO, glm::vec3 *arrayPointer, int index);
+    void generateInstanceBuffers(int nParticles, unsigned int VBO, unsigned int VAO, glm::vec3 *arrayPointer, int index);
     glm::vec3 calculateColor(Particle2d &p);
+    void updateBuffers(unsigned int instanceVBO, glm::vec3 *arrayPointer, int nParticles);
     void cleanup();
 };
 #endif //POINTPARTICLE_H
