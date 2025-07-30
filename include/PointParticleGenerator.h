@@ -3,36 +3,30 @@
 //
 #include <vector>
 #include <glm/glm.hpp>
+#include "Particle2d.h"
+#include "Shader.hpp"
 
 #ifndef POINTPARTICLE_H
 #define POINTPARTICLE_H
 #define MIN_HEAT 700
 #define MAX_HEAT 1500
-#define PARTICLE_LIFETIME 2
 #define MAX_PARTICLES 2000
 
-struct Particle2d {
-    glm::vec2 position;
-    glm::vec2 velocity;
-    float temperature;
-    float lifetime;
-    Particle2d(){
-        position = glm::vec2(0.0f, 0.0f);
-        velocity = glm::vec2(0.0f, 0.0f);
-        temperature = MIN_HEAT;
-        lifetime = PARTICLE_LIFETIME;
-    }
-};
+
 class PointParticleGenerator
 {
     std::vector<Particle2d> particles;
     unsigned int VAO, VBO;
+    Shader shader;
+    void initGlConfigurations();
     public:
     PointParticleGenerator();
+    PointParticleGenerator(Shader shader);
     void init();
-    void initGlConfigurations();
     void update();
     void draw();
-
+    void generateInstanceBuffers(int nParticles, unsigned int VAO, glm::vec3 *arrayPointer, int index);
+    glm::vec3 calculateColor(Particle2d &p);
+    void cleanup();
 };
 #endif //POINTPARTICLE_H

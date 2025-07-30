@@ -51,7 +51,7 @@ file(GLOB PROJECT_CONFIGS CMakeLists.txt
 source_group("include" FILES ${PROJECT_HEADERS})
 source_group("shaders" FILES ${PROJECT_SHADERS})
 source_group("textures" FILES ${PROJECT_TEXTURES})
-source_group("src" FILES ${PROJECT_SOURCES})
+#source_group("src" FILES ${PROJECT_SOURCES})
 source_group("vendors" FILES ${VENDORS_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
@@ -62,8 +62,11 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${VENDORS_SOURCES}
         include/emps.hpp
         src/emps.cpp
+        src/Camera.cpp
         include/PointParticleGenerator.h
         src/PointParticleGenerator.cpp
+        src/FireSimulation.cpp
+        include/Particle2d.h
 )
 #add_executable(OpenGL-MPS-2
 #        res/shaders/material.frag
@@ -73,7 +76,6 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
 #        src/Shader.cpp
 #        src/Camera.cpp
 #        src/ParticleType.cpp
-#        src/SimulationMain.cpp
 #)
 target_link_libraries(${PROJECT_NAME}
 		      glfw

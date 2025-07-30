@@ -2,7 +2,11 @@
 // Created by Andrej on 29/07/2025.
 //
 #include<PointParticleGenerator.h>
+
+#include "Camera.hpp"
+#include "Camera.hpp"
 #include "glad/glad.h"
+#include "Particle2d.h"
 
 #define FIRE_LEFT (-0.5f)
 #define FIRE_RIGHT 0.5f
@@ -11,13 +15,21 @@
 #define DISTANCE 0.01f
 #define N_PARTICLES 1000
 #define PARTICLE_DISTANCE 0.01f
-#define PARTICLE_DIAMETER 0.02f
 #define DT 0.01
+#define C_VIS 0.1f
+#define PARTICLE_RADIUS 0.04f
 
+std::vector<glm::vec3> position_offsets;
+float Particle2d::radius = 0.0f;
+
+PointParticleGenerator::PointParticleGenerator(Shader shader): shader(shader){}
 void PointParticleGenerator::init()
 {
     initGlConfigurations();
     Particle2d particle = Particle2d();
+    Particle2d::radius = PARTICLE_RADIUS;
+    shader.use();
+    shader.setFloat("pointSize", PARTICLE_RADIUS);
     float ratio = 1.0f;
     int nX = (int)std::sqrt((N_PARTICLES/ratio));
     int nY = N_PARTICLES/nX;
@@ -25,43 +37,90 @@ void PointParticleGenerator::init()
         for (int j=0; j<nY; j++){
             float x = FIRE_LEFT + i * DISTANCE;
             float y = FIRE_BOTTOM + j * DISTANCE;
-            glm::vec2 offset = glm::vec2(x, y);
+            glm::vec3 offset = glm::vec3(x, y, 0.0f);
             particle.position += offset;
+            position_offsets.push_back(offset);
+            if (j<nY/3)
+            {
+                particle.temperature =  MAX_HEAT;
+            }
             this->particles.push_back(particle);
         }
     }
+    //instanced variables
+    generateInstanceBuffers(nX*nY, this->VAO, &position_offsets[0], 1);
 }
 void PointParticleGenerator::initGlConfigurations()
 {
-    glm::vec3 initialPosition = glm::vec3(0.0f);
+    float initialQuad[] = {
+        //position
+        PARTICLE_RADIUS, -PARTICLE_RADIUS, 0.0f,
+        PARTICLE_RADIUS, PARTICLE_RADIUS, 0.0f,
+        -PARTICLE_RADIUS, -PARTICLE_RADIUS, 0.0f,
+        -PARTICLE_RADIUS, PARTICLE_RADIUS, 0.0f
+    };
     glGenBuffers(1, &this->VBO);
     glGenVertexArrays(1, &this->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3), &initialPosition, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*4, &initialQuad[0], GL_STATIC_DRAW);
     glBindVertexArray(this->VAO);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(0));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(0));
     glEnableVertexAttribArray(0);
     //for instanced drawing
     glVertexAttribDivisor(0, 1);
 }
 void PointParticleGenerator::update()
 {
+    this->shader.use();
     for (int i=0; i<particles.size(); i++)
     {
-        Particle2d &p = this->particles[i];
+        Particle2d p = this->particles[i];
         p.lifetime -= DT; // reduce life
         if (p.lifetime > 0.0f)
         {	// particle is alive, thus update
-            p.position -= p.velocity * glm::vec2(DT);
+            p.position += p.velocity * glm::vec3(DT);
+            position_offsets[i] = p.position;
         }
+        this->shader.setVec3("offset", p.position);
+        glm::vec3 resColor = calculateColor(p);
+        this->shader.setVec3("color", resColor);
     }
 }
 
 void PointParticleGenerator::draw()
 {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     glBindVertexArray(this->VAO);
     //for instanced drawing
-    glDrawArraysInstanced(GL_POINTS, 0, 2, (int)this->particles.size());
+    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, (int)this->particles.size());
     glBindVertexArray(0);
 
+}
+
+void PointParticleGenerator::generateInstanceBuffers(int nParticles, unsigned int VAO, glm::vec3 *arrayPointer, int index) {
+    //instanceMatrix VBO
+    unsigned int instanceVBO;
+    glGenBuffers(1, &instanceVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * nParticles, arrayPointer, GL_STATIC_DRAW);
+    //instanceMatrix VAO
+    glBindVertexArray(VAO);
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), reinterpret_cast<void *>(0));
+    //attribute divisor
+    glVertexAttribDivisor(index, 1);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+glm::vec3 PointParticleGenerator::calculateColor(Particle2d &p)
+{
+    float r = 1.0f;
+    float g = p.temperature/MAX_HEAT;
+    float b = p.temperature/MAX_HEAT;
+    return {r,g,b};
+}
+void PointParticleGenerator::cleanup()
+{
+    glDeleteBuffers(1, &this->VAO);
+    glDeleteBuffers(1, &this->VBO);
 }
