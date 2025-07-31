@@ -7,11 +7,13 @@
 #include <vector>
 #include "emps.hpp"
 #include <ParticleType.h>
+#include <thread>
+
 #include "Particle.hpp"
 #include "PointParticleGenerator.h"
 
 #define PI 3.14159265359f
-
+#define DT 0.005f
 const std::string program_name = ("EMPS method");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -99,11 +101,7 @@ int main() {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  lightingShader.use();
-  lightingShader.setFloat("material.shininess", 10.0f);
-  lightingShader.setFloat("alpha", 0.4f);
-
-  PointParticleGenerator generator = PointParticleGenerator(lightingShader);
+  PointParticleGenerator generator = PointParticleGenerator(DT, lightingShader);
   generator.init();
 //bug check
   GLenum err;
@@ -112,11 +110,13 @@ int main() {
   }
 //game loop
 //----------------------------------------------------------------------------------------------------
+  lightingShader.use();
+  double lastTime = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
     // per-frame time logic
     // --------------------
-    const auto currentFrame = static_cast<float>(glfwGetTime());
-    lightPos.x = glm::sin(currentFrame)*3;
+    double currentTime = glfwGetTime();
+    lightPos.x = glm::sin((float)currentTime)*3;
     processInput(window);
     glClearColor(.6f, .93f, .91f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -125,11 +125,19 @@ int main() {
     glm::mat4 view = camera.GetViewMatrix();
     lightingShader.setMat4("projection", projection);
     lightingShader.setMat4("view", view);
+    // manually adjust fps
+    double deltaTime = currentTime - lastTime;
+    if (deltaTime < DT) {
+      double sleepingTime = DT - deltaTime;
+      std::this_thread::sleep_for(std::chrono::duration<double>(sleepingTime));
+    }
     // update
     generator.update();
     // draw
     generator.draw();
-    //
+    currentTime = glfwGetTime();
+    lastTime = currentTime;
+    // end of game loop
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
