@@ -75,7 +75,6 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
 #        src/emps.cpp
 #        src/Shader.cpp
 #        src/Camera.cpp
-#        src/ParticleType.cpp
 #)
 target_link_libraries(${PROJECT_NAME}
 		      glfw

@@ -14,6 +14,7 @@
 
 #define PI 3.14159265359f
 #define DT 0.005f
+
 const std::string program_name = ("EMPS method");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -102,7 +103,7 @@ int main() {
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   PointParticleGenerator generator = PointParticleGenerator(DT, lightingShader);
-  generator.init();
+  generator.init(DT);
 //bug check
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {

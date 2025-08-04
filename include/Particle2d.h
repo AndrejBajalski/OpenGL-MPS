@@ -8,6 +8,8 @@
 #define PARTICLE_LIFETIME 2
 #define MIN_HEAT 700
 
+#include <glm/glm.hpp>
+
 class Particle2d
 {
 public:
@@ -18,6 +20,7 @@ public:
     float lifetime;
     float mass;
     static float radius;
+    ParticleType particleType;
     Particle2d(){
         position = glm::vec3(0.0f, 0.0f, 0.0f);
         velocity = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -25,6 +28,7 @@ public:
         temperature = MIN_HEAT;
         lifetime = PARTICLE_LIFETIME;
         mass = 0.025f;
+        particleType = ParticleType::FIRE;
     }
 };
 #endif //PARTICLE2D_H

@@ -5,8 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj.d"
   "CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj"
   "CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj.d"
-  "CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj"
-  "CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj.d"
   "CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj"
   "CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj.d"
   "CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj"

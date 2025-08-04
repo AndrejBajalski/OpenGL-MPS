@@ -3,6 +3,8 @@
 //
 #include <vector>
 #include <glm/glm.hpp>
+
+#include "emps.hpp"
 #include "Particle2d.h"
 #include "Shader.hpp"
 
@@ -19,11 +21,12 @@ class PointParticleGenerator
     unsigned int VAO, VBO, colorVBO, positionVBO, positionVAO, colorVAO;
     Shader shader;
     float dt;
+    EmpsSingleton *empsPtr;
     void initGlConfigurations();
     public:
     PointParticleGenerator();
     PointParticleGenerator(double dt, Shader shader);
-    void init();
+    void init(float delta_time);
     void update();
     void draw();
     void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, glm::vec3 *arrayPointer, int index);
@@ -32,6 +35,8 @@ class PointParticleGenerator
     void checkValid(Particle2d &p);
     void spawnParticle(Particle2d &p);
     void moveParticle(Particle2d &p);
+    float calculatePressureForce(Particle2d &p);
+    void configEmps();
     void cleanup();
 };
 #endif //POINTPARTICLE_H

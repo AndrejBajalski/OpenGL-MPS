@@ -4,7 +4,7 @@
 #include<PointParticleGenerator.h>
 #include<ctime>
 #include <random>
-
+#include "emps.hpp"
 #include "Camera.hpp"
 #include "Camera.hpp"
 #include "glad/glad.h"
@@ -15,10 +15,10 @@
 #define FIRE_BOTTOM (-0.5f)
 #define FIRE_TOP (0.5f)
 #define MAX_N_PARTICLES 4000
-#define PARTICLE_DISTANCE 0.01f
+#define PARTICLE_DISTANCE 0.025f
 #define C_VIS 0.1f
 #define C_BUO 0.5f
-#define PARTICLE_RADIUS 0.005f
+#define PARTICLE_RADIUS 0.01f
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 1000
 #define AMBIENT_HEAT 35
@@ -34,18 +34,19 @@ static const float UPPER_BOUND = FIRE_TOP + 0.15f;
 static int N_PARTICLES = 1000;
 static std::default_random_engine generator;
 static std::normal_distribution<float> distribution(0.0f, PARTICLE_RADIUS*5);
-
+static float DT;
 float calculateBuoyantForce(Particle2d &particle);
 float calculateViscosityForce(Particle2d &p);
 float calculatePressureForce(Particle2d &p);
-
 float Particle2d::radius = 0.0f;
 
 PointParticleGenerator::PointParticleGenerator(double dt, Shader shader): dt(dt), shader(shader){}
 
-void PointParticleGenerator::init()
+void PointParticleGenerator::init(float delta_time)
 {
     initGlConfigurations();
+    DT = delta_time;
+    configEmps();
     Particle2d::radius = PARTICLE_RADIUS;
     int nX = (int)FIRE_LENGTH.x;
     int nY = (int)FIRE_LENGTH.y;
@@ -53,17 +54,26 @@ void PointParticleGenerator::init()
     for (int i=0; i<nX; i++){
         for (int j=0; j<nY; j++){
             Particle2d particle = Particle2d();
-            float x = FIRE_LEFT + i * PARTICLE_RADIUS *2;
-            float y = FIRE_BOTTOM + j * PARTICLE_RADIUS *2;
+            float x = FIRE_LEFT + i * PARTICLE_DISTANCE;
+            float y = FIRE_BOTTOM + j * PARTICLE_DISTANCE;
             glm::vec3 offset = glm::vec3(x, y, 0.0f);
             particle.position += offset;
             position_offsets.push_back(offset);
+            this->empsPtr->PositionX[counter] = particle.position.x;
+            this->empsPtr->PositionY[counter] = particle.position.y;
+            this->empsPtr->PositionZ[counter] = particle.position.z;
             if ((i>=nX/4 && i<=3*nX/4) && (j<nY/3)){
                 particle.temperature =  MAX_HEAT;
+                particle.particleType = ParticleType::FIRE;
+                empsPtr->particleType[counter] = particle.particleType;
             }else if ((i>=nX/5 && i<nX/4 || i>3*nX/4 && i<=4*nX/5) && (j<2*nY/3) || (i>=nX/4 && i<=3*nX/4) && (j>=nY/4 && j<2*nY/3)){
                 particle.temperature = (MAX_HEAT - MIN_HEAT)/2.0f;
+                empsPtr->particleType[counter] = particle.particleType;
+                particle.particleType = ParticleType::FIRE;
             }else {
                 particle.temperature = MIN_HEAT;
+                particle.particleType = ParticleType::FIRE;
+                empsPtr->particleType[counter] = particle.particleType;
             }
             this->particles.push_back(particle);
             glm::vec3 color = calculateColor(particle);
@@ -73,9 +83,12 @@ void PointParticleGenerator::init()
     }
     N_PARTICLES = counter;
     std::cout<<"TOTAL NUMBER OF PARTICLES: "<<N_PARTICLES<<std::endl;
+    this->empsPtr->NumberOfParticles = N_PARTICLES;
     //instanced variables
     generateInstanceBuffers(nX*nY, &this->positionVBO, &this->VAO, &position_offsets[0], 1);
     generateInstanceBuffers(nX*nY, &this->colorVBO, &this->VAO, &colors[0], 2);
+    //calculate constants
+    this->empsPtr->calculateConstantParameter(nX, nY, 1);
 }
 
 void PointParticleGenerator::initGlConfigurations()
@@ -105,6 +118,10 @@ void PointParticleGenerator::update()
         p.lifetime -= dt;
         // apply all the respective forces to the acceleration equation
         calculateBuoyantForce(p);
+        empsPtr->calculateParticleNumberDensity(i);
+        empsPtr->calculatePressure_forExplicitMPS(i);
+        empsPtr->calculatePressureGradient_forExplicitMPS(i);
+        empsPtr->moveParticleUsingPressureGradient(particles[i], i);
         checkValid(p);
         // update particle position and color respectively
         moveParticle(p);
@@ -187,6 +204,10 @@ float calculatePressureForce(Particle2d &p) {
 void PointParticleGenerator::moveParticle(Particle2d &p) {
     p.velocity += p.acceleration * glm::vec3(dt);
     p.position += p.velocity * glm::vec3(dt);
+}
+void PointParticleGenerator::configEmps() {
+    this->empsPtr = EmpsSingleton::getInstance();
+    this->empsPtr->DT = DT;
 }
 void PointParticleGenerator::cleanup()
 {

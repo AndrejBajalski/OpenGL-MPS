@@ -271,30 +271,6 @@ src/Particle.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.s
 .PHONY : src/Particle.cpp.s
 
-src/ParticleType.obj: src/ParticleType.cpp.obj
-.PHONY : src/ParticleType.obj
-
-# target to build an object file
-src/ParticleType.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.obj
-.PHONY : src/ParticleType.cpp.obj
-
-src/ParticleType.i: src/ParticleType.cpp.i
-.PHONY : src/ParticleType.i
-
-# target to preprocess a source file
-src/ParticleType.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.i
-.PHONY : src/ParticleType.cpp.i
-
-src/ParticleType.s: src/ParticleType.cpp.s
-.PHONY : src/ParticleType.s
-
-# target to generate assembly for a file
-src/ParticleType.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/ParticleType.cpp.s
-.PHONY : src/ParticleType.cpp.s
-
 src/PointParticleGenerator.obj: src/PointParticleGenerator.cpp.obj
 .PHONY : src/PointParticleGenerator.obj
 
@@ -415,9 +391,6 @@ help:
 	@echo ... src/Particle.obj
 	@echo ... src/Particle.i
 	@echo ... src/Particle.s
-	@echo ... src/ParticleType.obj
-	@echo ... src/ParticleType.i
-	@echo ... src/ParticleType.s
 	@echo ... src/PointParticleGenerator.obj
 	@echo ... src/PointParticleGenerator.i
 	@echo ... src/PointParticleGenerator.s
