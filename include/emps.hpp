@@ -50,6 +50,9 @@ public:
   double VelocityX[ARRAY_SIZE];
   double VelocityY[ARRAY_SIZE];
   double VelocityZ[ARRAY_SIZE];
+  double VelocityAfterCollisionX[ARRAY_SIZE];
+  double VelocityAfterCollisionY[ARRAY_SIZE];
+  double VelocityAfterCollisionZ[ARRAY_SIZE];
   double Pressure[ARRAY_SIZE];
   double ParticleNumberDensity[ARRAY_SIZE];
   int    BoundaryCondition[ARRAY_SIZE];
@@ -180,6 +183,66 @@ public:
     }
   }
 
+void collision( void ){
+  int    i,j;
+  double xij, yij, zij;
+  double distance,distance2;
+  double forceDT; /* forceDT is the impulse of collision between particles */
+  double mi, mj;
+  double velocity_ix, velocity_iy, velocity_iz;
+  double e = COEFFICIENT_OF_RESTITUTION;
+  for(i=0;i<NumberOfParticles;i++){
+    VelocityAfterCollisionX[i] = VelocityX[i];
+    VelocityAfterCollisionY[i] = VelocityY[i];
+    VelocityAfterCollisionZ[i] = VelocityZ[i];
+  }
+  for(i=0;i<NumberOfParticles;i++){
+    if(particleType[i] == ParticleType::FIRE){
+      mi = FluidDensity;
+      velocity_ix = VelocityX[i];
+      velocity_iy = VelocityY[i];
+      velocity_iz = VelocityZ[i];
+      for(j=0;j<NumberOfParticles;j++){
+	if( (j==i) || (particleType[j]==ParticleType::AIR) ) continue;
+	    xij = PositionX[j] - PositionX[i];
+	    yij = PositionY[j] - PositionY[i];
+	    zij = PositionZ[j] - PositionZ[i];
+	    distance2 = (xij*xij) + (yij*yij) + (zij*zij);
+	    if(distance2<collisionDistance2){
+	      distance = sqrt(distance2);
+	      //calculate impulse of collision between particles
+	      forceDT = (velocity_ix-VelocityX[j])*(xij/distance)
+	               +(velocity_iy-VelocityY[j])*(yij/distance)
+	               +(velocity_iz-VelocityZ[j])*(zij/distance);
+	      if(forceDT > 0.0){
+	        mj = FluidDensity;
+	        forceDT *= (1.0+e)*mi*mj/(mi+mj);
+	        velocity_ix -= (forceDT/mi)*(xij/distance);
+	        velocity_iy -= (forceDT/mi)*(yij/distance);
+	        velocity_iz -= (forceDT/mi)*(zij/distance);
+	        /*
+	        if(j>i){ fprintf(stderr,"WARNING: Collision occured between %d and %d particles.\n",i,j); }
+	        */
+	      }
+	    }
+      }
+      VelocityAfterCollisionX[i] = velocity_ix;
+      VelocityAfterCollisionY[i] = velocity_iy;
+      VelocityAfterCollisionZ[i] = velocity_iz;
+    }
+  }
+  for(i=0;i<NumberOfParticles;i++){
+    if(particleType[i] == ParticleType::FIRE){
+      PositionX[i] += (VelocityAfterCollisionX[i]-VelocityX[i])*DT;
+      PositionY[i] += (VelocityAfterCollisionY[i]-VelocityY[i])*DT;
+      PositionZ[i] += (VelocityAfterCollisionZ[i]-VelocityZ[i])*DT;
+      VelocityX[i] = VelocityAfterCollisionX[i];
+      VelocityY[i] = VelocityAfterCollisionY[i];
+      VelocityZ[i] = VelocityAfterCollisionZ[i];
+    }
+  }
+}
+
 double calculateParticleNumberDensity(int i){
     double xij, yij, zij;
     double distance, distance2;
@@ -227,7 +290,6 @@ double calculateParticleNumberDensity(int i){
     double w,pij;
     double a;
     a =DIM/N0_forGradient;
-    if(particleType[i] != ParticleType::FIRE) return;
     gradientX = 0.0;  gradientY = 0.0;  gradientZ = 0.0;
     for(int j=0;j<NumberOfParticles;j++){
       if( j==i ) continue;
@@ -253,26 +315,35 @@ double calculateParticleNumberDensity(int i){
   }
 
   void moveParticleUsingPressureGradient(Particle2d &particle, int i) {
-    if(particle.particleType == ParticleType::FIRE || particle.particleType == ParticleType::AIR){
-      glm::vec3 acceleration = glm::vec3(AccelerationX[i], AccelerationY[i], AccelerationZ[i]);
-      glm::vec3 velocity_diff = acceleration * glm::vec3(static_cast<float>(DT));
-      glm::vec3 position_diff = velocity_diff * glm::vec3(static_cast<float>(DT));
+    glm::vec3 acceleration = glm::vec3(AccelerationX[i], AccelerationY[i], AccelerationZ[i]);
+    glm::vec3 velocity_diff = acceleration * glm::vec3(static_cast<float>(DT));
+    glm::vec3 position_diff = velocity_diff * glm::vec3(static_cast<float>(DT));
+    VelocityX[i] += velocity_diff.x;
+    VelocityY[i] += velocity_diff.y;
+    VelocityZ[i] += velocity_diff.z;
+    PositionX[i] += position_diff.x;
+    PositionY[i] += position_diff.y;
+    PositionZ[i] += position_diff.z;
+    particle.velocity += velocity_diff;
+    particle.position += position_diff;
+    particle.acceleration = glm::vec3(0.0f);
+    setAcceleration(i, 0.0, 0.0, 0.0);
+  }
 
-      VelocityX[i] += velocity_diff.x;
-      VelocityY[i] += velocity_diff.y;
-      VelocityZ[i] += velocity_diff.z;
-      PositionX[i] += position_diff.x;
-      PositionY[i] += position_diff.y;
-      PositionZ[i] += position_diff.z;
-
-      particle.velocity += velocity_diff;
-      particle.position += position_diff;
-      particle.acceleration = glm::vec3(0.0f);
-
-      AccelerationX[i]=0.0;
-      AccelerationY[i]=0.0;
-      AccelerationZ[i]=0.0;
-    }
+  void setPosition(int index, float x, float y, float z) {
+      PositionX[index] = x; PositionY[index] = y; PositionZ[index] = z;
+  }
+  void setVelocity(int index, float x, float y, float z) {
+      VelocityX[index] = x; VelocityY[index] = y; VelocityZ[index] = z;
+  }
+  void setAcceleration(int index, float x, float y, float z) {
+      AccelerationX[index] = x; AccelerationY[index] = y; AccelerationZ[index] = z;
+  }
+  void setParticleType(int index, ParticleType type) {
+      particleType[index] = type;
+  }
+  void setNumberOfParticles(int n) {
+      NumberOfParticles = n;
   }
 };
 #endif //EMPS_HPP

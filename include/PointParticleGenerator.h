@@ -37,7 +37,7 @@ class PointParticleGenerator
     void updateBuffers(unsigned int instanceVBO, glm::vec3 *arrayPointer, int nParticles);
     void checkValid(Particle2d &p);
     void spawnParticle(Particle2d &p);
-    void moveParticle(Particle2d &p);
+    void moveParticle(Particle2d &p, int index);
     float calculatePressureForce(Particle2d &p);
     void configEmps();
     void cleanup();

@@ -61,21 +61,19 @@ void PointParticleGenerator::init(float delta_time)
             glm::vec3 offset = glm::vec3(x, y, 0.0f);
             particle.position += offset;
             position_offsets.push_back(offset);
-            this->empsPtr->PositionX[counter] = particle.position.x;
-            this->empsPtr->PositionY[counter] = particle.position.y;
-            this->empsPtr->PositionZ[counter] = particle.position.z;
+            empsPtr->setPosition(counter, particle.position.x, particle.position.y, particle.position.z);
             if ((i>=nX/4 && i<=3*nX/4) && (j<nY/3)){
                 particle.temperature =  MAX_HEAT;
                 particle.particleType = ParticleType::FIRE;
-                empsPtr->particleType[counter] = particle.particleType;
+                empsPtr->setParticleType(counter, particle.particleType);
             }else if ((i>=nX/5 && i<nX/4 || i>3*nX/4 && i<=4*nX/5) && (j<2*nY/3) || (i>=nX/4 && i<=3*nX/4) && (j>=nY/4 && j<2*nY/3)){
                 particle.temperature = MIN_HEAT;
-                empsPtr->particleType[counter] = particle.particleType;
                 particle.particleType = ParticleType::FIRE;
+                empsPtr->setParticleType(counter, particle.particleType);
             }else {
                 particle.temperature = AMBIENT_HEAT;
-                empsPtr->particleType[counter] = particle.particleType;
                 particle.particleType = ParticleType::AIR;
+                empsPtr->setParticleType(counter, particle.particleType);
             }
             this->particles.push_back(particle);
             glm::vec3 color = calculateColor(particle);
@@ -85,7 +83,7 @@ void PointParticleGenerator::init(float delta_time)
     }
     N_PARTICLES = counter;
     std::cout<<"TOTAL NUMBER OF PARTICLES: "<<N_PARTICLES<<std::endl;
-    this->empsPtr->NumberOfParticles = N_PARTICLES;
+    this->empsPtr->setNumberOfParticles(N_PARTICLES);
     //instanced variables
     generateInstanceBuffers(nX*nY, &this->positionVBO, &this->VAO, &position_offsets[0], 1);
     generateInstanceBuffers(nX*nY, &this->colorVBO, &this->VAO, &colors[0], 2);
@@ -125,7 +123,8 @@ void PointParticleGenerator::update()
         p.lifetime -= dt;
         // apply all the respective forces to the acceleration equation
         calculateBuoyantForce(p);
-        moveParticle(p);
+        moveParticle(p, i);
+        // empsPtr->collision();
         double ni = empsPtr->calculateParticleNumberDensity(i);
         double pressure = empsPtr->calculatePressure_forExplicitMPS(i);
         empsPtr->calculatePressureGradient_forExplicitMPS(i);
@@ -147,9 +146,8 @@ void PointParticleGenerator::update()
             maxPressure = pressure;
         }
     }
-    std::cout<<"Max Particle number density: Particle "<<maxNiIndex<<" -> "<<maxNi<<std::endl;
-    std::cout<<"Min Particle number density: Particle "<<minNiIndex<<" -> "<<minNi<<std::endl;
-    std::cout<<"Max Pressure: "<<maxPressure<<std::endl;
+    // std::cout<<"Max Particle number density: Particle "<<maxNiIndex<<" -> "<<maxNi<<std::endl;
+    // std::cout<<"Max Pressure: "<<maxPressure<<std::endl;
     updateBuffers(this->positionVBO, &position_offsets[0], this->particles.size());
     updateBuffers(this->colorVBO, &colors[0], this->particles.size());
 }
@@ -225,9 +223,10 @@ float calculatePressureForce(Particle2d &p) {
     return 0.0f;
 }
 
-void PointParticleGenerator::moveParticle(Particle2d &p) {
+void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
     p.velocity += p.acceleration * glm::vec3(dt);
     p.position += p.velocity * glm::vec3(dt);
+    empsPtr->setPosition(index, p.position.x, p.position.y, p.position.z);
 }
 void PointParticleGenerator::configEmps() {
     this->empsPtr = EmpsSingleton::getInstance(FIRE_TOP, FIRE_BOTTOM, FIRE_LEFT, FIRE_RIGHT, PARTICLE_DISTANCE, PARTICLE_RADIUS);
