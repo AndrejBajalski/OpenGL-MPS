@@ -7,6 +7,8 @@
 
 #define PARTICLE_LIFETIME 2
 #define MIN_HEAT 700
+#define MAX_HEAT 1500
+#define AMBIENT_HEAT 30
 
 #include <glm/glm.hpp>
 
@@ -30,5 +32,19 @@ public:
         mass = 0.025f;
         particleType = ParticleType::FIRE;
     }
+    Particle2d(ParticleType particleType):Particle2d(){
+        this->particleType = particleType;
+        switch (particleType) {
+            case ParticleType::FIRE:
+                this->temperature = MAX_HEAT;
+                break;
+            case ParticleType::AIR:
+                this->temperature = AMBIENT_HEAT;
+                break;
+            default:
+                this->temperature = AMBIENT_HEAT;
+        }
+    }
+
 };
 #endif //PARTICLE2D_H

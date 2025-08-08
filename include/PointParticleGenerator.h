@@ -12,6 +12,7 @@
 #define POINTPARTICLE_H
 #define MIN_HEAT 700
 #define MAX_HEAT 1500
+#define AMBIENT_HEAT 30
 #define MAX_PARTICLES 2000
 
 
@@ -21,6 +22,8 @@ class PointParticleGenerator
     unsigned int VAO, VBO, colorVBO, positionVBO, positionVAO, colorVAO;
     Shader shader;
     float dt;
+    float PARTICLE_DISTANCE;
+    glm::vec2 FIRE_LENGTH;
     EmpsSingleton *empsPtr;
     void initGlConfigurations();
     public:

@@ -5,6 +5,7 @@
 #ifndef EMPS_HPP
 #define EMPS_HPP
 
+#include <iostream>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -15,40 +16,28 @@
 
 /* for two-dimensional simulation */
 #define DIM                  2
-#define PARTICLE_DISTANCE    0.025
 #define OUTPUT_INTERVAL      20
-
 /* for three-dimensional simulation */
 // #define DIM                  3
-// #define PARTICLE_DISTANCE    0.042
 // #define DT                   0.002
-// #define OUTPUT_INTERVAL      10
-
-#define ARRAY_SIZE           5000
+// #define OUTPUT_INTERVAL      10  v
+#define ARRAY_SIZE           10000
 #define FINISH_TIME          1.5
 #define KINEMATIC_VISCOSITY  (1.0E-6)
-#define SPEED_OF_SOUND       10.0
-#define FLUID_DENSITY        1000.0
+#define SPEED_OF_SOUND       4.766
+#define FLUID_DENSITY        0.3
 #define GRAVITY_X  0.0
 #define GRAVITY_Y  -9.8
 #define GRAVITY_Z  0.0
-#define RADIUS_FOR_NUMBER_DENSITY  (2.1*PARTICLE_DISTANCE)
-#define RADIUS_FOR_GRADIENT        (2.1*PARTICLE_DISTANCE)
-#define RADIUS_FOR_LAPLACIAN       (2.1*PARTICLE_DISTANCE)
 #define COLLISION_DISTANCE         (0.5*PARTICLE_DISTANCE)
-#define EPS                        (0.01 * PARTICLE_DISTANCE)
 #define COEFFICIENT_OF_RESTITUTION 0.2
 #define ON              1
 #define OFF             0
 
-#define FIRE_LEFT (-0.3f)
-#define FIRE_RIGHT 0.3f
-#define FIRE_BOTTOM (-0.5f)
-#define FIRE_TOP (0.5f)
-
 class EmpsSingleton {
 private:
   static EmpsSingleton *instance;
+  float FIRE_TOP, FIRE_BOTTOM, FIRE_LEFT, FIRE_RIGHT, PARTICLE_DISTANCE, PARTICLE_RADIUS;
   EmpsSingleton(){}
 public:
   double AccelerationX[ARRAY_SIZE];
@@ -76,38 +65,43 @@ public:
   double Re_forLaplacian,    Re2_forLaplacian;
   double N0_forParticleNumberDensity;
   double N0_forGradient;
-  double N0_forLaplacian;
   double Lambda;
   double collisionDistance,collisionDistance2;
   double FluidDensity;
   Particle *particles;
   double DT;
 
-  static EmpsSingleton* getInstance() {
+  static EmpsSingleton* getInstance(float FIRE_TOP, float FIRE_BOTTOM, float FIRE_LEFT, float FIRE_RIGHT, float PARTICLE_DISTANCE, float PARTICLE_RADIUS) {
     if (instance==nullptr) {
-      instance = new EmpsSingleton();
+      instance = new EmpsSingleton(FIRE_TOP, FIRE_BOTTOM, FIRE_LEFT, FIRE_RIGHT, PARTICLE_DISTANCE, PARTICLE_RADIUS);
     }
     return instance;
   }
-  EmpsSingleton(const EmpsSingleton& obj) = delete;
-  int simulate( void ) {
 
+  EmpsSingleton(float FIRE_TOP, float FIRE_BOTTOM, float FIRE_LEFT, float FIRE_RIGHT, float PARTICLE_DISTANCE, float PARTICLE_RADIUS) {
+    this->FIRE_TOP = FIRE_TOP; this->FIRE_BOTTOM = FIRE_BOTTOM; this->FIRE_LEFT = FIRE_LEFT; this->FIRE_RIGHT = FIRE_RIGHT;
+    this->PARTICLE_DISTANCE = PARTICLE_DISTANCE;
+    this->PARTICLE_RADIUS = PARTICLE_RADIUS;
+  }
+
+  EmpsSingleton(const EmpsSingleton& obj) = delete;
+
+  int simulate( void ) {
     printf("\n*** START EMPS-SIMULATION ***\n");
     // calculateConstantParameter();
     mainLoopOfSimulation();
     printf("*** END ***\n\n");
     return 0;
-
   }
 
-  void calculateConstantParameter(int nX, int nY, int nZ ){
-    Re_forParticleNumberDensity  = RADIUS_FOR_NUMBER_DENSITY;
-    Re_forGradient       = RADIUS_FOR_GRADIENT;
-    Re_forLaplacian      = RADIUS_FOR_LAPLACIAN;
+  void calculateConstantParameter(int index){
+    Re_forParticleNumberDensity  = 3.0 * PARTICLE_DISTANCE;
+    Re_forGradient       = 3.0 * PARTICLE_DISTANCE;
+    Re_forLaplacian      = 3.1 * PARTICLE_DISTANCE;
     Re2_forParticleNumberDensity = Re_forParticleNumberDensity*Re_forParticleNumberDensity;
     Re2_forGradient      = Re_forGradient*Re_forGradient;
     Re2_forLaplacian     = Re_forLaplacian*Re_forLaplacian;
-    calculateNZeroAndLambda(nX, nY, nZ);
+    calculateNZeroAndLambda(index);
     FluidDensity       = FLUID_DENSITY;
     collisionDistance  = COLLISION_DISTANCE;
     collisionDistance2 = collisionDistance*collisionDistance;
@@ -115,44 +109,53 @@ public:
     Time=0.0;
   }
 
-
-  void calculateNZeroAndLambda(int nX, int nY, int nZ) {
-    int iX, iY, iZ;
-    int iZ_start, iZ_end;
+  void calculateNZeroAndLambda(int index) {
     double xj, yj, zj, distance, distance2;
     double xi, yi, zi;
     N0_forParticleNumberDensity = 0.0;
     N0_forGradient      = 0.0;
-    N0_forLaplacian     = 0.0;
-    Lambda              = 0.0;
-    xi = 0.0;  yi = 0.0;  zi = 0.0;
-    for(iX=0;iX<nX;iX++){
-      for(iY=0;iY<nY;iY++){
-        for(iZ=0;iZ<nZ;iZ++){
-          // if( ((iX==0)&&(iY==0)) && (iZ==0) )continue;
-          double xj = FIRE_LEFT + iX * PARTICLE_DISTANCE;
-          double yj = FIRE_BOTTOM + iY * PARTICLE_DISTANCE;
-          double zj = 0.0f;
-          distance2 = (xj-xi)*(xj-xi)+(yj-yi)*(yj-yi)+(zj-zi)*(zj-zi);
-          distance = sqrt(distance2);
-          N0_forParticleNumberDensity += weight(distance, Re_forParticleNumberDensity);
-          N0_forGradient      += weight(distance, Re_forGradient);
-          N0_forLaplacian     += weight(distance, Re_forLaplacian);
-          Lambda              += distance2 * weight(distance, Re_forLaplacian);
+    double pndTemp=0.0, gradTemp=0.0;
+    double minDistance = 10.0;
+    int neighborsCount=0;
+    xi = PositionX[index];  yi = PositionY[index];  zi = 0.0;
+    std::cout<<"Neighbors: "<<std::endl;
+    for(int i=0; i<NumberOfParticles; i++) {
+        xj = PositionX[i];
+        yj = PositionY[i];
+        zj = 0.0f;
+        distance2 = (xj-xi)*(xj-xi)+(yj-yi)*(yj-yi)+(zj-zi)*(zj-zi);
+        distance = sqrt(distance2);
+        if (distance!=0.0 && distance<minDistance)
+          minDistance = distance;
+        pndTemp = weight(distance, Re_forParticleNumberDensity);
+        gradTemp = weightGrad(distance, Re_forGradient);
+        if(pndTemp!=0.0) {
+          neighborsCount++;
+          std::cout<<i<<", Weight: "<<pndTemp<<std::endl;;
         }
-      }
+        N0_forParticleNumberDensity += pndTemp;
+        N0_forGradient += gradTemp;
     }
-    Lambda = Lambda/N0_forLaplacian;
+    std::cout<<"N0_forParticleNumberDensity = "<<N0_forParticleNumberDensity<<std::endl;
+    std::cout<<"N0_forGradient = "<<N0_forGradient<<std::endl;
   }
-
 
   double weight( double distance, double re ){
     double weightIJ;
-
-    if( distance >= re ){
+    if( distance >= re || distance==0.0){
       weightIJ = 0.0;
     }else{
       weightIJ = (re/distance) - 1.0;
+    }
+    return weightIJ;
+  }
+
+  double weightGrad( double distance, double re ) {
+    double weightIJ;
+    if( distance>=re || distance==0.0){
+      weightIJ = 0.0;
+    }    else{
+      weightIJ = (re/distance) - (distance/re);
     }
     return weightIJ;
   }
@@ -177,35 +180,14 @@ public:
     }
   }
 
-  void calculatePressure_forExplicitMPS(int iParticle){
-    double n0;
-    double ni;
-    double c,c2;
-    double rho = FLUID_DENSITY;
-
-    c  = SPEED_OF_SOUND;
-    c2 = c * c;
-    n0 = N0_forParticleNumberDensity;
-
-    if ( (particleType[iParticle]!=ParticleType::FIRE) ){
-      Pressure[iParticle] = 0.0;
-    }else{
-      ni  = ParticleNumberDensity[iParticle];
-      if( ni > n0 ){
-        Pressure[iParticle] =  c2 * rho * (ni - n0) / n0;
-      }else{
-        Pressure[iParticle] =  0.0;
-      }
-    }
-  }
-
-void calculateParticleNumberDensity(int i){
+double calculateParticleNumberDensity(int i){
     double xij, yij, zij;
     double distance, distance2;
     double w;
     ParticleNumberDensity[i] = 0.0;
     for(int j=0;j<NumberOfParticles;j++){
-      if( (j==i) || (particleType[j]==ParticleType::GHOST) ) continue;
+      if (i==j)
+        continue;
       xij = PositionX[j] - PositionX[i];
       yij = PositionY[j] - PositionY[i];
       zij = PositionZ[j] - PositionZ[i];
@@ -214,8 +196,29 @@ void calculateParticleNumberDensity(int i){
       w =  weight(distance, Re_forParticleNumberDensity);
       ParticleNumberDensity[i] += w;
     }
-  }
+    return ParticleNumberDensity[i];
+}
 
+  double calculatePressure_forExplicitMPS(int iParticle){
+    double n0;
+    double ni;
+    double c,c2;
+    double rho = FLUID_DENSITY;
+    c  = SPEED_OF_SOUND;
+    c2 = c * c;
+    n0 = N0_forParticleNumberDensity;
+    // if ( (particleType[iParticle]!=ParticleType::FIRE) ){
+    //   Pressure[iParticle] = 0.0;
+    // }else{
+      ni  = ParticleNumberDensity[iParticle];
+       if( ni > n0 ){
+        Pressure[iParticle] =  c2 * rho * (ni - n0) / n0;
+      }else{
+        Pressure[iParticle] =  0.0;
+      // }
+    }
+    return Pressure[iParticle];
+  }
 
   void calculatePressureGradient_forExplicitMPS(int i){
     double gradientX, gradientY, gradientZ;
@@ -224,20 +227,17 @@ void calculateParticleNumberDensity(int i){
     double w,pij;
     double a;
     a =DIM/N0_forGradient;
-
     if(particleType[i] != ParticleType::FIRE) return;
     gradientX = 0.0;  gradientY = 0.0;  gradientZ = 0.0;
     for(int j=0;j<NumberOfParticles;j++){
       if( j==i ) continue;
-      if( particleType[j]==ParticleType::GHOST ) continue;
-      if( particleType[j]==ParticleType::DUMMY_WALL ) continue;
       xij = PositionX[j] - PositionX[i];
       yij = PositionY[j] - PositionY[i];
       zij = PositionZ[j] - PositionZ[i];
       distance2 = (xij*xij) + (yij*yij) + (zij*zij);
       distance = sqrt(distance2);
       if(distance<Re_forGradient){
-        w =  weight(distance, Re_forGradient);
+        w =  weightGrad(distance, Re_forGradient);
         pij = (Pressure[j] + Pressure[i])/distance2;
         gradientX += xij*pij*w;
         gradientY += yij*pij*w;
@@ -252,34 +252,27 @@ void calculateParticleNumberDensity(int i){
     }
   }
 
+  void moveParticleUsingPressureGradient(Particle2d &particle, int i) {
+    if(particle.particleType == ParticleType::FIRE || particle.particleType == ParticleType::AIR){
+      glm::vec3 acceleration = glm::vec3(AccelerationX[i], AccelerationY[i], AccelerationZ[i]);
+      glm::vec3 velocity_diff = acceleration * glm::vec3(static_cast<float>(DT));
+      glm::vec3 position_diff = velocity_diff * glm::vec3(static_cast<float>(DT));
 
-  void moveParticleUsingPressureGradient(Particle2d &particle, int i){
-    if(particle.particleType == ParticleType::FIRE){
-      double accelerationX = AccelerationX[i];
-      double accelerationY = AccelerationY[i];
-      double accelerationZ = AccelerationZ[i];
+      VelocityX[i] += velocity_diff.x;
+      VelocityY[i] += velocity_diff.y;
+      VelocityZ[i] += velocity_diff.z;
+      PositionX[i] += position_diff.x;
+      PositionY[i] += position_diff.y;
+      PositionZ[i] += position_diff.z;
 
-      VelocityX[i] +=accelerationX*DT;
-      VelocityY[i] +=accelerationY*DT;
-      VelocityZ[i] +=accelerationZ*DT;
+      particle.velocity += velocity_diff;
+      particle.position += position_diff;
+      particle.acceleration = glm::vec3(0.0f);
 
-      PositionX[i] +=accelerationX*DT*DT;
-      PositionY[i] +=accelerationY*DT*DT;
-      PositionZ[i] +=accelerationZ*DT*DT;
+      AccelerationX[i]=0.0;
+      AccelerationY[i]=0.0;
+      AccelerationZ[i]=0.0;
     }
-    // AccelerationX[i]=0.0;
-    // AccelerationY[i]=0.0;
-    // AccelerationZ[i]=0.0;
-
-    particle.velocity.x = VelocityX[i];
-    particle.velocity.y = VelocityY[i];
-    particle.velocity.z = VelocityZ[i];
-    particle.acceleration.x = AccelerationX[i];
-    particle.acceleration.y = AccelerationY[i];
-    particle.acceleration.z = AccelerationZ[i];
-    particle.position.x = PositionX[i];
-    particle.position.y = PositionY[i];
-    particle.position.z = PositionZ[i];
   }
 };
 #endif //EMPS_HPP

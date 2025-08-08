@@ -24,7 +24,7 @@ Particle::Particle(int sectorCount, int stackCount, float radius, double particl
     Particle::stackCount = stackCount;
     Particle::radius = radius;
     Particle::particleDistance = particleDistance;
-    Particle::type = ParticleType::GHOST;
+    Particle::type = ParticleType::AIR;
     generateParticleAsSphere();
 }
 
