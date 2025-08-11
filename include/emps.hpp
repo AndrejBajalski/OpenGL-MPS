@@ -192,47 +192,38 @@ void collision( void ){
   double velocity_ix, velocity_iy, velocity_iz;
   double e = COEFFICIENT_OF_RESTITUTION;
   for(i=0;i<NumberOfParticles;i++){
-    VelocityAfterCollisionX[i] = VelocityX[i];
-    VelocityAfterCollisionY[i] = VelocityY[i];
-    VelocityAfterCollisionZ[i] = VelocityZ[i];
-  }
-  for(i=0;i<NumberOfParticles;i++){
     if(particleType[i] == ParticleType::FIRE){
       mi = FluidDensity;
       velocity_ix = VelocityX[i];
       velocity_iy = VelocityY[i];
       velocity_iz = VelocityZ[i];
       for(j=0;j<NumberOfParticles;j++){
-	if( (j==i) || (particleType[j]==ParticleType::AIR) ) continue;
-	    xij = PositionX[j] - PositionX[i];
-	    yij = PositionY[j] - PositionY[i];
-	    zij = PositionZ[j] - PositionZ[i];
-	    distance2 = (xij*xij) + (yij*yij) + (zij*zij);
-	    if(distance2<collisionDistance2){
-	      distance = sqrt(distance2);
-	      //calculate impulse of collision between particles
-	      forceDT = (velocity_ix-VelocityX[j])*(xij/distance)
-	               +(velocity_iy-VelocityY[j])*(yij/distance)
-	               +(velocity_iz-VelocityZ[j])*(zij/distance);
-	      if(forceDT > 0.0){
-	        mj = FluidDensity;
-	        forceDT *= (1.0+e)*mi*mj/(mi+mj);
-	        velocity_ix -= (forceDT/mi)*(xij/distance);
-	        velocity_iy -= (forceDT/mi)*(yij/distance);
-	        velocity_iz -= (forceDT/mi)*(zij/distance);
-	        /*
-	        if(j>i){ fprintf(stderr,"WARNING: Collision occured between %d and %d particles.\n",i,j); }
-	        */
+	      if( (j==i) || (particleType[j]==ParticleType::AIR) ) continue;
+	      xij = PositionX[j] - PositionX[i];
+	      yij = PositionY[j] - PositionY[i];
+	      zij = PositionZ[j] - PositionZ[i];
+	      distance2 = (xij*xij) + (yij*yij) + (zij*zij);
+	      if(distance2<collisionDistance2){
+	        distance = sqrt(distance2);
+	        //calculate impulse of collision between particles
+	        forceDT = (velocity_ix-VelocityX[j])*(xij/distance)
+	                 +(velocity_iy-VelocityY[j])*(yij/distance)
+	                 +(velocity_iz-VelocityZ[j])*(zij/distance);
+	        if(forceDT > 0.0){
+	          mj = FluidDensity;
+	          forceDT *= (1.0+e)*mi*mj/(mi+mj);
+	          velocity_ix -= (forceDT/mi)*(xij/distance);
+	          velocity_iy -= (forceDT/mi)*(yij/distance);
+	          velocity_iz -= (forceDT/mi)*(zij/distance);
+	          /*
+	          if(j>i){ fprintf(stderr,"WARNING: Collision occured between %d and %d particles.\n",i,j); }
+	          */
+	        }
 	      }
-	    }
       }
       VelocityAfterCollisionX[i] = velocity_ix;
       VelocityAfterCollisionY[i] = velocity_iy;
       VelocityAfterCollisionZ[i] = velocity_iz;
-    }
-  }
-  for(i=0;i<NumberOfParticles;i++){
-    if(particleType[i] == ParticleType::FIRE){
       PositionX[i] += (VelocityAfterCollisionX[i]-VelocityX[i])*DT;
       PositionY[i] += (VelocityAfterCollisionY[i]-VelocityY[i])*DT;
       PositionZ[i] += (VelocityAfterCollisionZ[i]-VelocityZ[i])*DT;
