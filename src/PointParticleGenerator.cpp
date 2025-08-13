@@ -17,7 +17,7 @@
 #define MAX_N_PARTICLES 4000
 #define C_VIS 0.1f
 #define C_BUO 0.5f
-#define PARTICLE_RADIUS 0.005f
+#define PARTICLE_RADIUS 0.02f
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 1000
 #define AMBIENT_HEAT 35
@@ -70,10 +70,6 @@ void PointParticleGenerator::init(float delta_time)
                 particle.temperature = MIN_HEAT;
                 particle.particleType = ParticleType::FIRE;
                 empsPtr->setParticleType(counter, particle.particleType);
-            }else {
-                particle.temperature = AMBIENT_HEAT;
-                particle.particleType = ParticleType::AIR;
-                empsPtr->setParticleType(counter, particle.particleType);
             }
             this->particles.push_back(particle);
             glm::vec3 color = calculateColor(particle);
@@ -85,8 +81,8 @@ void PointParticleGenerator::init(float delta_time)
     std::cout<<"TOTAL NUMBER OF PARTICLES: "<<N_PARTICLES<<std::endl;
     this->empsPtr->setNumberOfParticles(N_PARTICLES);
     //instanced variables
-    generateInstanceBuffers(nX*nY, &this->positionVBO, &this->VAO, &position_offsets[0], 1);
-    generateInstanceBuffers(nX*nY, &this->colorVBO, &this->VAO, &colors[0], 2);
+    generateInstanceBuffers(nX*nY, &this->positionVBO, &this->VAO, &position_offsets[0], 2);
+    generateInstanceBuffers(nX*nY, &this->colorVBO, &this->VAO, &colors[0], 3);
     //calculate constants
     int middleParticleIndex = nX/2*nY - nY/2;
     this->empsPtr->calculateConstantParameter(middleParticleIndex);
@@ -95,11 +91,11 @@ void PointParticleGenerator::init(float delta_time)
 void PointParticleGenerator::initGlConfigurations()
 {
     float initialQuad[] = {
-        //position
-        PARTICLE_RADIUS, -PARTICLE_RADIUS, 0.0f,
-        PARTICLE_RADIUS, PARTICLE_RADIUS, 0.0f,
-        -PARTICLE_RADIUS, -PARTICLE_RADIUS, 0.0f,
-        -PARTICLE_RADIUS, PARTICLE_RADIUS, 0.0f
+        //position                                //UV coords
+        PARTICLE_RADIUS, -PARTICLE_RADIUS, 0.0f,  1.0f, 0.0f,     //bottom right
+        PARTICLE_RADIUS, PARTICLE_RADIUS, 0.0f,   1.0f, 1.0f,     //top right
+        -PARTICLE_RADIUS, -PARTICLE_RADIUS, 0.0f, 0.0f, 0.0f,     //bottom left
+        -PARTICLE_RADIUS, PARTICLE_RADIUS, 0.0f,  0.0f, 1.0f      //top left
     };
     //position
     glGenBuffers(1, &this->VBO);
@@ -108,7 +104,9 @@ void PointParticleGenerator::initGlConfigurations()
     glBufferData(GL_ARRAY_BUFFER, sizeof(initialQuad), &initialQuad[0], GL_STATIC_DRAW);
     glBindVertexArray(this->VAO);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), reinterpret_cast<void *>(0));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float), reinterpret_cast<void *>(0));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), reinterpret_cast<void *>(3*sizeof(float)));
 }
 
 void PointParticleGenerator::update()

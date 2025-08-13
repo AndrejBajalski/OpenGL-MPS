@@ -119,7 +119,7 @@ int main() {
     double currentTime = glfwGetTime();
     lightPos.x = glm::sin((float)currentTime)*3;
     processInput(window);
-    glClearColor(.9f, .93f, .9f, 1.0f);
+    glClearColor(.2f, .2f, .2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // projections
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
