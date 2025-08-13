@@ -19,7 +19,7 @@
 class PointParticleGenerator
 {
     std::vector<Particle2d> particles;
-    unsigned int VAO, VBO, colorVBO, positionVBO, positionVAO, colorVAO;
+    unsigned int VAO, VBO, positionVBO, positionVAO, temperatureVBO, temperatureVAO;
     Shader shader;
     float dt;
     float PARTICLE_DISTANCE;
@@ -32,9 +32,6 @@ class PointParticleGenerator
     void init(float delta_time);
     void update();
     void draw();
-    void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, glm::vec3 *arrayPointer, int index);
-    glm::vec3 calculateColor(Particle2d &p);
-    void updateBuffers(unsigned int instanceVBO, glm::vec3 *arrayPointer, int nParticles);
     void checkValid(Particle2d &p);
     void spawnParticle(Particle2d &p);
     void moveParticle(Particle2d &p, int index);

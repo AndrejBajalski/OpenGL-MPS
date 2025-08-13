@@ -5,11 +5,6 @@
 #ifndef PARTICLE2D_H
 #define PARTICLE2D_H
 
-#define PARTICLE_LIFETIME 2
-#define MIN_HEAT 700
-#define MAX_HEAT 1500
-#define AMBIENT_HEAT 30
-
 #include <glm/glm.hpp>
 
 class Particle2d
@@ -27,8 +22,8 @@ public:
         position = glm::vec3(0.0f, 0.0f, 0.0f);
         velocity = glm::vec3(0.0f, 0.0f, 0.0f);
         acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
-        temperature = MIN_HEAT;
-        lifetime = PARTICLE_LIFETIME;
+        temperature = 6000;
+        lifetime = 1.0f;
         mass = 0.025f;
         particleType = ParticleType::FIRE;
     }
@@ -36,13 +31,13 @@ public:
         this->particleType = particleType;
         switch (particleType) {
             case ParticleType::FIRE:
-                this->temperature = MAX_HEAT;
+                this->temperature = 6000.0f;
                 break;
             case ParticleType::AIR:
-                this->temperature = AMBIENT_HEAT;
+                this->temperature = 303.15f;
                 break;
             default:
-                this->temperature = AMBIENT_HEAT;
+                this->temperature = 303.15f;
         }
     }
 

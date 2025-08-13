@@ -113,7 +113,6 @@ void Particle::setPosition(double x, double y, double z) {
     PositionY = y;
     PositionZ = z;
 }
-
 void Particle::setVelocity(double vx, double vy, double vz) {
     VelocityX = vx;
     VelocityY = vy;

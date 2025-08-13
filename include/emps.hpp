@@ -121,7 +121,6 @@ public:
     double minDistance = 10.0;
     int neighborsCount=0;
     xi = PositionX[index];  yi = PositionY[index];  zi = 0.0;
-    std::cout<<"Neighbors: "<<std::endl;
     for(int i=0; i<NumberOfParticles; i++) {
         xj = PositionX[i];
         yj = PositionY[i];
@@ -134,13 +133,12 @@ public:
         gradTemp = weightGrad(distance, Re_forGradient);
         if(pndTemp!=0.0) {
           neighborsCount++;
-          std::cout<<i<<", Weight: "<<pndTemp<<std::endl;;
         }
         N0_forParticleNumberDensity += pndTemp;
         N0_forGradient += gradTemp;
     }
-    std::cout<<"N0_forParticleNumberDensity = "<<N0_forParticleNumberDensity<<std::endl;
-    std::cout<<"N0_forGradient = "<<N0_forGradient<<std::endl;
+    // std::cout<<"N0_forParticleNumberDensity = "<<N0_forParticleNumberDensity<<std::endl;
+    // std::cout<<"N0_forGradient = "<<N0_forGradient<<std::endl;
   }
 
   double weight( double distance, double re ){
@@ -176,9 +174,9 @@ public:
       // moveParticleUsingPressureGradient();
       iTimeStep++;
       Time += DT;
-      if( (iTimeStep % OUTPUT_INTERVAL) == 0 ){
-        printf("TimeStepNumber: %4d   Time: %lf(s)   NumberOfParticles: %d\n", iTimeStep, Time, NumberOfParticles);
-      }
+      // if( (iTimeStep % OUTPUT_INTERVAL) == 0 ){
+      //   printf("TimeStepNumber: %4d   Time: %lf(s)   NumberOfParticles: %d\n", iTimeStep, Time, NumberOfParticles);
+      // }
       if( Time >= FINISH_TIME ){break;}
     }
   }
