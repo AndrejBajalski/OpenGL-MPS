@@ -7,18 +7,20 @@
 #include <random>
 #include "emps.hpp"
 #include "Camera.hpp"
-#include "Camera.hpp"
 #include "glad/glad.h"
 #include "Particle2d.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 #define FIRE_LEFT (-0.2f)
 #define FIRE_RIGHT 0.2f
 #define FIRE_BOTTOM (-0.5f)
-#define FIRE_TOP (0.5f)
-#define MAX_N_PARTICLES 3000
+#define FIRE_TOP (0.8f)
+#define MAX_N_PARTICLES 1000
 #define C_VIS 0.1f
 #define C_BUO 1.5f
-#define PARTICLE_RADIUS 0.013f
+#define PARTICLE_RADIUS 0.05f
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 1000
 #define AMBIENT_HEAT 30
@@ -29,15 +31,10 @@
 std::vector<glm::vec3> position_offsets;
 std::vector<float> particleTemperatures;
 
-static const glm::vec3 FIRE_0 = {1.0f, 0.9098f, 0.03137f};
-static const glm::vec3 FIRE_1 = {1.0f, 0.8078f, 0.0f};
-static const glm::vec3 FIRE_2 = {1.0f, 0.6039f, 0.0f};
-static const glm::vec3 FIRE_3 = {1.0f, 0.3529f, 0.0f};
-static const float UPPER_BOUND = FIRE_TOP + 0.15f;
 static int N_PARTICLES = 1000;
 static std::default_random_engine generator;
-static const float SPAWNING_OFFSET_X = PARTICLE_RADIUS*2*2;
-static const float SPAWNING_OFFSET_Z = PARTICLE_RADIUS*2*2;
+// static constexpr float SPAWNING_OFFSET_X = PARTICLE_RADIUS*2*2;
+static constexpr float SPAWNING_OFFSET_Z = PARTICLE_RADIUS*2*2;
 static std::normal_distribution<float> distributionNormal(0.0f, FIRE_RIGHT/2);
 static std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now().time_since_epoch().count());
 static float DT;
@@ -46,6 +43,7 @@ template<typename V>
     void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, V *arrayPointer, int index, std::string type);
 template<typename V>
     void updateBuffers(unsigned int instanceVBO, V *arrayPointer, int nParticles, std::string type);
+void generateTextures(unsigned int *texture);
 float calculateBuoyantForce(Particle2d &particle);
 float updateTemperature(Particle2d &p);
 float calculatePressureForce(Particle2d &p);
@@ -64,7 +62,7 @@ PointParticleGenerator::PointParticleGenerator(double dt, Shader shader): dt(dt)
 void PointParticleGenerator::init(float delta_time)
 {
     initGlConfigurations();
-    DT = delta_time;
+    generateTextures(&this->texture1);
     configEmps();
     Particle2d::radius = PARTICLE_RADIUS;
     int counter = 0;
@@ -79,11 +77,10 @@ void PointParticleGenerator::init(float delta_time)
         counter++;
     }
     N_PARTICLES = counter;
-    std::cout<<"TOTAL NUMBER OF PARTICLES: "<<N_PARTICLES<<std::endl;
-    this->empsPtr->setNumberOfParticles(N_PARTICLES);
+    this->empsPtr->setNumberOfParticles(MAX_N_PARTICLES);
     //instanced variables
     generateInstanceBuffers(N_PARTICLES, &this->positionVBO, &this->VAO, &position_offsets[0], 2, "vec3");
-    generateInstanceBuffers(N_PARTICLES, &this->temperatureVBO, &this->temperatureVAO, &particleTemperatures[0], 3, "float");
+    generateInstanceBuffers(N_PARTICLES, &this->temperatureVBO, &this->VAO, &particleTemperatures[0], 3, "float");
 }
 
 void PointParticleGenerator::initGlConfigurations()
@@ -102,16 +99,15 @@ void PointParticleGenerator::initGlConfigurations()
     glBufferData(GL_ARRAY_BUFFER, sizeof(initialQuad), &initialQuad[0], GL_STATIC_DRAW);
     glBindVertexArray(this->VAO);
     glEnableVertexAttribArray(0);
+    //aPos
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float), reinterpret_cast<void *>(0));
+    //aUV
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), reinterpret_cast<void *>(3*sizeof(float)));
 }
 
 void PointParticleGenerator::update()
 {
-    double maxNi = 0.0;
-    double minNi = 10.0;
-    double maxPressure = 0.0;
     for (int i=0; i<particles.size(); i++)
     {
         Particle2d &p = this->particles[i];
@@ -135,10 +131,62 @@ void PointParticleGenerator::update()
 void PointParticleGenerator::draw()
 {
     glBindVertexArray(this->VAO);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, this->texture1);
+    glBindVertexArray(VAO);
     //for instanced drawing
     glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, (int)this->particles.size());
     glBindVertexArray(0);
 }
+
+void PointParticleGenerator::spawnParticle(Particle2d &p) {
+    ParticleType tmpType = p.particleType;
+    p = Particle2d(tmpType);
+    float tmp = distributionNormal(generator);
+    float x = std::max(FIRE_LEFT, std::min(tmp, FIRE_RIGHT));
+    float y = randRange(FIRE_BOTTOM, FIRE_BOTTOM+4*PARTICLE_RADIUS);
+    float z = randRange(-SPAWNING_OFFSET_Z, SPAWNING_OFFSET_Z);
+    float t = MAX_HEAT;
+    float life = p.lifetime * randRange(0.65f, 1.0f);
+    p.velocity = glm::vec3(randRange(-0.4f, 0.4f), randRange(1.2f, 2.6f), randRange(-0.4f,0.4f));
+    p.position.x = x;
+    p.position.y = y;
+    p.position.z = z;
+    p.temperature = t;
+    p.lifetime = life;
+}
+
+void PointParticleGenerator::checkValid(Particle2d &p) {
+    if (p.lifetime < 0.0 || p.position.y >= FIRE_TOP) {
+        spawnParticle(p);
+    }
+}
+float calculateBuoyantForce(Particle2d &p) {
+    float T = C_BUO * (p.temperature - AMBIENT_HEAT)/AMBIENT_HEAT - GRAVITY;
+    return T;
+}
+float updateTemperature(Particle2d &p) {
+    p.temperature -= 100.0f;
+    if (p.temperature < MIN_HEAT) {
+        p.temperature = SMOKE_HEAT;
+    }
+    return p.temperature;
+}
+
+float calculatePressureForce(Particle2d &p) {
+    /**TODO
+     *Calculate pressure force using the EMPS method
+     **/
+    return 0.0f;
+}
+
+void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
+    p.velocity += p.acceleration * glm::vec3(dt);
+    glm::vec3 dp =  p.velocity * glm::vec3(dt);
+    p.position += dp;
+    empsPtr->setPosition(index, p.position.x, p.position.y, p.position.z);
+}
+
 template<typename V>
 void generateInstanceBuffers(int nParticles, unsigned int *instanceVBO, unsigned int *VAO, V *arrayPointer, int index, std::string type) {
     //instanceMatrix VBO
@@ -169,56 +217,34 @@ void updateBuffers(unsigned int instanceVBO, V *arrayPointer, int nParticles, st
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * nParticles, arrayPointer);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
-
-void PointParticleGenerator::spawnParticle(Particle2d &p) {
-    ParticleType tmpType = p.particleType;
-    p = Particle2d(tmpType);
-    float tmp = distributionNormal(generator);
-    float x = std::max(FIRE_LEFT, std::min(tmp, FIRE_RIGHT));
-    float y = randRange(FIRE_BOTTOM, FIRE_BOTTOM+4*PARTICLE_RADIUS);
-    float z = randRange(-SPAWNING_OFFSET_Z, SPAWNING_OFFSET_Z);
-    float t = MAX_HEAT;
-    float life = p.lifetime * randRange(0.65f, 1.0f);
-    p.velocity = glm::vec3(randRange(-0.4f, 0.4f), randRange(1.2f, 2.6f), randRange(-0.4f,0.4f));
-    p.position.x = x;
-    p.position.y = y;
-    p.position.z = z;
-    p.temperature = t;
-    p.lifetime = life;
-}
-
-void PointParticleGenerator::checkValid(Particle2d &p) {
-    // if (p.lifetime<=0.0f || p.position.y>FIRE_TOP || p.position.y<FIRE_BOTTOM || p.position.x<=FIRE_LEFT-0.15f || p.position.x>=FIRE_RIGHT+0.15f) {
-    //     spawnParticle(p);
-    // }
-    if (p.lifetime < 0.0) {
-        spawnParticle(p);
+// load and create a texture
+void generateTextures(unsigned int *texture) {
+    // texture 1
+    // ---------
+    glGenTextures(1, texture);
+    glBindTexture(GL_TEXTURE_2D, *texture);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    unsigned char *data = stbi_load("../res/textures/smoke3.png", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
     }
-}
-float calculateBuoyantForce(Particle2d &p) {
-    float T = C_BUO * (p.temperature - AMBIENT_HEAT)/AMBIENT_HEAT - GRAVITY;
-    return T;
-}
-float updateTemperature(Particle2d &p) {
-    p.temperature -= 100.0f;
-    if (p.temperature < MIN_HEAT)
-        p.temperature = MIN_HEAT;
-    return p.temperature;
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
 }
 
-float calculatePressureForce(Particle2d &p) {
-    /**TODO
-     *Calculate pressure force using the EMPS method
-     **/
-    return 0.0f;
-}
-
-void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
-    p.velocity += p.acceleration * glm::vec3(dt);
-    glm::vec3 dp =  p.velocity * glm::vec3(dt);
-    p.position += dp;
-    empsPtr->setPosition(index, p.position.x, p.position.y, p.position.z);
-}
 void PointParticleGenerator::configEmps() {
     this->empsPtr = EmpsSingleton::getInstance(FIRE_TOP, FIRE_BOTTOM, FIRE_LEFT, FIRE_RIGHT, PARTICLE_DISTANCE, PARTICLE_RADIUS);
     this->empsPtr->DT = DT;

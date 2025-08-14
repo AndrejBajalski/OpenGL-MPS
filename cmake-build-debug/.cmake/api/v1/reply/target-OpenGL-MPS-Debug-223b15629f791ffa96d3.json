@@ -151,7 +151,7 @@
 			"language" : "C",
 			"sourceIndexes" : 
 			[
-				20
+				22
 			]
 		}
 	],
@@ -232,33 +232,35 @@
 			"sourceIndexes" : 
 			[
 				13,
-				14
+				14,
+				15,
+				16
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				15,
-				16,
 				17,
 				18,
-				19
+				19,
+				20,
+				21
 			]
 		},
 		{
 			"name" : "vendors",
 			"sourceIndexes" : 
 			[
-				20
+				22
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				21,
-				22
+				23,
+				24
 			]
 		}
 	],
@@ -337,12 +339,22 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "res/textures/awesomeface.png",
+			"path" : "res/textures/smoke1.png",
 			"sourceGroupIndex" : 3
 		},
 		{
 			"backtrace" : 1,
-			"path" : "res/textures/container.jpg",
+			"path" : "res/textures/smoke2.png",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "res/textures/smoke3.png",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "res/textures/smoke4.png",
 			"sourceGroupIndex" : 3
 		},
 		{

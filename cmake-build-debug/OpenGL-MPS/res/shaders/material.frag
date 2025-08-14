@@ -56,11 +56,12 @@ in float fTemp;
 uniform vec3 viewPos;
 uniform float alpha;
 uniform float temperature;
+uniform sampler2D ourTexture;
 
 void main()
 {
-    vec2 centered = texCoord * 2.0 - 1.0;
-    float a = 1.0 - smoothstep(0.9, 1.0, length(centered));
+    vec4 texColor = texture(ourTexture, texCoord);
+    if(texColor.a < 0.1) discard;
     vec3 resColor = blackbody(fTemp);
-    FragColor = vec4(resColor, a);
+    FragColor = texColor * vec4(resColor, 1.0);
 }

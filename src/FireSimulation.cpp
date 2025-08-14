@@ -8,7 +8,6 @@
 #include "emps.hpp"
 #include <ParticleType.h>
 #include <thread>
-
 #include "Particle.hpp"
 #include "PointParticleGenerator.h"
 
@@ -100,7 +99,7 @@ int main() {
   // ------------------------------------------------------------------
 
   glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   PointParticleGenerator generator = PointParticleGenerator(DT, lightingShader);
   generator.init(DT);

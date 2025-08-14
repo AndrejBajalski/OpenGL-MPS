@@ -524,4 +524,5 @@ CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_transform.hpp \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/matrix_transform.inl \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/matrix_transform.inl \
- C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle2d.h
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle2d.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb/stb_image.h
