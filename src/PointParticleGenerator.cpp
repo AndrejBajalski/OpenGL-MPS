@@ -32,13 +32,13 @@
 std::vector<glm::vec3> position_offsets;
 std::vector<float> particleTemperatures;
 
-static int N_PARTICLES = 1000;
-static std::default_random_engine generator;
 // static constexpr float SPAWNING_OFFSET_X = PARTICLE_RADIUS*2*2;
 static constexpr float SPAWNING_OFFSET_Z = PARTICLE_RADIUS*2*2;
 static std::normal_distribution<float> distributionNormal(0.0f, FIRE_RIGHT/2);
 static std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now().time_since_epoch().count());
 static float DT;
+float PointParticleGenerator::P_RADIUS;
+int PointParticleGenerator::N_PARTICLES;
 
 template<typename V>
     void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, V *arrayPointer, int index, std::string type);
@@ -62,6 +62,7 @@ int randIntRange(int a, int b) {
 PointParticleGenerator::PointParticleGenerator(double dt, Shader shader): dt(dt), shader(shader) {
     this->PARTICLE_DISTANCE = PARTICLE_RADIUS*2.0f;
     this->FIRE_LENGTH = {(FIRE_RIGHT-FIRE_LEFT)/(this->PARTICLE_DISTANCE+PARTICLE_RADIUS*2), (FIRE_TOP-FIRE_BOTTOM)/(this->PARTICLE_DISTANCE+PARTICLE_RADIUS*2)};
+    P_RADIUS = PARTICLE_RADIUS;
 }
 
 void PointParticleGenerator::init(float delta_time)
@@ -129,8 +130,8 @@ void PointParticleGenerator::update()
     }
     // std::cout<<"Max Particle number density: Particle "<<maxNiIndex<<" -> "<<maxNi<<std::endl;
     // std::cout<<"Max Pressure: "<<maxPressure<<std::endl;
-    updateBuffers(this->positionVBO, &position_offsets[0], this->particles.size(), "vec3");
-    updateBuffers(this->temperatureVBO, &particleTemperatures[0], this->particles.size(), "float");
+    updateBuffers(this->positionVBO, &position_offsets[0], (int)particles.size(), "vec3");
+    updateBuffers(this->temperatureVBO, &particleTemperatures[0], (int)particles.size(), "float");
 }
 
 void PointParticleGenerator::draw()
@@ -139,15 +140,17 @@ void PointParticleGenerator::draw()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, this->texture1);
     glBindVertexArray(VAO);
-    //for instanced drawing
-    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, (int)this->particles.size());
+    //for instanced drawing of a quad
+    // glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, (int)this->particles.size())
+    //for instanced drawing of a cube
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, (int) this->particles.size());;
     glBindVertexArray(0);
 }
 
 void PointParticleGenerator::spawnParticle(Particle2d &p) {
     ParticleType tmpType = p.particleType;
     p = Particle2d(tmpType);
-    float tmp = distributionNormal(generator);
+    float tmp = distributionNormal(rng);
     float x = std::max(FIRE_LEFT, std::min(tmp, FIRE_RIGHT));
     float y = randRange(FIRE_BOTTOM, FIRE_BOTTOM+4*PARTICLE_RADIUS);
     float z = randRange(-SPAWNING_OFFSET_Z, SPAWNING_OFFSET_Z);

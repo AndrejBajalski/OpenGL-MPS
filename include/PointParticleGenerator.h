@@ -15,7 +15,6 @@
 #define AMBIENT_HEAT 30
 #define MAX_PARTICLES 2000
 
-
 class PointParticleGenerator
 {
     std::vector<Particle2d> particles;
@@ -27,6 +26,8 @@ class PointParticleGenerator
     EmpsSingleton *empsPtr;
     void initGlConfigurations();
     public:
+    static int N_PARTICLES;
+    static float P_RADIUS;
     PointParticleGenerator();
     PointParticleGenerator(double dt, Shader shader);
     void init(float delta_time);

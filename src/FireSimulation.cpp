@@ -17,8 +17,8 @@
 const std::string program_name = ("EMPS method");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-// void mouse_callback(GLFWwindow *window, double xpos, double ypos);
-// void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+void mouse_callback(GLFWwindow *window, double xpos, double ypos);
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess);
 void generateInstanceBuffers(int n, unsigned int VAO);
@@ -64,8 +64,8 @@ int main() {
   }
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-  // glfwSetCursorPosCallback(window, mouse_callback);
-  // glfwSetScrollCallback(window, scroll_callback);
+  glfwSetCursorPosCallback(window, mouse_callback);
+  glfwSetScrollCallback(window, scroll_callback);
 
   // tell GLFW to capture our mouse
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -89,7 +89,7 @@ int main() {
 
   // build and compile our shader zprogram
   // ------------------------------------
-  Shader lightingShader(
+  Shader fireShader(
       shader_location + fire_shader + std::string(".vert"),
       shader_location + fire_shader + std::string(".frag"));
   // Shader lampShader(shader_location + lamp_shader + std::string(".vert"),
@@ -99,9 +99,9 @@ int main() {
   // ------------------------------------------------------------------
 
   glEnable(GL_BLEND);
-  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+  glBlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-  PointParticleGenerator generator = PointParticleGenerator(DT, lightingShader);
+  PointParticleGenerator generator = PointParticleGenerator(DT, fireShader);
   generator.init(DT);
 //bug check
   GLenum err;
@@ -110,7 +110,9 @@ int main() {
   }
 //game loop
 //----------------------------------------------------------------------------------------------------
-  lightingShader.use();
+  fireShader.use();
+  float particleRadius = PointParticleGenerator::P_RADIUS;
+  fireShader.setFloat("billboardSize", particleRadius);
   double lastTime = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
     // per-frame time logic
@@ -123,10 +125,10 @@ int main() {
     // projections
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
-    lightingShader.setMat4("projection", projection);
-    lightingShader.setMat4("view", view);
+    fireShader.setMat4("projection", projection);
+    fireShader.setMat4("view", view);
     // manually adjust fps
-    double deltaTime = currentTime - lastTime;
+    deltaTime = currentTime - lastTime;
     if (deltaTime < DT) {
       double sleepingTime = DT - deltaTime;
       std::this_thread::sleep_for(std::chrono::duration<double>(sleepingTime));
@@ -166,15 +168,15 @@ void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 am
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
-
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     camera.ProcessKeyboard(FORWARD, deltaTime);
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     camera.ProcessKeyboard(BACKWARD, deltaTime);
   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     camera.ProcessKeyboard(LEFT, deltaTime);
-  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
     camera.ProcessKeyboard(RIGHT, deltaTime);
+  }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
@@ -188,27 +190,26 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
-// void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
-//   float xpos = static_cast<float>(xposd);
-//   float ypos = static_cast<float>(yposd);
-//   if (firstMouse) {
-//     lastX = xpos;
-//     lastY = ypos;
-//     firstMouse = false;
-//   }
-//
-//   float xoffset = xpos - lastX;
-//   float yoffset =
-//       lastY - ypos; // reversed since y-coordinates go from bottom to top
-//
-//   lastX = xpos;
-//   lastY = ypos;
-//
-//   camera.ProcessMouseMovement(xoffset, yoffset);
-// }
+void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
+  float xpos = static_cast<float>(xposd);
+  float ypos = static_cast<float>(yposd);
+  if (firstMouse) {
+    lastX = xpos;
+    lastY = ypos;
+    firstMouse = false;
+  }
+  float xoffset = xpos - lastX;
+  float yoffset =
+      lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+  lastX = xpos;
+  lastY = ypos;
+
+  camera.ProcessMouseMovement(xoffset, yoffset);
+}
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
-// void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-//   camera.ProcessMouseScroll(static_cast<float>(yoffset));
-// }
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+  camera.ProcessMouseScroll(static_cast<float>(yoffset));
+}
