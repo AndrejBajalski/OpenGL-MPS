@@ -8,7 +8,7 @@
 #include "emps.hpp"
 #include <ParticleType.h>
 #include <thread>
-#include "Particle.hpp"
+#include "Sphere.hpp"
 #include "PointParticleGenerator.h"
 
 #define PI 3.14159265359f
@@ -84,14 +84,14 @@ int main() {
   // build and compile our shader program
   // ------------------------------------
   std::string shader_location("../res/shaders/");
-  std::string material_shader("material");
+  std::string fire_shader("fire");
   std::string lamp_shader("lamp");
 
   // build and compile our shader zprogram
   // ------------------------------------
   Shader lightingShader(
-      shader_location + material_shader + std::string(".vert"),
-      shader_location + material_shader + std::string(".frag"));
+      shader_location + fire_shader + std::string(".vert"),
+      shader_location + fire_shader + std::string(".frag"));
   // Shader lampShader(shader_location + lamp_shader + std::string(".vert"),
   //                   shader_location + lamp_shader + std::string(".frag"));
 

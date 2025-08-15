@@ -98,26 +98,11 @@ CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\FireSimulation.cpp -o CMakeFiles\OpenGL-MPS.dir\src\FireSimulation.cpp.s
 
-CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
-CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
-CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Particle.cpp
-CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\Particle.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\Particle.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Particle.cpp
-
-CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Particle.cpp > CMakeFiles\OpenGL-MPS.dir\src\Particle.cpp.i
-
-CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Particle.cpp -o CMakeFiles\OpenGL-MPS.dir\src\Particle.cpp.s
-
 CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
 CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
 CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/PointParticleGenerator.cpp
 CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\PointParticleGenerator.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\PointParticleGenerator.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\PointParticleGenerator.cpp
 
 CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.i: cmake_force
@@ -132,7 +117,7 @@ CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.ma
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Shader.cpp
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\Shader.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\Shader.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Shader.cpp
 
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.i: cmake_force
@@ -142,6 +127,21 @@ CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.i: cmake_force
 CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Shader.cpp -o CMakeFiles\OpenGL-MPS.dir\src\Shader.cpp.s
+
+CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
+CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
+CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Sphere.cpp
+CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj: CMakeFiles/OpenGL-MPS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj -MF CMakeFiles\OpenGL-MPS.dir\src\Sphere.cpp.obj.d -o CMakeFiles\OpenGL-MPS.dir\src\Sphere.cpp.obj -c C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Sphere.cpp
+
+CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Sphere.cpp > CMakeFiles\OpenGL-MPS.dir\src\Sphere.cpp.i
+
+CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\admin\OneDrive\Dokumenti\OpenGL-MPS\src\Sphere.cpp -o CMakeFiles\OpenGL-MPS.dir\src\Sphere.cpp.s
 
 CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj: CMakeFiles/OpenGL-MPS.dir/flags.make
 CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj: CMakeFiles/OpenGL-MPS.dir/includes_CXX.rsp
@@ -177,9 +177,9 @@ CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.s: cmake_force
 OpenGL__MPS_OBJECTS = \
 "CMakeFiles/OpenGL-MPS.dir/src/Camera.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj" \
-"CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj" \
+"CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj" \
 "CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj"
 
@@ -188,9 +188,9 @@ OpenGL__MPS_EXTERNAL_OBJECTS =
 
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/Camera.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj
-OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj
+OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj
 OpenGL-MPS/bin/OpenGL-MPS.exe: CMakeFiles/OpenGL-MPS.dir/build.make

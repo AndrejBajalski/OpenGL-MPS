@@ -3,32 +3,30 @@
 //
 #include<math.h>
 #include <vector>
-#include <Particle.hpp>
+#include <Sphere.hpp>
 #include <ParticleType.h>
+#include <glad/glad.h>
 #define PI 3.14159265358979323846
 
-int Particle::sectorCount;
-int Particle::stackCount;
-float Particle::radius;
-double Particle::particleDistance;
-std::vector<float> Particle::sphere_vertices;
-std::vector<int> Particle::lineIndices;
-std::vector<unsigned int> Particle::indices;
+int Sphere::sectorCount;
+int Sphere::stackCount;
+float Sphere::radius;
+std::vector<float> Sphere::sphere_vertices;
+std::vector<int> Sphere::lineIndices;
+std::vector<unsigned int> Sphere::indices;
 
-Particle::Particle() {
-    generateParticleAsSphere();
+Sphere::Sphere() {
+    generateSphere();
 }
 
-Particle::Particle(int sectorCount, int stackCount, float radius, double particleDistance) {
-    Particle::sectorCount = sectorCount;
-    Particle::stackCount = stackCount;
-    Particle::radius = radius;
-    Particle::particleDistance = particleDistance;
-    Particle::type = ParticleType::AIR;
-    generateParticleAsSphere();
+Sphere::Sphere(int sectorCount, int stackCount, float radius) {
+    Sphere::sectorCount = sectorCount;
+    Sphere::stackCount = stackCount;
+    Sphere::radius = radius;
+    generateSphere();
 }
 
-Particle Particle::generateParticleAsSphere() {
+Sphere Sphere::generateSphere() {
     float x, y, z, xy;                              // vertex position
     float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
     float s, t;                                     // vertex texCoord
@@ -94,28 +92,36 @@ Particle Particle::generateParticleAsSphere() {
     }
     return *this;
 }
-
-void Particle::setParticleType(enum ParticleType type) {
-    this->type = type;
+void Sphere::setRadius(double radius) {
+    Sphere::radius = radius;
 }
-void Particle::setRadius(double radius) {
-    Particle::radius = radius;
-}
-void Particle::setSectorAndStackCount(int sectorCount, int stackCount) {
-    Particle::sectorCount = sectorCount;
-    Particle::stackCount = stackCount;
-}
-void Particle::setParticleDistance(double particleDistance) {
-    Particle::particleDistance = particleDistance;
-}
-void Particle::setPosition(double x, double y, double z) {
-    PositionX = x;
-    PositionY = y;
-    PositionZ = z;
-}
-void Particle::setVelocity(double vx, double vy, double vz) {
-    VelocityX = vx;
-    VelocityY = vy;
-    VelocityZ = vz;
+void Sphere::setSectorAndStackCount(int sectorCount, int stackCount) {
+    Sphere::sectorCount = sectorCount;
+    Sphere::stackCount = stackCount;
 }
 
+void Sphere::initGlConfig() {
+    glGenBuffers(1, &sphereVBO);
+    glGenBuffers(1, &sphereEBO);
+    glGenVertexArrays(1, &sphereVAO);
+    //VBO
+    glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere_vertices.size(), sphere_vertices.data(), GL_STATIC_DRAW);
+    //EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
+    //VAO
+    glBindVertexArray(sphereVAO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          reinterpret_cast<void *>(0));
+    glEnableVertexAttribArray(0);
+    //normal attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          reinterpret_cast<void *>(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+}
+
+void Sphere::draw() {
+    glBindVertexArray(sphereVAO);
+    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, indices.data());
+}

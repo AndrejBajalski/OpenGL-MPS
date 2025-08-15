@@ -247,30 +247,6 @@ src/FireSimulation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.s
 .PHONY : src/FireSimulation.cpp.s
 
-src/Particle.obj: src/Particle.cpp.obj
-.PHONY : src/Particle.obj
-
-# target to build an object file
-src/Particle.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.obj
-.PHONY : src/Particle.cpp.obj
-
-src/Particle.i: src/Particle.cpp.i
-.PHONY : src/Particle.i
-
-# target to preprocess a source file
-src/Particle.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.i
-.PHONY : src/Particle.cpp.i
-
-src/Particle.s: src/Particle.cpp.s
-.PHONY : src/Particle.s
-
-# target to generate assembly for a file
-src/Particle.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Particle.cpp.s
-.PHONY : src/Particle.cpp.s
-
 src/PointParticleGenerator.obj: src/PointParticleGenerator.cpp.obj
 .PHONY : src/PointParticleGenerator.obj
 
@@ -318,6 +294,30 @@ src/Shader.s: src/Shader.cpp.s
 src/Shader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.s
 .PHONY : src/Shader.cpp.s
+
+src/Sphere.obj: src/Sphere.cpp.obj
+.PHONY : src/Sphere.obj
+
+# target to build an object file
+src/Sphere.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj
+.PHONY : src/Sphere.cpp.obj
+
+src/Sphere.i: src/Sphere.cpp.i
+.PHONY : src/Sphere.i
+
+# target to preprocess a source file
+src/Sphere.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.i
+.PHONY : src/Sphere.cpp.i
+
+src/Sphere.s: src/Sphere.cpp.s
+.PHONY : src/Sphere.s
+
+# target to generate assembly for a file
+src/Sphere.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.s
+.PHONY : src/Sphere.cpp.s
 
 src/emps.obj: src/emps.cpp.obj
 .PHONY : src/emps.obj
@@ -388,15 +388,15 @@ help:
 	@echo ... src/FireSimulation.obj
 	@echo ... src/FireSimulation.i
 	@echo ... src/FireSimulation.s
-	@echo ... src/Particle.obj
-	@echo ... src/Particle.i
-	@echo ... src/Particle.s
 	@echo ... src/PointParticleGenerator.obj
 	@echo ... src/PointParticleGenerator.i
 	@echo ... src/PointParticleGenerator.s
 	@echo ... src/Shader.obj
 	@echo ... src/Shader.i
 	@echo ... src/Shader.s
+	@echo ... src/Sphere.obj
+	@echo ... src/Sphere.i
+	@echo ... src/Sphere.s
 	@echo ... src/emps.obj
 	@echo ... src/emps.i
 	@echo ... src/emps.s

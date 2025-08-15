@@ -67,9 +67,10 @@ void main()
     vec4 texColor = texture(ourTexture, texCoord);
     vec3 resColor;
     if(texColor.a < 0.1) discard;
-    if(fTemp < 1000.0f){
-        resColor = smoke(fTemp);
-    }else {
+//    if(fTemp < 1000.0f){
+//        resColor = smoke(fTemp);
+//    }
+    else {
         resColor = blackbody(fTemp);
     }
     FragColor = texColor * vec4(resColor, 1.0);

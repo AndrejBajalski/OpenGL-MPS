@@ -548,7 +548,7 @@ CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/sstream.tcc \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/emps.hpp \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/math.h \
- C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle.hpp \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Sphere.hpp \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle2d.h \

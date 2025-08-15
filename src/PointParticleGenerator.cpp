@@ -17,7 +17,7 @@
 #define FIRE_RIGHT 0.2f
 #define FIRE_BOTTOM (-0.5f)
 #define FIRE_TOP (0.8f)
-#define MAX_N_PARTICLES 1000
+#define MAX_N_PARTICLES 4000
 #define C_VIS 0.1f
 #define C_BUO 1.5f
 #define PARTICLE_RADIUS 0.05f

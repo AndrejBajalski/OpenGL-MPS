@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <Particle.hpp>
+#include <Sphere.hpp>
 #include<ParticleType.h>
 
 #include "Particle2d.h"
@@ -71,7 +71,7 @@ public:
   double Lambda;
   double collisionDistance,collisionDistance2;
   double FluidDensity;
-  Particle *particles;
+  Sphere *particles;
   double DT;
 
   static EmpsSingleton* getInstance(float FIRE_TOP, float FIRE_BOTTOM, float FIRE_LEFT, float FIRE_RIGHT, float PARTICLE_DISTANCE, float PARTICLE_RADIUS) {

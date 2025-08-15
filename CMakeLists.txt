@@ -69,9 +69,8 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
         include/Particle2d.h
 )
 #add_executable(OpenGL-MPS-2
-#        res/shaders/material.frag
-#        res/shaders/material.vert
-#        src/Particle.cpp
+#        res/shaders/fire.frag
+#        res/shaders/fire.vert
 #        src/emps.cpp
 #        src/Shader.cpp
 #        src/Camera.cpp
