@@ -48,6 +48,11 @@ vec3 blackbody(float kelvin) {
     }
     return vec3(r, g, b) / 255.0;
 }
+vec3 smoke(float temperature) {
+    float coeff = temperature/1000.0f;
+    return vec3(1/coeff, 1/coeff, 1/coeff);
+}
+
 //in vec3 FragPos;
 //in vec3 Normal;
 in vec2 texCoord;
@@ -55,13 +60,17 @@ in float fTemp;
 
 uniform vec3 viewPos;
 uniform float alpha;
-uniform float temperature;
 uniform sampler2D ourTexture;
 
 void main()
 {
     vec4 texColor = texture(ourTexture, texCoord);
+    vec3 resColor;
     if(texColor.a < 0.1) discard;
-    vec3 resColor = blackbody(fTemp);
+    if(fTemp < 1000.0f){
+        resColor = smoke(fTemp);
+    }else {
+        resColor = blackbody(fTemp);
+    }
     FragColor = texColor * vec4(resColor, 1.0);
 }

@@ -26,6 +26,7 @@
 #define AMBIENT_HEAT 30
 #define MIN_HEAT 1500.0f
 #define MAX_HEAT 6000.0f
+#define SMOKE_HEAT 410.0f
 #define GRAVITY 9.81f
 
 std::vector<glm::vec3> position_offsets;
@@ -51,6 +52,10 @@ float Particle2d::radius = 0.0f;
 
 float randRange(float a, float b) {
     std::uniform_real_distribution<float> dist(a, b);
+    return dist(rng);
+}
+int randIntRange(int a, int b) {
+    std::uniform_int_distribution<int> dist(a, b);
     return dist(rng);
 }
 
@@ -168,7 +173,7 @@ float calculateBuoyantForce(Particle2d &p) {
 float updateTemperature(Particle2d &p) {
     p.temperature -= 100.0f;
     if (p.temperature < MIN_HEAT) {
-        p.temperature = SMOKE_HEAT;
+        p.temperature = randRange(SMOKE_HEAT, MIN_HEAT);
     }
     return p.temperature;
 }
@@ -232,6 +237,7 @@ void generateTextures(unsigned int *texture) {
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    int smokeTextureNumber = randIntRange(1, 4);
     unsigned char *data = stbi_load("../res/textures/smoke3.png", &width, &height, &nrChannels, 0);
     if (data)
     {
