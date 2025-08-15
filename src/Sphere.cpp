@@ -17,6 +17,7 @@ std::vector<unsigned int> Sphere::indices;
 
 Sphere::Sphere() {
     generateSphere();
+    initGlConfig();
 }
 
 Sphere::Sphere(int sectorCount, int stackCount, float radius) {
@@ -24,6 +25,7 @@ Sphere::Sphere(int sectorCount, int stackCount, float radius) {
     Sphere::stackCount = stackCount;
     Sphere::radius = radius;
     generateSphere();
+    initGlConfig();
 }
 
 Sphere Sphere::generateSphere() {
@@ -101,17 +103,14 @@ void Sphere::setSectorAndStackCount(int sectorCount, int stackCount) {
 }
 
 void Sphere::initGlConfig() {
+    glGenVertexArrays(1, &sphereVAO);
+    glBindVertexArray(sphereVAO);
     glGenBuffers(1, &sphereVBO);
     glGenBuffers(1, &sphereEBO);
-    glGenVertexArrays(1, &sphereVAO);
     //VBO
     glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere_vertices.size(), sphere_vertices.data(), GL_STATIC_DRAW);
-    //EBO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
     //VAO
-    glBindVertexArray(sphereVAO);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                           reinterpret_cast<void *>(0));
     glEnableVertexAttribArray(0);
@@ -119,9 +118,12 @@ void Sphere::initGlConfig() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                           reinterpret_cast<void *>(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    //EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
 }
 
 void Sphere::draw() {
     glBindVertexArray(sphereVAO);
-    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, indices.data());
+    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr);
 }

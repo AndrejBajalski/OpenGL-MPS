@@ -562,6 +562,7 @@ CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ratio \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ctime \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/parse_numbers.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/sphere.hpp \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/PointParticleGenerator.h \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/emps.hpp \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp

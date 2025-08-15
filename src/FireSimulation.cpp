@@ -8,7 +8,7 @@
 #include "emps.hpp"
 #include <ParticleType.h>
 #include <thread>
-#include "Sphere.hpp"
+#include "sphere.hpp"
 #include "PointParticleGenerator.h"
 
 #define PI 3.14159265359f
@@ -85,15 +85,15 @@ int main() {
   // ------------------------------------
   std::string shader_location("../res/shaders/");
   std::string fire_shader("fire");
-  std::string lamp_shader("lamp");
+  std::string object_shader("object");
 
   // build and compile our shader zprogram
   // ------------------------------------
   Shader fireShader(
       shader_location + fire_shader + std::string(".vert"),
       shader_location + fire_shader + std::string(".frag"));
-  // Shader lampShader(shader_location + lamp_shader + std::string(".vert"),
-  //                   shader_location + lamp_shader + std::string(".frag"));
+  Shader objectShader(shader_location + object_shader + std::string(".vert"),
+                    shader_location + object_shader + std::string(".frag"));
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
@@ -103,6 +103,8 @@ int main() {
 
   PointParticleGenerator generator = PointParticleGenerator(DT, fireShader);
   generator.init(DT);
+
+  Sphere sphere = Sphere(64, 64, 0.5f);
 //bug check
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
@@ -123,8 +125,10 @@ int main() {
     glClearColor(.0f, .0f, .0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // projections
+    glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
+    fireShader.use();
     fireShader.setMat4("projection", projection);
     fireShader.setMat4("view", view);
     // manually adjust fps
@@ -135,10 +139,18 @@ int main() {
     }
     // update
     generator.update();
-    // draw
+    // draw fire
     generator.draw();
     currentTime = glfwGetTime();
     lastTime = currentTime;
+    // draw object
+    model = glm::translate(model, glm::vec3(0.5f, -0.5f, 0.0f));
+    objectShader.use();
+    objectShader.setMat4("projection", projection);
+    objectShader.setMat4("view", view);
+    objectShader.setMat4("model", model);
+    objectShader.setVec3("oColor", glm::vec3(0.0f, 0.8f, 0.0f));
+    sphere.draw();
     // end of game loop
     glfwSwapBuffers(window);
     glfwPollEvents();
