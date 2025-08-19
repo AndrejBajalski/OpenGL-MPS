@@ -977,7 +977,8 @@ CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj: C:/Users/admin/OneDrive/Do
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vec2.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vec3.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vec4.hpp \
-  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vector_relational.hpp
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vector_relational.hpp \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb/stb_image.h
 
 CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/PointParticleGenerator.cpp \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/adxintrin.h \

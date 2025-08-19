@@ -126,4 +126,5 @@ void Sphere::initGlConfig() {
 void Sphere::draw() {
     glBindVertexArray(sphereVAO);
     glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(0);
 }

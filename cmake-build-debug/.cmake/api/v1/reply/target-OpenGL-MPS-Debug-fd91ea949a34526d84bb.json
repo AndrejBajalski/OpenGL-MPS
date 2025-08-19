@@ -151,7 +151,7 @@
 			"language" : "C",
 			"sourceIndexes" : 
 			[
-				24
+				25
 			]
 		}
 	],
@@ -236,33 +236,34 @@
 				15,
 				16,
 				17,
-				18
+				18,
+				19
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				19,
 				20,
 				21,
 				22,
-				23
+				23,
+				24
 			]
 		},
 		{
 			"name" : "vendors",
 			"sourceIndexes" : 
 			[
-				24
+				25
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				25,
-				26
+				26,
+				27
 			]
 		}
 	],
@@ -348,6 +349,11 @@
 			"backtrace" : 1,
 			"path" : "res/shaders/object.vert",
 			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "res/textures/checkerboard.jpg",
+			"sourceGroupIndex" : 3
 		},
 		{
 			"backtrace" : 1,

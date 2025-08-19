@@ -7,6 +7,7 @@
 #include <vector>
 #include "emps.hpp"
 #include <ParticleType.h>
+#include <stb_image.h>
 #include <thread>
 #include "sphere.hpp"
 #include "PointParticleGenerator.h"
@@ -20,8 +21,12 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
-void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess);
-void generateInstanceBuffers(int n, unsigned int VAO);
+void illuminate(Shader &objectShader, glm::vec3 ambient, int diffuse, glm::vec3 specular, float shininess);
+void updateLight(Shader &objectShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
+void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> data);
+void drawEnvironment(unsigned int VAO);
+void generateTextures(unsigned int *texture, const std::string &path);
+void illuminateFloor(Shader &objectShader);
 void cleanup();
 
 // settings
@@ -38,6 +43,8 @@ static float deltaTime = 0.0f;
 static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 glm::mat4 *instanceTransformations;
 glm::vec3 *instanceColors;
+//general
+unsigned int VBO, VAO, floorTexture;
 
 int main() {
   // glfw: initialize and configure
@@ -97,25 +104,47 @@ int main() {
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
-
+  //BLENDING PROPERTIES
   glEnable(GL_BLEND);
   glBlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-
+  //SET UP ENVIRONMENT
+  std::vector<float> floorVertices = {
+    //position                //normal           //tex coord
+    -100.0f, 3.0f, -100.0f,   0.0f, 1.0f, 0.0f,    0.0f, 100.0f, //top left
+    100.0f, 3.0f, -100.0f,    0.0f, 1.0f, 0.0f,    100.0f, 100.0f, //top right
+    -100.0f, -5.0, 100.0f,     0.0f, 1.0f, 0.0f,    0.0f, 0.0f,  //bottom left
+    100.0f, -5.0f, 100.0f,     0.0f, 1.0f, 0.0f,    100.0f, 0.0f//bottom right
+  };
+  generateBuffers(&VBO, &VAO, floorVertices);
+  generateTextures(&floorTexture, "../res/textures/checkerboard.jpg");
+  //GENERATE PARTICLES
   PointParticleGenerator generator = PointParticleGenerator(DT, fireShader);
   generator.init(DT);
-
+  //GENERATE AN OBJECT
   Sphere sphere = Sphere(64, 64, 0.5f);
 //bug check
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
     std::cerr << "OpenGL Error after setup: " << err << std::endl;
   }
-//game loop
-//----------------------------------------------------------------------------------------------------
-  fireShader.use();
+  //SET UP PROJECTION AND VIEW MATRICES
+  glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
+  //fire shader static uniforms
   float particleRadius = PointParticleGenerator::P_RADIUS;
+  fireShader.use();
+  fireShader.setMat4("projection", projection);
   fireShader.setFloat("billboardSize", particleRadius);
+  //object shader static uniforms
+  objectShader.use();
+  objectShader.setMat4("projection", projection);
+  //light color properties
+  glm::vec3 light_ambient = glm::vec3(0.2f);
+  glm::vec3 light_diffuse = glm::vec3(0.5f);
+  glm::vec3 light_specular = glm::vec3(1.0f, 1.0f, 1.0f);
+  updateLight(objectShader, light_ambient, light_diffuse, light_specular);
   double lastTime = glfwGetTime();
+  //----------------------------------------GAME LOOP-------------------------------------------------
+  //----------------------------------------------------------------------------------------------------
   while (!glfwWindowShouldClose(window)) {
     // per-frame time logic
     // --------------------
@@ -124,12 +153,12 @@ int main() {
     processInput(window);
     glClearColor(.0f, .0f, .0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // projections
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT),0.1f, 100.0f);
-    glm::mat4 view = camera.GetViewMatrix();
+    //transform fire to world space
+    glm::mat4 fireModel = glm::mat4(1.0f);
     fireShader.use();
-    fireShader.setMat4("projection", projection);
+    fireShader.setMat4("model", fireModel);
+    //transform fire to view space
+    glm::mat4 view = camera.GetViewMatrix();
     fireShader.setMat4("view", view);
     // manually adjust fps
     deltaTime = currentTime - lastTime;
@@ -143,14 +172,19 @@ int main() {
     generator.draw();
     currentTime = glfwGetTime();
     lastTime = currentTime;
-    // draw object
-    model = glm::translate(model, glm::vec3(0.5f, -0.5f, 0.0f));
+    //draw floor
+    glm::mat4 objectModel = glm::mat4(1.0f);
     objectShader.use();
-    objectShader.setMat4("projection", projection);
+    objectShader.setMat4("model", objectModel);
     objectShader.setMat4("view", view);
-    objectShader.setMat4("model", model);
-    objectShader.setVec3("oColor", glm::vec3(0.0f, 0.8f, 0.0f));
-    sphere.draw();
+    illuminateFloor(objectShader);
+    drawEnvironment(VAO);
+    // // draw object
+    // objectModel = glm::translate(objectModel, glm::vec3(0.73f, -0.78f, 0.0f));
+    // objectShader.use();
+    // objectShader.setMat4("model", objectModel);
+    // objectShader.setMat4("view", view);
+    // sphere.draw();
     // end of game loop
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -163,19 +197,30 @@ int main() {
   glfwTerminate();
   return 0;
 }
-//end of game loop
+//-------------------------------------------END OF GAME LOOP-----------------------------------------------
 //----------------------------------------------------------------------------------------------------------
-
-
 
 //method definitions
 //----------------------------------------------------------------------------------------------------------
-void illuminate(glm::vec3 lightColor, const Shader &lightingShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess) {
-  // material properties
-  // lightingShader.setVec3("material.ambient", ambient);
-  // lightingShader.setVec3("material.diffuse", diffuse);
-  // lightingShader.setVec3("material.specular", specular);
-  // specular lighting doesn't have full effect on this object's material
+void illuminate(Shader &objectShader, glm::vec3 ambient, int diffuse, glm::vec3 specular, float shininess) {
+  objectShader.use();
+  objectShader.setVec3("material.ambient", ambient);
+  objectShader.setInt("material.diffuse", diffuse);
+  objectShader.setVec3("material.specular", specular);
+  objectShader.setFloat("material.shininess", shininess);
+}
+void illuminateFloor(Shader &objectShader) {
+  objectShader.use();
+  objectShader.setVec3("material.ambient", glm::vec3(0.1f));
+  objectShader.setInt("material.diffuse", 0);
+  objectShader.setVec3("material.specular", glm::vec3(0.9f));
+  objectShader.setFloat("material.shininess", 16);
+}
+void updateLight(Shader &objectShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) {
+  objectShader.use();
+  objectShader.setVec3("light.ambient", ambient);
+  objectShader.setVec3("light.diffuse", diffuse);
+  objectShader.setVec3("light.specular", specular);
 }
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -190,7 +235,6 @@ void processInput(GLFWwindow *window) {
     camera.ProcessKeyboard(RIGHT, deltaTime);
   }
 }
-
 // glfw: whenever the window size changed (by OS or user resize) this callback
 // function executes
 // ---------------------------------------------------------------------------------------------
@@ -219,9 +263,65 @@ void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
 
   camera.ProcessMouseMovement(xoffset, yoffset);
 }
-
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
   camera.ProcessMouseScroll(static_cast<float>(yoffset));
+}
+void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> data) {
+  glGenVertexArrays(1, VAO);
+  glBindVertexArray(*VAO);
+  glGenBuffers(1, VBO);
+  //VBO
+  glBindBuffer(GL_ARRAY_BUFFER, *VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * data.size(), data.data(), GL_STATIC_DRAW);
+  //VAO
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                        reinterpret_cast<void *>(0));
+  glEnableVertexAttribArray(0);
+  //normal attribute
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                        reinterpret_cast<void *>(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
+  //texture attribute
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                        reinterpret_cast<void *>(6 * sizeof(float)));
+  glEnableVertexAttribArray(2);
+}
+void drawEnvironment(unsigned int VAO) {
+  //draw floor
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, floorTexture);
+  glBindVertexArray(VAO);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  glBindVertexArray(0);
+}
+void generateTextures(unsigned int *texture, const std::string &path) {
+  // texture 1
+  // ---------
+  glGenTextures(1, texture);
+  glBindTexture(GL_TEXTURE_2D, *texture);
+  // set the texture wrapping parameters
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  // set texture filtering parameters
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  // load image, create texture and generate mipmaps
+  int width, height, nrChannels;
+  stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+  unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+  if (data)
+  {
+    if (nrChannels>3)
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    else
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  }
+  else
+  {
+    std::cout << "Failed to load texture" << std::endl;
+  }
+  stbi_image_free(data);
 }
