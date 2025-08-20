@@ -18,7 +18,7 @@
 class PointParticleGenerator
 {
     std::vector<Particle2d> particles;
-    unsigned int VAO, VBO, positionVBO, temperatureVBO, texture1;
+    unsigned int VAO, VBO, positionVBO, temperatureVBO, texture1, UBO;
     Shader shader;
     float dt;
     float PARTICLE_DISTANCE;

@@ -11,13 +11,15 @@
 #include "Particle2d.h"
 
 #define STB_IMAGE_IMPLEMENTATION
+#include <glm/gtc/type_ptr.hpp>
+
 #include "stb_image.h"
 
 #define FIRE_LEFT (-0.2f)
 #define FIRE_RIGHT 0.2f
 #define FIRE_BOTTOM (-0.5f)
 #define FIRE_TOP (0.8f)
-#define MAX_N_PARTICLES 4000
+#define MAX_N_PARTICLES 1000
 #define C_VIS 0.1f
 #define C_BUO 1.5f
 #define PARTICLE_RADIUS 0.05f
@@ -28,10 +30,15 @@
 #define MAX_HEAT 6000.0f
 #define SMOKE_HEAT 410.0f
 #define GRAVITY 9.81f
+#define MAX_LIGHT_POINTS 10
 
 std::vector<glm::vec3> position_offsets;
 std::vector<float> particleTemperatures;
 
+struct PointLightWrapper {
+    glm::vec3 positions[MAX_LIGHT_POINTS];
+};
+PointLightWrapper wrapper;
 // static constexpr float SPAWNING_OFFSET_X = PARTICLE_RADIUS*2*2;
 static constexpr float SPAWNING_OFFSET_Z = PARTICLE_RADIUS*2*2;
 static std::normal_distribution<float> distributionNormal(0.0f, FIRE_RIGHT/2);
@@ -44,6 +51,8 @@ template<typename V>
     void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, V *arrayPointer, int index, std::string type);
 template<typename V>
     void updateBuffers(unsigned int instanceVBO, V *arrayPointer, int nParticles, std::string type);
+void generateUBO(unsigned int *UBO, Shader &shader);
+void updateUBO(unsigned int *UBO, glm::vec3 *data);
 void generateTextures(unsigned int *texture);
 float calculateBuoyantForce(Particle2d &particle);
 float updateTemperature(Particle2d &p);
@@ -71,7 +80,7 @@ void PointParticleGenerator::init(float delta_time)
     generateTextures(&this->texture1);
     configEmps();
     Particle2d::radius = PARTICLE_RADIUS;
-    int counter = 0;
+    int counter = 0, j = 0;
     for (int i=0; i<MAX_N_PARTICLES; i++){
         Particle2d particle = Particle2d();
         spawnParticle(particle);
@@ -80,6 +89,8 @@ void PointParticleGenerator::init(float delta_time)
         empsPtr->setPosition(counter, particle.position.x, particle.position.y, particle.position.z);
         empsPtr->setParticleType(counter, particle.particleType);
         this->particles.push_back(particle);
+        if (i%100==0)
+            wrapper.positions[j++]=particle.position;
         counter++;
     }
     N_PARTICLES = counter;
@@ -87,6 +98,7 @@ void PointParticleGenerator::init(float delta_time)
     //instanced variables
     generateInstanceBuffers(N_PARTICLES, &this->positionVBO, &this->VAO, &position_offsets[0], 2, "vec3");
     generateInstanceBuffers(N_PARTICLES, &this->temperatureVBO, &this->VAO, &particleTemperatures[0], 3, "float");
+    generateUBO(&this->UBO, this->shader);
 }
 
 void PointParticleGenerator::initGlConfigurations()
@@ -132,6 +144,7 @@ void PointParticleGenerator::update()
     // std::cout<<"Max Pressure: "<<maxPressure<<std::endl;
     updateBuffers(this->positionVBO, &position_offsets[0], (int)particles.size(), "vec3");
     updateBuffers(this->temperatureVBO, &particleTemperatures[0], (int)particles.size(), "float");
+    updateUBO(&this->UBO, &wrapper.positions[0]);
 }
 
 void PointParticleGenerator::draw()
@@ -195,6 +208,16 @@ void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
     empsPtr->setPosition(index, p.position.x, p.position.y, p.position.z);
 }
 
+void generateUBO(unsigned int *UBO, Shader &shader) {
+    glGenBuffers(1, UBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, *UBO);
+    glBufferData(GL_UNIFORM_BUFFER, 160, &wrapper.positions, GL_STATIC_DRAW);
+    unsigned int uniformBlockIndex = glGetUniformBlockIndex(shader.ID, "PointLights");
+    glUniformBlockBinding(shader.ID, uniformBlockIndex, 0);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, *UBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
 template<typename V>
 void generateInstanceBuffers(int nParticles, unsigned int *instanceVBO, unsigned int *VAO, V *arrayPointer, int index, std::string type) {
     //instanceMatrix VBO
@@ -214,6 +237,12 @@ void generateInstanceBuffers(int nParticles, unsigned int *instanceVBO, unsigned
     //attribute divisor
     glVertexAttribDivisor(index, 1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void updateUBO(unsigned int *UBO, glm::vec3 *data) {
+    glBindBuffer(GL_UNIFORM_BUFFER, *UBO);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec4)*MAX_LIGHT_POINTS, data);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 template<typename V>
@@ -258,6 +287,7 @@ void PointParticleGenerator::configEmps() {
     this->empsPtr = EmpsSingleton::getInstance(FIRE_TOP, FIRE_BOTTOM, FIRE_LEFT, FIRE_RIGHT, PARTICLE_DISTANCE, PARTICLE_RADIUS);
     this->empsPtr->DT = DT;
 }
+
 void PointParticleGenerator::cleanup()
 {
     glDeleteBuffers(1, &this->VBO);
