@@ -118,7 +118,7 @@ int main() {
   generateBuffers(&VBO, &VAO, floorVertices);
   generateTextures(&floorTexture, "../res/textures/checkerboard.jpg");
   //GENERATE PARTICLES
-  PointParticleGenerator generator = PointParticleGenerator(DT, fireShader);
+  PointParticleGenerator generator = PointParticleGenerator(DT, fireShader, objectShader);
   generator.init(DT);
   //GENERATE AN OBJECT
   Sphere sphere = Sphere(64, 64, 0.5f);

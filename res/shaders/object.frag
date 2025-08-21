@@ -36,8 +36,8 @@ vec3 calculatePointLight(vec3 textureMapping, vec3 norm) {
         vec3 lightDir = normalize(pointPositions[i] - FragPos);
         //attenuation
         float dist = length(pointPositions[i] - FragPos);
-        float attenuation = 1/(1.0 + 1.0*dist + 4.0*dist*dist);
-        float coeff = 0.1;
+        float attenuation = 1/(1.0 + 0.09*dist + 4.0*dist*dist);
+        float coeff = 1.0/MAX_LIGHT_POINTS;
         // ambient
         ambient += light.ambient * textureMapping * attenuation * coeff;
         // diffuse

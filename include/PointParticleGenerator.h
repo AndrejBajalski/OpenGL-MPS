@@ -19,7 +19,7 @@ class PointParticleGenerator
 {
     std::vector<Particle2d> particles;
     unsigned int VAO, VBO, positionVBO, temperatureVBO, texture1, UBO;
-    Shader shader;
+    Shader fireShader, objectShader;
     float dt;
     float PARTICLE_DISTANCE;
     glm::vec2 FIRE_LENGTH;
@@ -29,7 +29,7 @@ class PointParticleGenerator
     static int N_PARTICLES;
     static float P_RADIUS;
     PointParticleGenerator();
-    PointParticleGenerator(double dt, Shader shader);
+    PointParticleGenerator(double dt, Shader shader, Shader objectShader);
     void init(float delta_time);
     void update();
     void draw();
