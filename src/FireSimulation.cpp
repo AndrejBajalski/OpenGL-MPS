@@ -174,6 +174,7 @@ int main() {
     lastTime = currentTime;
     //draw floor
     glm::mat4 objectModel = glm::mat4(1.0f);
+    // objectModel = glm::scale(objectModel, glm::vec3(100.0f, 0.0f, 100.0f));
     objectShader.use();
     objectShader.setMat4("model", objectModel);
     objectShader.setMat4("view", view);

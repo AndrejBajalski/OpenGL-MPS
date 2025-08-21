@@ -1,5 +1,5 @@
 #version 330 core
-#define MAX_LIGHT_POINTS 12
+#define MAX_LIGHT_POINTS 10
 
 layout (std140) uniform PointLights {
     vec3 pointPositions[MAX_LIGHT_POINTS];

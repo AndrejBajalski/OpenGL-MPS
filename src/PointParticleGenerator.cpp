@@ -16,7 +16,7 @@
 
 #define FIRE_LEFT (-0.2f)
 #define FIRE_RIGHT 0.2f
-#define FIRE_BOTTOM (-0.5f)
+#define FIRE_BOTTOM (-1.0f)
 #define FIRE_TOP (0.8f)
 #define MAX_N_PARTICLES 3000
 #define C_VIS 0.1f
@@ -26,10 +26,11 @@
 #define SCREEN_HEIGHT 1000
 #define AMBIENT_HEAT 30
 #define MIN_HEAT 1500.0f
-#define MAX_HEAT 6000.0f
+#define MAX_HEAT 3800.0f
 #define SMOKE_HEAT 410.0f
 #define GRAVITY 9.81f
 #define MAX_LIGHT_POINTS 10
+#define SIGMA 5.670374E-8
 
 std::vector<glm::vec3> position_offsets;
 std::vector<float> particleTemperatures;
@@ -54,7 +55,6 @@ void generateUBO(unsigned int *UBO, Shader &fireShader);
 void updateUBO(unsigned int *UBO, glm::vec3 *data);
 void generateTextures(unsigned int *texture);
 float calculateBuoyantForce(Particle2d &particle);
-float updateTemperature(Particle2d &p);
 float calculatePressureForce(Particle2d &p);
 float Particle2d::radius = 0.0f;
 
@@ -166,7 +166,7 @@ void PointParticleGenerator::spawnParticle(Particle2d &p) {
     p = Particle2d(tmpType);
     float tmp = distributionNormal(rng);
     float x = std::max(FIRE_LEFT, std::min(tmp, FIRE_RIGHT));
-    float y = randRange(FIRE_BOTTOM, FIRE_BOTTOM+4*PARTICLE_RADIUS);
+    float y = FIRE_BOTTOM;
     float z = randRange(-SPAWNING_OFFSET_Z, SPAWNING_OFFSET_Z);
     float t = MAX_HEAT;
     float life = p.lifetime * randRange(0.65f, 1.0f);
@@ -187,9 +187,20 @@ float calculateBuoyantForce(Particle2d &p) {
     float T = C_BUO * (p.temperature - AMBIENT_HEAT)/AMBIENT_HEAT - GRAVITY;
     return T;
 }
-float updateTemperature(Particle2d &p) {
-    p.temperature -= 100.0f;
-    if (p.temperature < MIN_HEAT) {
+float PointParticleGenerator::updateTemperature(Particle2d &p) {
+    float t0;
+    float area = PARTICLE_RADIUS*PARTICLE_RADIUS*6;
+    float delta_x = fabs(p.position.x);
+    if (delta_x >= FIRE_RIGHT-PARTICLE_RADIUS) {
+        t0 = (MIN_HEAT - AMBIENT_HEAT)/2;
+    }
+    else {
+        //linear gradient for temperature for inner particles
+        t0 = p.temperature - (p.temperature+MIN_HEAT)/(2*FIRE_RIGHT) * delta_x * 0.5f;
+    }
+    auto radiationGradient = static_cast<float>(SIGMA * (pow(p.temperature, 4)-pow(t0, 4)) * area * dt) ;
+    p.temperature -= radiationGradient;
+    if (p.temperature <= MIN_HEAT) {
         p.temperature = randRange(SMOKE_HEAT, MIN_HEAT);
     }
     return p.temperature;
