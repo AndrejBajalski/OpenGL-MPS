@@ -13,12 +13,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <glm/gtc/type_ptr.hpp>
 #include "stb_image.h"
+#include "Plane.h"
 
 #define FIRE_LEFT (-0.5f)
 #define FIRE_RIGHT 0.5f
 #define FIRE_BOTTOM (-1.0f)
 #define FIRE_TOP (0.7f)
-#define MAX_N_PARTICLES 4500
+#define MAX_N_PARTICLES 2000
 #define C_VIS 0.1f
 #define C_BUO 0.36f
 #define PARTICLE_RADIUS 0.05f
@@ -31,7 +32,7 @@
 #define GRAVITY 9.81f
 #define MAX_LIGHT_POINTS 10
 #define SIGMA 5.670374E-8
-#define FIRE_BASE_ANGLE 75.0f
+#define FIRE_BASE_ANGLE 80.0f
 
 std::vector<glm::vec3> position_offsets;
 std::vector<float> particleTemperatures;
@@ -181,13 +182,6 @@ void PointParticleGenerator::spawnParticle(Particle2d &p) {
 }
 
 bool checkClippingVolume(Particle2d &p) {
-    if (p.position.y > FIRE_TOP)
-        return false;
-    // if (p.position.x<FIRE_LEFT-2*PARTICLE_RADIUS || p.position.x>FIRE_RIGHT+2*PARTICLE_RADIUS)
-    //     return false;
-    float x = p.position.x<0.0f? fabs(FIRE_LEFT-p.position.x) : FIRE_RIGHT-p.position.x;
-    float y = x*tan(glm::radians(FIRE_BASE_ANGLE));
-
     float t = (p.position.y - FIRE_BOTTOM)/(FIRE_TOP - FIRE_BOTTOM);
     float xmin = FIRE_LEFT * (1.0f - t) - 2*PARTICLE_RADIUS;
     float xmax = FIRE_RIGHT * (1.0f - t) + 2*PARTICLE_RADIUS;
@@ -207,11 +201,17 @@ float calculateBuoyantForce(Particle2d &p) {
     p.acceleration.y = T;
     return T;
 }
+
 float PointParticleGenerator::updateTemperature(Particle2d &p) {
     float t0;
     float area = PARTICLE_RADIUS*PARTICLE_RADIUS*6;
     float delta_x = fabs(p.position.x);
-    if (delta_x >= FIRE_RIGHT-PARTICLE_RADIUS) {
+    // if (delta_x >= FIRE_RIGHT) {
+    //     t0 = (MIN_HEAT - AMBIENT_HEAT)/2;
+    //     p.particleType = ParticleType::OUTER_PARTICLE;
+    // }
+    if (Plane::isOnPyramidWall(p.position, FIRE_BOTTOM, FIRE_TOP, FIRE_LEFT, FIRE_RIGHT,
+        -2*SPAWNING_OFFSET_Z, -SPAWNING_OFFSET_Z, PARTICLE_RADIUS)) {
         t0 = (MIN_HEAT - AMBIENT_HEAT)/2;
         p.particleType = ParticleType::OUTER_PARTICLE;
     }

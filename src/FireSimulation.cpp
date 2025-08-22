@@ -11,7 +11,6 @@
 #include <thread>
 #include "sphere.hpp"
 #include "PointParticleGenerator.h"
-
 #define PI 3.14159265359f
 #define DT 0.01f
 

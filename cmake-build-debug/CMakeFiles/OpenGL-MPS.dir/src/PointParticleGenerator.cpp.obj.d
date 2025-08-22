@@ -565,4 +565,5 @@ CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint1.hpp \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/ext/vector_uint1_precision.hpp \
  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/type_ptr.inl \
- C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb/stb_image.h
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb/stb_image.h \
+ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Plane.h

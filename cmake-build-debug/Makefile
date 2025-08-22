@@ -247,6 +247,30 @@ src/FireSimulation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.s
 .PHONY : src/FireSimulation.cpp.s
 
+src/Plane.obj: src/Plane.cpp.obj
+.PHONY : src/Plane.obj
+
+# target to build an object file
+src/Plane.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.obj
+.PHONY : src/Plane.cpp.obj
+
+src/Plane.i: src/Plane.cpp.i
+.PHONY : src/Plane.i
+
+# target to preprocess a source file
+src/Plane.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.i
+.PHONY : src/Plane.cpp.i
+
+src/Plane.s: src/Plane.cpp.s
+.PHONY : src/Plane.s
+
+# target to generate assembly for a file
+src/Plane.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.s
+.PHONY : src/Plane.cpp.s
+
 src/PointParticleGenerator.obj: src/PointParticleGenerator.cpp.obj
 .PHONY : src/PointParticleGenerator.obj
 
@@ -388,6 +412,9 @@ help:
 	@echo ... src/FireSimulation.obj
 	@echo ... src/FireSimulation.i
 	@echo ... src/FireSimulation.s
+	@echo ... src/Plane.obj
+	@echo ... src/Plane.i
+	@echo ... src/Plane.s
 	@echo ... src/PointParticleGenerator.obj
 	@echo ... src/PointParticleGenerator.i
 	@echo ... src/PointParticleGenerator.s

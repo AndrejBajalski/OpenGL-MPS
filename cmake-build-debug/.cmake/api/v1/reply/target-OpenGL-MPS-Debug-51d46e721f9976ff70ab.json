@@ -36,7 +36,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 78,
+				"line" : 80,
 				"parent" : 0
 			},
 			{
@@ -104,7 +104,8 @@
 				2,
 				3,
 				4,
-				5
+				5,
+				6
 			]
 		},
 		{
@@ -151,7 +152,7 @@
 			"language" : "C",
 			"sourceIndexes" : 
 			[
-				25
+				26
 			]
 		}
 	],
@@ -205,65 +206,67 @@
 				2,
 				3,
 				4,
-				5
+				5,
+				6
 			]
 		},
 		{
 			"name" : "include",
 			"sourceIndexes" : 
 			[
-				6,
 				7,
 				8,
 				9,
-				10
+				10,
+				11
 			]
 		},
 		{
 			"name" : "shaders",
 			"sourceIndexes" : 
 			[
-				11,
 				12,
 				13,
-				14
+				14,
+				15
 			]
 		},
 		{
 			"name" : "textures",
 			"sourceIndexes" : 
 			[
-				15,
 				16,
 				17,
 				18,
-				19
+				19,
+				20
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				20,
 				21,
 				22,
 				23,
-				24
+				24,
+				25
 			]
 		},
 		{
 			"name" : "vendors",
 			"sourceIndexes" : 
 			[
-				25
+				26
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				26,
-				27
+				27,
+				28,
+				29
 			]
 		}
 	],
@@ -279,6 +282,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/FireSimulation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Plane.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -414,6 +423,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "include/Particle2d.h",
+			"sourceGroupIndex" : 6
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Plane.h",
 			"sourceGroupIndex" : 6
 		}
 	],
