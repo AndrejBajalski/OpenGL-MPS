@@ -106,7 +106,9 @@ int main() {
   // ------------------------------------------------------------------
   //BLENDING PROPERTIES
   glEnable(GL_BLEND);
-  glBlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+  glBlendFuncSeparate(GL_ONE, GL_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   //SET UP ENVIRONMENT
   std::vector<float> floorVertices = {
     //position                //normal           //tex coord

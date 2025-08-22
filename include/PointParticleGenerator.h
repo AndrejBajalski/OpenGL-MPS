@@ -37,7 +37,7 @@ class PointParticleGenerator
     void spawnParticle(Particle2d &p);
     void moveParticle(Particle2d &p, int index);
     float updateTemperature(Particle2d &p);
-    float calculatePressureForce(Particle2d &p);
+    void addNoise(Particle2d &p);
     void configEmps();
     void cleanup();
 };

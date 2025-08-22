@@ -7,7 +7,7 @@
 
 
 enum class ParticleType {
-    FLUID=0, FIRE=1, SMOKE=2, AIR=3, WALL=4, POINT_LIGHT=5
+    FLUID=0, FIRE=1, SMOKE=2, AIR=3, WALL=4, POINT_LIGHT=5, OUTER_PARTICLE=6
 };
 
 

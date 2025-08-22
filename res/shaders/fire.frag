@@ -59,5 +59,5 @@ void main()
     else {
         resColor = blackbody(fTemp);
     }
-    FragColor = texColor * vec4(resColor, 0.5);
+    FragColor = texColor * vec4(resColor, 1.0);
 }

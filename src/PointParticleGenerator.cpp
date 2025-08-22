@@ -14,13 +14,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "stb_image.h"
 
-#define FIRE_LEFT (-0.2f)
-#define FIRE_RIGHT 0.2f
+#define FIRE_LEFT (-0.5f)
+#define FIRE_RIGHT 0.5f
 #define FIRE_BOTTOM (-1.0f)
-#define FIRE_TOP (0.8f)
-#define MAX_N_PARTICLES 3000
+#define FIRE_TOP (0.7f)
+#define MAX_N_PARTICLES 4500
 #define C_VIS 0.1f
-#define C_BUO 1.5f
+#define C_BUO 0.36f
 #define PARTICLE_RADIUS 0.05f
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 1000
@@ -31,6 +31,7 @@
 #define GRAVITY 9.81f
 #define MAX_LIGHT_POINTS 10
 #define SIGMA 5.670374E-8
+#define FIRE_BASE_ANGLE 75.0f
 
 std::vector<glm::vec3> position_offsets;
 std::vector<float> particleTemperatures;
@@ -55,7 +56,6 @@ void generateUBO(unsigned int *UBO, Shader &fireShader);
 void updateUBO(unsigned int *UBO, glm::vec3 *data);
 void generateTextures(unsigned int *texture);
 float calculateBuoyantForce(Particle2d &particle);
-float calculatePressureForce(Particle2d &p);
 float Particle2d::radius = 0.0f;
 
 float randRange(float a, float b) {
@@ -135,6 +135,7 @@ void PointParticleGenerator::update()
         calculateBuoyantForce(p);
         moveParticle(p, i);
         checkValid(p);
+        addNoise(p);
         //update particle temperature
         updateTemperature(p);
         // update particle position and color respectively
@@ -167,10 +168,11 @@ void PointParticleGenerator::spawnParticle(Particle2d &p) {
     float tmp = distributionNormal(rng);
     float x = std::max(FIRE_LEFT, std::min(tmp, FIRE_RIGHT));
     float y = FIRE_BOTTOM;
-    float z = randRange(-SPAWNING_OFFSET_Z, SPAWNING_OFFSET_Z);
+    float z = randRange(-2*SPAWNING_OFFSET_Z, -SPAWNING_OFFSET_Z);
     float t = MAX_HEAT;
     float life = p.lifetime * randRange(0.65f, 1.0f);
-    p.velocity = glm::vec3(randRange(-0.4f, 0.4f), randRange(1.2f, 2.6f), randRange(-0.4f,0.4f));
+    // p.velocity = glm::vec3(randRange(-0.4f, 0.4f), randRange(1.2f, 2.6f), randRange(-0.4f,0.4f));
+    p.velocity = glm::vec3(0.0f);
     p.position.x = x;
     p.position.y = y;
     p.position.z = z;
@@ -178,13 +180,31 @@ void PointParticleGenerator::spawnParticle(Particle2d &p) {
     p.lifetime = life;
 }
 
+bool checkClippingVolume(Particle2d &p) {
+    if (p.position.y > FIRE_TOP)
+        return false;
+    // if (p.position.x<FIRE_LEFT-2*PARTICLE_RADIUS || p.position.x>FIRE_RIGHT+2*PARTICLE_RADIUS)
+    //     return false;
+    float x = p.position.x<0.0f? fabs(FIRE_LEFT-p.position.x) : FIRE_RIGHT-p.position.x;
+    float y = x*tan(glm::radians(FIRE_BASE_ANGLE));
+
+    float t = (p.position.y - FIRE_BOTTOM)/(FIRE_TOP - FIRE_BOTTOM);
+    float xmin = FIRE_LEFT * (1.0f - t) - 2*PARTICLE_RADIUS;
+    float xmax = FIRE_RIGHT * (1.0f - t) + 2*PARTICLE_RADIUS;
+    float zmin = -2*SPAWNING_OFFSET_Z * (1.0f - t) - 2*PARTICLE_RADIUS;
+    float zmax = -SPAWNING_OFFSET_Z * (1.0f - t) + 2*PARTICLE_RADIUS;
+    return (p.position.x >= xmin && p.position.x <= xmax &&
+            p.position.z >= zmin && p.position.z <= zmax);
+}
+
 void PointParticleGenerator::checkValid(Particle2d &p) {
-    if (p.lifetime < 0.0 || p.position.y >= FIRE_TOP) {
+    if (p.lifetime < 0.0 || !checkClippingVolume(p)) {
         spawnParticle(p);
     }
 }
 float calculateBuoyantForce(Particle2d &p) {
     float T = C_BUO * (p.temperature - AMBIENT_HEAT)/AMBIENT_HEAT - GRAVITY;
+    p.acceleration.y = T;
     return T;
 }
 float PointParticleGenerator::updateTemperature(Particle2d &p) {
@@ -193,10 +213,12 @@ float PointParticleGenerator::updateTemperature(Particle2d &p) {
     float delta_x = fabs(p.position.x);
     if (delta_x >= FIRE_RIGHT-PARTICLE_RADIUS) {
         t0 = (MIN_HEAT - AMBIENT_HEAT)/2;
+        p.particleType = ParticleType::OUTER_PARTICLE;
     }
     else {
         //linear gradient for temperature for inner particles
-        t0 = p.temperature - (p.temperature+MIN_HEAT)/(2*FIRE_RIGHT) * delta_x * 0.5f;
+        t0 = p.temperature - (p.temperature+MIN_HEAT)/(2*FIRE_RIGHT) * delta_x * 0.33f;
+        p.particleType = ParticleType::FIRE;
     }
     auto radiationGradient = static_cast<float>(SIGMA * (pow(p.temperature, 4)-pow(t0, 4)) * area * dt) ;
     p.temperature -= radiationGradient;
@@ -204,13 +226,6 @@ float PointParticleGenerator::updateTemperature(Particle2d &p) {
         p.temperature = randRange(SMOKE_HEAT, MIN_HEAT);
     }
     return p.temperature;
-}
-
-float calculatePressureForce(Particle2d &p) {
-    /**TODO
-     *Calculate pressure force using the EMPS method
-     **/
-    return 0.0f;
 }
 
 void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
@@ -222,6 +237,17 @@ void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
         wrapper.positions[j++] = p.position;
     }
     empsPtr->setPosition(index, p.position.x, p.position.y, p.position.z);
+}
+
+void PointParticleGenerator::addNoise(Particle2d &p) {
+    int i = randIntRange(0, MAX_PARTICLES);
+    float x = randRange(-0.01f, 0.015);
+    if (p.particleType == ParticleType::OUTER_PARTICLE) {
+        // p.position.x += x;
+    }
+    // this->particles[i].position.x+=x;
+    p.position.x += randRange(-0.008, 0.008f);
+    p.position.z += randRange(-0.008, 0.008f);
 }
 
 void generateUBO(unsigned int *UBO, Shader &fireShader) {
