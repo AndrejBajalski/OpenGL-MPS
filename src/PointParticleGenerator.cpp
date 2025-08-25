@@ -30,19 +30,19 @@
 #define MAX_HEAT 3800.0f
 #define SMOKE_HEAT 410.0f
 #define GRAVITY 9.81f
-#define MAX_LIGHT_POINTS 10
+#define MAX_LIGHT_POINTS 5
 #define SIGMA 5.670374E-8
 #define FIRE_BASE_ANGLE 80.0f
+#define SPAWNING_OFFSET_Z_NEAR -PARTICLE_RADIUS*4
+#define SPAWNING_OFFSET_Z_FAR -PARTICLE_RADIUS*8
 
 std::vector<glm::vec3> position_offsets;
 std::vector<float> particleTemperatures;
 
 struct PointLightWrapper {
-    std::vector<glm::vec3> positions;
+    glm::vec3 positions[MAX_LIGHT_POINTS];
 };
 PointLightWrapper wrapper;
-// static constexpr float SPAWNING_OFFSET_X = PARTICLE_RADIUS*2*2;
-static constexpr float SPAWNING_OFFSET_Z = PARTICLE_RADIUS*2*2;
 static std::normal_distribution<float> distributionNormal(0.0f, FIRE_RIGHT/2);
 static std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now().time_since_epoch().count());
 static float DT;
@@ -74,20 +74,16 @@ PointParticleGenerator::PointParticleGenerator(double dt, Shader fireShader, Sha
     P_RADIUS = PARTICLE_RADIUS;
 }
 
-void PointParticleGenerator::init(float delta_time)
+void PointParticleGenerator::init()
 {
     initGlConfigurations();
     generateTextures(&this->texture1);
     configEmps();
     Particle2d::radius = PARTICLE_RADIUS;
-    int counter = 0, j = 0;
+    int counter = 0;
     for (int i=0; i<MAX_N_PARTICLES; i++){
-        Particle2d particle = Particle2d();
+        Particle2d particle = Particle2d(i);
         spawnParticle(particle);
-        if (i%(MAX_PARTICLES/MAX_LIGHT_POINTS)==0) {
-            particle.particleType = ParticleType::POINT_LIGHT;
-            wrapper.positions.push_back(particle.position);
-        }
         position_offsets.push_back(particle.position);
         particleTemperatures.push_back(particle.temperature);
         empsPtr->setPosition(counter, particle.position.x, particle.position.y, particle.position.z);
@@ -101,6 +97,7 @@ void PointParticleGenerator::init(float delta_time)
     generateInstanceBuffers(N_PARTICLES, &this->positionVBO, &this->VAO, &position_offsets[0], 2, "vec3");
     generateInstanceBuffers(N_PARTICLES, &this->temperatureVBO, &this->VAO, &particleTemperatures[0], 3, "float");
     generateUBO(&this->UBO, this->objectShader);
+    generatePointLights();
 }
 
 void PointParticleGenerator::initGlConfigurations()
@@ -133,6 +130,7 @@ void PointParticleGenerator::update()
         Particle2d &p = this->particles[i];
         p.lifetime -= dt;
         // apply all the respective forces to the acceleration equation
+        generatePointLights();
         calculateBuoyantForce(p);
         moveParticle(p, i);
         checkValid(p);
@@ -143,8 +141,6 @@ void PointParticleGenerator::update()
         position_offsets[i] = p.position;
         particleTemperatures[i] = p.temperature;
     }
-    // std::cout<<"Max Particle number density: Particle "<<maxNiIndex<<" -> "<<maxNi<<std::endl;
-    // std::cout<<"Max Pressure: "<<maxPressure<<std::endl;
     updateBuffers(this->positionVBO, &position_offsets[0], (int)particles.size(), "vec3");
     updateBuffers(this->temperatureVBO, &particleTemperatures[0], (int)particles.size(), "float");
     updateUBO(&this->UBO, &wrapper.positions[0]);
@@ -169,7 +165,7 @@ void PointParticleGenerator::spawnParticle(Particle2d &p) {
     float tmp = distributionNormal(rng);
     float x = std::max(FIRE_LEFT, std::min(tmp, FIRE_RIGHT));
     float y = FIRE_BOTTOM;
-    float z = randRange(-2*SPAWNING_OFFSET_Z, -SPAWNING_OFFSET_Z);
+    float z = randRange(SPAWNING_OFFSET_Z_FAR, SPAWNING_OFFSET_Z_NEAR);
     float t = MAX_HEAT;
     float life = p.lifetime * randRange(0.65f, 1.0f);
     // p.velocity = glm::vec3(randRange(-0.4f, 0.4f), randRange(1.2f, 2.6f), randRange(-0.4f,0.4f));
@@ -185,8 +181,8 @@ bool checkClippingVolume(Particle2d &p) {
     float t = (p.position.y - FIRE_BOTTOM)/(FIRE_TOP - FIRE_BOTTOM);
     float xmin = FIRE_LEFT * (1.0f - t) - 2*PARTICLE_RADIUS;
     float xmax = FIRE_RIGHT * (1.0f - t) + 2*PARTICLE_RADIUS;
-    float zmin = -2*SPAWNING_OFFSET_Z * (1.0f - t) - 2*PARTICLE_RADIUS;
-    float zmax = -SPAWNING_OFFSET_Z * (1.0f - t) + 2*PARTICLE_RADIUS;
+    float zmin = SPAWNING_OFFSET_Z_FAR * (1.0f - t) - 2*PARTICLE_RADIUS;
+    float zmax = SPAWNING_OFFSET_Z_NEAR * (1.0f - t) + 2*PARTICLE_RADIUS;
     return (p.position.x >= xmin && p.position.x <= xmax &&
             p.position.z >= zmin && p.position.z <= zmax);
 }
@@ -198,7 +194,7 @@ void PointParticleGenerator::checkValid(Particle2d &p) {
 }
 float calculateBuoyantForce(Particle2d &p) {
     float T = C_BUO * (p.temperature - AMBIENT_HEAT)/AMBIENT_HEAT - GRAVITY;
-    p.acceleration.y = T;
+    p.acceleration.y = T>0.0f ? T : 0.0f;
     return T;
 }
 
@@ -206,12 +202,8 @@ float PointParticleGenerator::updateTemperature(Particle2d &p) {
     float t0;
     float area = PARTICLE_RADIUS*PARTICLE_RADIUS*6;
     float delta_x = fabs(p.position.x);
-    // if (delta_x >= FIRE_RIGHT) {
-    //     t0 = (MIN_HEAT - AMBIENT_HEAT)/2;
-    //     p.particleType = ParticleType::OUTER_PARTICLE;
-    // }
     if (Plane::isOnPyramidWall(p.position, FIRE_BOTTOM, FIRE_TOP, FIRE_LEFT, FIRE_RIGHT,
-        -2*SPAWNING_OFFSET_Z, -SPAWNING_OFFSET_Z, PARTICLE_RADIUS)) {
+        SPAWNING_OFFSET_Z_FAR, SPAWNING_OFFSET_Z_NEAR, PARTICLE_RADIUS)) {
         t0 = (MIN_HEAT - AMBIENT_HEAT)/2;
         p.particleType = ParticleType::OUTER_PARTICLE;
     }
@@ -240,16 +232,20 @@ void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
 }
 
 void PointParticleGenerator::addNoise(Particle2d &p) {
-    int i = randIntRange(0, MAX_PARTICLES);
-    float x = randRange(-0.01f, 0.015);
-    if (p.particleType == ParticleType::OUTER_PARTICLE) {
-        // p.position.x += x;
-    }
-    // this->particles[i].position.x+=x;
     p.position.x += randRange(-0.008, 0.008f);
     p.position.z += randRange(-0.008, 0.008f);
 }
 
+void PointParticleGenerator::generatePointLights() {
+    int j = 0;
+    for (int i=0; i<MAX_LIGHT_POINTS; i++) {
+        int index = randIntRange(0, MAX_PARTICLES-1);
+        wrapper.positions[j] = position_offsets[index];
+        this->particles[index].particleType = ParticleType::POINT_LIGHT;
+        this->particles[j].particleType = ParticleType::FIRE;
+        j++;
+    }
+}
 void generateUBO(unsigned int *UBO, Shader &fireShader) {
     glGenBuffers(1, UBO);
     glBindBuffer(GL_UNIFORM_BUFFER, *UBO);

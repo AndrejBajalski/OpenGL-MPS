@@ -10,6 +10,7 @@
 class Particle2d
 {
 public:
+    int index;
     glm::vec3 position;
     glm::vec3 velocity;
     glm::vec3 acceleration;
@@ -26,6 +27,9 @@ public:
         lifetime = 1.0f;
         mass = 0.025f;
         particleType = ParticleType::FIRE;
+    }
+    Particle2d(int index):Particle2d() {
+        this->index = index;
     }
     Particle2d(ParticleType particleType):Particle2d(){
         this->particleType = particleType;

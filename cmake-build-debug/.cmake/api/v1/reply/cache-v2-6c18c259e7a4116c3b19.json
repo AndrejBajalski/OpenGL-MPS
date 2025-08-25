@@ -1478,7 +1478,39 @@
 			"value" : "C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS"
 		},
 		{
-			"name" : "VULKAN_INCLUDE_DIR",
+			"name" : "Vulkan_GLSLANG_VALIDATOR_EXECUTABLE",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a program."
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "Vulkan_GLSLANG_VALIDATOR_EXECUTABLE-NOTFOUND"
+		},
+		{
+			"name" : "Vulkan_GLSLC_EXECUTABLE",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a program."
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "Vulkan_GLSLC_EXECUTABLE-NOTFOUND"
+		},
+		{
+			"name" : "Vulkan_INCLUDE_DIR",
 			"properties" : 
 			[
 				{
@@ -1491,10 +1523,10 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "VULKAN_INCLUDE_DIR-NOTFOUND"
+			"value" : "Vulkan_INCLUDE_DIR-NOTFOUND"
 		},
 		{
-			"name" : "VULKAN_LIBRARY",
+			"name" : "Vulkan_LIBRARY",
 			"properties" : 
 			[
 				{
@@ -1507,23 +1539,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "VULKAN_LIBRARY-NOTFOUND"
-		},
-		{
-			"name" : "VULKAN_STATIC_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "VULKAN_STATIC_LIBRARY-NOTFOUND"
+			"value" : "Vulkan_LIBRARY-NOTFOUND"
 		},
 		{
 			"name" : "XINPUT_H_FOUND",

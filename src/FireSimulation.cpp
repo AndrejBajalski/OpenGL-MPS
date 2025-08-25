@@ -120,7 +120,7 @@ int main() {
   generateTextures(&floorTexture, "../res/textures/checkerboard.jpg");
   //GENERATE PARTICLES
   PointParticleGenerator generator = PointParticleGenerator(DT, fireShader, objectShader);
-  generator.init(DT);
+  generator.init();
   //GENERATE AN OBJECT
   Sphere sphere = Sphere(64, 64, 0.5f);
 //bug check
@@ -179,6 +179,7 @@ int main() {
     objectShader.use();
     objectShader.setMat4("model", objectModel);
     objectShader.setMat4("view", view);
+    objectShader.setVec3("viewPos", camera.Position);
     illuminateFloor(objectShader);
     drawEnvironment(VAO);
     // // draw object
@@ -214,7 +215,7 @@ void illuminate(Shader &objectShader, glm::vec3 ambient, int diffuse, glm::vec3 
 void illuminateFloor(Shader &objectShader) {
   objectShader.use();
   objectShader.setVec3("material.ambient", glm::vec3(0.1f));
-  objectShader.setInt("material.diffuse", 0);
+  objectShader.setInt("material.diffuse", 0.0f);
   objectShader.setVec3("material.specular", glm::vec3(0.9f));
   objectShader.setFloat("material.shininess", 16);
 }

@@ -30,7 +30,7 @@ class PointParticleGenerator
     static float P_RADIUS;
     PointParticleGenerator();
     PointParticleGenerator(double dt, Shader shader, Shader objectShader);
-    void init(float delta_time);
+    void init();
     void update();
     void draw();
     void checkValid(Particle2d &p);
@@ -38,6 +38,7 @@ class PointParticleGenerator
     void moveParticle(Particle2d &p, int index);
     float updateTemperature(Particle2d &p);
     void addNoise(Particle2d &p);
+    void generatePointLights();
     void configEmps();
     void cleanup();
 };
