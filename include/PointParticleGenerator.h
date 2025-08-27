@@ -23,6 +23,8 @@ class PointParticleGenerator
     float dt;
     float PARTICLE_DISTANCE;
     glm::vec2 FIRE_LENGTH;
+    static glm::vec3 offsetWorld;
+    static bool shouldUpdateOffsets;
     EmpsSingleton *empsPtr;
     void initGlConfigurations();
     public:
@@ -41,5 +43,12 @@ class PointParticleGenerator
     void generatePointLights();
     void configEmps();
     void cleanup();
+    void updatePositionalOffsets(Particle2d &p, int index);
+    static void setOffsetWorld(glm::vec3 offset) {
+        offsetWorld = offset;
+    }
+    static void setShouldUpdateOffsets(bool val) {
+        shouldUpdateOffsets = val;
+    }
 };
 #endif //POINTPARTICLE_H

@@ -15,10 +15,10 @@
 #include "stb_image.h"
 #include "Plane.h"
 
-#define FIRE_LEFT (-0.5f)
-#define FIRE_RIGHT 0.5f
-#define FIRE_BOTTOM (-1.0f)
-#define FIRE_TOP (0.7f)
+#define FIRE_LEFT_BASE (-0.5f)
+#define FIRE_RIGHT_BASE 0.5f
+#define FIRE_BOTTOM_BASE (-1.0f)
+#define FIRE_TOP_BASE (0.7f)
 #define MAX_N_PARTICLES 2000
 #define C_VIS 0.1f
 #define C_BUO 2.6f
@@ -45,11 +45,20 @@ struct PointLightWrapper {
     glm::vec3 positions[MAX_LIGHT_POINTS];
 };
 PointLightWrapper wrapper;
+
+static float DT;
+static float FIRE_LEFT = FIRE_LEFT_BASE;
+static float FIRE_RIGHT = FIRE_RIGHT_BASE;
+static float FIRE_BOTTOM = FIRE_BOTTOM_BASE;
+static float FIRE_TOP = FIRE_TOP_BASE;
 static std::normal_distribution<float> distributionNormal(0.0f, FIRE_RIGHT/2);
 static std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now().time_since_epoch().count());
-static float DT;
+
 float PointParticleGenerator::P_RADIUS;
 int PointParticleGenerator::N_PARTICLES;
+glm::vec3 PointParticleGenerator::offsetWorld;
+bool PointParticleGenerator::shouldUpdateOffsets = false;
+
 
 template<typename V>
     void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, V *arrayPointer, int index, std::string type);
@@ -140,7 +149,10 @@ void PointParticleGenerator::update()
         //update particle temperature
         updateTemperature(p);
         // update particle position and color respectively
-        position_offsets[i] = p.position;
+        if (!shouldUpdateOffsets)
+            position_offsets[i] = p.position;
+        else
+            updatePositionalOffsets(p, i);
         particleTemperatures[i] = p.temperature;
     }
     updateBuffers(this->positionVBO, &position_offsets[0], (int)particles.size(), "vec3");
@@ -250,6 +262,16 @@ void PointParticleGenerator::generatePointLights() {
         j++;
     }
 }
+
+void PointParticleGenerator::updatePositionalOffsets(Particle2d &p, int index) {
+    p.position += offsetWorld;
+    position_offsets[index] += offsetWorld;
+    // FIRE_TOP = FIRE_TOP_BASE + offsetWorld.y;
+    // FIRE_BOTTOM = FIRE_BOTTOM_BASE + offsetWorld.y;
+    // FIRE_LEFT = FIRE_LEFT_BASE + offsetWorld.x;
+    // FIRE_RIGHT = FIRE_RIGHT_BASE + offsetWorld.z;
+}
+
 void generateUBO(unsigned int *UBO, Shader &fireShader) {
     glGenBuffers(1, UBO);
     glBindBuffer(GL_UNIFORM_BUFFER, *UBO);
@@ -325,12 +347,10 @@ void generateTextures(unsigned int *texture) {
     }
     stbi_image_free(data);
 }
-
 void PointParticleGenerator::configEmps() {
     this->empsPtr = EmpsSingleton::getInstance(FIRE_TOP, FIRE_BOTTOM, FIRE_LEFT, FIRE_RIGHT, PARTICLE_DISTANCE, PARTICLE_RADIUS);
     this->empsPtr->DT = DT;
 }
-
 void PointParticleGenerator::cleanup()
 {
     glDeleteBuffers(1, &this->VBO);

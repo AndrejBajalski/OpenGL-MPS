@@ -13,11 +13,13 @@
 #include "PointParticleGenerator.h"
 #define PI 3.14159265359f
 #define DT 0.01f
+#define FIRE_MOVEMENT_SENSITIVITY 1.0f
 
 const std::string program_name = ("EMPS method");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
+void moveFire(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void illuminate(Shader &objectShader, glm::vec3 ambient, int diffuse, glm::vec3 specular, float shininess);
@@ -26,6 +28,7 @@ void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> da
 void drawEnvironment(unsigned int VAO);
 void generateTextures(unsigned int *texture, const std::string &path);
 void illuminateFloor(Shader &objectShader);
+void updateOffets();
 void cleanup();
 
 // settings
@@ -33,9 +36,12 @@ const unsigned int SCR_WIDTH = 1200;
 const unsigned int SCR_HEIGHT = 1000;
 // camera
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-static float lastX = SCR_WIDTH / 2.0f;
-static float lastY = SCR_HEIGHT / 2.0f;
+static float lastX, lastFirePosX = SCR_WIDTH / 2.0f;
+static float lastY, lastFirePosY = SCR_HEIGHT / 2.0f;
+static float lastZ = 0.0f;
 static bool firstMouse = true;
+static bool cameraProcessMouse = true;
+static glm::vec3 fireOffsets;
 // timing
 static float deltaTime = 0.0f;
 // lighting
@@ -151,22 +157,25 @@ int main() {
     // --------------------
     double currentTime = glfwGetTime();
     lightPos.x = glm::sin((float)currentTime)*3;
-    processInput(window);
-    glClearColor(.0f, .0f, .0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //transform fire to world space
-    glm::mat4 fireModel = glm::mat4(1.0f);
-    fireShader.use();
-    fireShader.setMat4("model", fireModel);
-    //transform fire to view space
-    glm::mat4 view = camera.GetViewMatrix();
-    fireShader.setMat4("view", view);
     // manually adjust fps
     deltaTime = currentTime - lastTime;
     if (deltaTime < DT) {
       double sleepingTime = DT - deltaTime;
       std::this_thread::sleep_for(std::chrono::duration<double>(sleepingTime));
     }
+    processInput(window);
+    glClearColor(.0f, .0f, .0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //transform fire to world space
+    glm::mat4 fireModel = glm::mat4(1.0f);
+    fireModel = glm::translate(fireModel, fireOffsets);
+    fireShader.use();
+    fireShader.setMat4("model", fireModel);
+    //transform fire to view space
+    glm::mat4 view = camera.GetViewMatrix();
+    fireShader.setMat4("view", view);
+    // apply fire translation to offsets VBO
+    updateOffets();
     // update
     generator.update();
     // draw fire
@@ -237,6 +246,17 @@ void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
     camera.ProcessKeyboard(RIGHT, deltaTime);
   }
+  if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+    cameraProcessMouse = !cameraProcessMouse;
+    if (cameraProcessMouse) {
+      glfwSetCursorPosCallback(window, mouse_callback);
+      PointParticleGenerator::setShouldUpdateOffsets(false);
+    }
+    else {
+      glfwSetCursorPosCallback(window, moveFire);
+      PointParticleGenerator::setShouldUpdateOffsets(true);
+    }
+  }
 }
 // glfw: whenever the window size changed (by OS or user resize) this callback
 // function executes
@@ -250,8 +270,8 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
-  float xpos = static_cast<float>(xposd);
-  float ypos = static_cast<float>(yposd);
+  auto xpos = static_cast<float>(xposd);
+  auto ypos = static_cast<float>(yposd);
   if (firstMouse) {
     lastX = xpos;
     lastY = ypos;
@@ -260,24 +280,40 @@ void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
   float xoffset = xpos - lastX;
   float yoffset =
       lastY - ypos; // reversed since y-coordinates go from bottom to top
-
   lastX = xpos;
   lastY = ypos;
-
   camera.ProcessMouseMovement(xoffset, yoffset);
+}
+// mouse cursor callback that arbitrarily moves fire base position
+void moveFire(GLFWwindow *window, double xposd, double yposd) {
+  lastX = static_cast<float>(xposd);
+  lastY = static_cast<float>(yposd);
+  fireOffsets.x = lastX/SCR_WIDTH * FIRE_MOVEMENT_SENSITIVITY;
+  fireOffsets.y = lastY/SCR_HEIGHT * FIRE_MOVEMENT_SENSITIVITY;
+}
+void updateOffets() {
+  std::cout<<fireOffsets.x<<", "<<fireOffsets.y<<", "<<fireOffsets.z<<std::endl;
+  PointParticleGenerator::setOffsetWorld(fireOffsets);
 }
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-  camera.ProcessMouseScroll(static_cast<float>(yoffset));
+  if (cameraProcessMouse)
+    camera.ProcessMouseScroll(static_cast<float>(yoffset));
+  else {
+    float zOffset = static_cast<float>(yoffset*FIRE_MOVEMENT_SENSITIVITY);
+    lastZ -= zOffset;
+    fireOffsets.z = lastZ;
+  }
 }
+
 void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> data) {
   glGenVertexArrays(1, VAO);
   glBindVertexArray(*VAO);
   glGenBuffers(1, VBO);
   //VBO
   glBindBuffer(GL_ARRAY_BUFFER, *VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * data.size(), data.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), data.data(), GL_STATIC_DRAW);
   //VAO
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
                         reinterpret_cast<void *>(0));
