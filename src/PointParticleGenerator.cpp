@@ -21,18 +21,20 @@
 #define FIRE_TOP (0.7f)
 #define MAX_N_PARTICLES 2000
 #define C_VIS 0.1f
-#define C_BUO 0.36f
+#define C_BUO 2.6f
 #define PARTICLE_RADIUS 0.05f
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 1000
-#define AMBIENT_HEAT 30
+#define AMBIENT_HEAT 300
 #define MIN_HEAT 1500.0f
 #define MAX_HEAT 3800.0f
+#define FIRE_DENSITY 0.135763f
+#define PARTICLE_MASS FIRE_DENSITY*PARTICLE_RADIUS*PARTICLE_RADIUS*PARTICLE_RADIUS
 #define SMOKE_HEAT 410.0f
 #define GRAVITY 9.81f
-#define MAX_LIGHT_POINTS 5
+#define MAX_LIGHT_POINTS 10
 #define SIGMA 5.670374E-8
-#define FIRE_BASE_ANGLE 80.0f
+#define FIRE_BASE_ANGLE 75.0f
 #define SPAWNING_OFFSET_Z_NEAR -PARTICLE_RADIUS*4
 #define SPAWNING_OFFSET_Z_FAR -PARTICLE_RADIUS*8
 
@@ -193,7 +195,7 @@ void PointParticleGenerator::checkValid(Particle2d &p) {
     }
 }
 float calculateBuoyantForce(Particle2d &p) {
-    float T = C_BUO * (p.temperature - AMBIENT_HEAT)/AMBIENT_HEAT - GRAVITY;
+    float T = C_BUO * (p.temperature - AMBIENT_HEAT)/AMBIENT_HEAT - GRAVITY*PARTICLE_MASS;
     p.acceleration.y = T>0.0f ? T : 0.0f;
     return T;
 }
@@ -204,12 +206,14 @@ float PointParticleGenerator::updateTemperature(Particle2d &p) {
     float delta_x = fabs(p.position.x);
     if (Plane::isOnPyramidWall(p.position, FIRE_BOTTOM, FIRE_TOP, FIRE_LEFT, FIRE_RIGHT,
         SPAWNING_OFFSET_Z_FAR, SPAWNING_OFFSET_Z_NEAR, PARTICLE_RADIUS)) {
-        t0 = (MIN_HEAT - AMBIENT_HEAT)/2;
+        t0 = (MIN_HEAT + AMBIENT_HEAT)/2;
+        // t0 = AMBIENT_HEAT;
         p.particleType = ParticleType::OUTER_PARTICLE;
     }
     else {
         //linear gradient for temperature for inner particles
         t0 = p.temperature - (p.temperature+MIN_HEAT)/(2*FIRE_RIGHT) * delta_x * 0.33f;
+        // t0 = MIN_HEAT + ((delta_x - FIRE_RIGHT)*(MAX_HEAT - MIN_HEAT))/(0.0f-FIRE_RIGHT);
         p.particleType = ParticleType::FIRE;
     }
     auto radiationGradient = static_cast<float>(SIGMA * (pow(p.temperature, 4)-pow(t0, 4)) * area * dt) ;
