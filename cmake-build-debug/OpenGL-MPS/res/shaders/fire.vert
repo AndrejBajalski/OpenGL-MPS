@@ -1,4 +1,6 @@
 #version 330 core
+#define FIRE_BOTTOM -1.0f
+
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aUV;
 layout (location = 2) in vec3 aOffset;
@@ -19,5 +21,9 @@ void main()
     vec3 vertexPosWorldSpace = aOffset + camRight*aPos.x + camUp*aPos.y;
     texCoord = aUV;
     fTemp = aTemp;
-    gl_Position = projection * view * model * vec4(vertexPosWorldSpace, 1.0);
+    vec4 world = model * vec4(vertexPosWorldSpace, 1.0);
+    if (world.y < FIRE_BOTTOM){
+        world.y = FIRE_BOTTOM;
+    }
+    gl_Position = projection * view * world;
 }

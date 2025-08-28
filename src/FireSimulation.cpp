@@ -37,7 +37,7 @@ static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 static float lastX, lastFirePosX = SCR_WIDTH / 2.0f;
 static float lastY, lastFirePosY = SCR_HEIGHT / 2.0f;
 static float lastZ = 0.0f;
-static bool firstMouse = true;
+static bool firstMouse = true, firstMove = true;
 static bool cameraProcessMouse = true;
 static glm::vec3 fireOffsets;
 // timing
@@ -281,10 +281,16 @@ void mouse_callback(GLFWwindow *window, double xposd, double yposd) {
 }
 // mouse cursor callback that arbitrarily moves fire base position
 void moveFire(GLFWwindow *window, double xposd, double yposd) {
+  float x = static_cast<float>(xposd)/SCR_WIDTH * FIRE_MOVEMENT_SENSITIVITY;
+  float y = static_cast<float>(-yposd)/SCR_HEIGHT * FIRE_MOVEMENT_SENSITIVITY;
+  if (y<0)
+    yposd = fireOffsets.y = 0;
+  else
+    fireOffsets.y = y;
+  fireOffsets.x = x;
   lastX = static_cast<float>(xposd);
   lastY = static_cast<float>(yposd);
-  fireOffsets.x = lastX/SCR_WIDTH * FIRE_MOVEMENT_SENSITIVITY;
-  fireOffsets.y = lastY/SCR_HEIGHT * FIRE_MOVEMENT_SENSITIVITY;
+  std::cout<<"Fire offset x,y: "<<x<<" "<<y<<" "<<std::endl;
 }
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
