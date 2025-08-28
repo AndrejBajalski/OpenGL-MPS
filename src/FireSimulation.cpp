@@ -5,7 +5,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "emps.hpp"
 #include <ParticleType.h>
 #include <stb_image.h>
 #include <thread>
@@ -15,7 +14,7 @@
 #define DT 0.01f
 #define FIRE_MOVEMENT_SENSITIVITY 1.0f
 
-const std::string program_name = ("EMPS method");
+const std::string program_name = ("Burning fire simulation");
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
@@ -28,7 +27,6 @@ void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> da
 void drawEnvironment(unsigned int VAO);
 void generateTextures(unsigned int *texture, const std::string &path);
 void illuminateFloor(Shader &objectShader);
-void updateOffets();
 void cleanup();
 
 // settings
@@ -174,8 +172,6 @@ int main() {
     //transform fire to view space
     glm::mat4 view = camera.GetViewMatrix();
     fireShader.setMat4("view", view);
-    // apply fire translation to offsets VBO
-    updateOffets();
     // update
     generator.update();
     // draw fire
@@ -187,6 +183,7 @@ int main() {
     // objectModel = glm::scale(objectModel, glm::vec3(100.0f, 0.0f, 100.0f));
     objectShader.use();
     objectShader.setMat4("model", objectModel);
+    objectShader.setMat4("fireModel", fireModel);
     objectShader.setMat4("view", view);
     objectShader.setVec3("viewPos", camera.Position);
     illuminateFloor(objectShader);
@@ -250,11 +247,9 @@ void processInput(GLFWwindow *window) {
     cameraProcessMouse = !cameraProcessMouse;
     if (cameraProcessMouse) {
       glfwSetCursorPosCallback(window, mouse_callback);
-      PointParticleGenerator::setShouldUpdateOffsets(false);
     }
     else {
       glfwSetCursorPosCallback(window, moveFire);
-      PointParticleGenerator::setShouldUpdateOffsets(true);
     }
   }
 }
@@ -290,10 +285,6 @@ void moveFire(GLFWwindow *window, double xposd, double yposd) {
   lastY = static_cast<float>(yposd);
   fireOffsets.x = lastX/SCR_WIDTH * FIRE_MOVEMENT_SENSITIVITY;
   fireOffsets.y = lastY/SCR_HEIGHT * FIRE_MOVEMENT_SENSITIVITY;
-}
-void updateOffets() {
-  std::cout<<fireOffsets.x<<", "<<fireOffsets.y<<", "<<fireOffsets.z<<std::endl;
-  PointParticleGenerator::setOffsetWorld(fireOffsets);
 }
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------

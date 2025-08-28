@@ -19,5 +19,5 @@ void main()
     vec3 vertexPosWorldSpace = aOffset + camRight*aPos.x + camUp*aPos.y;
     texCoord = aUV;
     fTemp = aTemp;
-    gl_Position = projection * view * vec4(vertexPosWorldSpace, 1.0);
+    gl_Position = projection * view * model * vec4(vertexPosWorldSpace, 1.0);
 }

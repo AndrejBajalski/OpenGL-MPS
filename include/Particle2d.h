@@ -5,6 +5,7 @@
 #ifndef PARTICLE2D_H
 #define PARTICLE2D_H
 
+#include <ParticleType.h>
 #include <glm/glm.hpp>
 
 class Particle2d

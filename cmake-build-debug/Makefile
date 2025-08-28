@@ -343,30 +343,6 @@ src/Sphere.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.s
 .PHONY : src/Sphere.cpp.s
 
-src/emps.obj: src/emps.cpp.obj
-.PHONY : src/emps.obj
-
-# target to build an object file
-src/emps.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj
-.PHONY : src/emps.cpp.obj
-
-src/emps.i: src/emps.cpp.i
-.PHONY : src/emps.i
-
-# target to preprocess a source file
-src/emps.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.i
-.PHONY : src/emps.cpp.i
-
-src/emps.s: src/emps.cpp.s
-.PHONY : src/emps.s
-
-# target to generate assembly for a file
-src/emps.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.s
-.PHONY : src/emps.cpp.s
-
 vendor/glad/src/glad.obj: vendor/glad/src/glad.c.obj
 .PHONY : vendor/glad/src/glad.obj
 
@@ -424,9 +400,6 @@ help:
 	@echo ... src/Sphere.obj
 	@echo ... src/Sphere.i
 	@echo ... src/Sphere.s
-	@echo ... src/emps.obj
-	@echo ... src/emps.i
-	@echo ... src/emps.s
 	@echo ... vendor/glad/src/glad.obj
 	@echo ... vendor/glad/src/glad.i
 	@echo ... vendor/glad/src/glad.s

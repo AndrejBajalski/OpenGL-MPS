@@ -11,8 +11,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/OpenGL-MPS.dir/src/Shader.cpp.obj.d"
   "CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj"
   "CMakeFiles/OpenGL-MPS.dir/src/Sphere.cpp.obj.d"
-  "CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj"
-  "CMakeFiles/OpenGL-MPS.dir/src/emps.cpp.obj.d"
   "CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj"
   "CMakeFiles/OpenGL-MPS.dir/vendor/glad/src/glad.c.obj.d"
   "OpenGL-MPS/bin/OpenGL-MPS.exe"

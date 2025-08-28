@@ -4,7 +4,6 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "emps.hpp"
 #include "Particle2d.h"
 #include "Shader.hpp"
 
@@ -25,7 +24,6 @@ class PointParticleGenerator
     glm::vec2 FIRE_LENGTH;
     static glm::vec3 offsetWorld;
     static bool shouldUpdateOffsets;
-    EmpsSingleton *empsPtr;
     void initGlConfigurations();
     public:
     static int N_PARTICLES;
@@ -41,14 +39,6 @@ class PointParticleGenerator
     float updateTemperature(Particle2d &p);
     void addNoise(Particle2d &p);
     void generatePointLights();
-    void configEmps();
     void cleanup();
-    void updatePositionalOffsets(Particle2d &p, int index);
-    static void setOffsetWorld(glm::vec3 offset) {
-        offsetWorld = offset;
-    }
-    static void setShouldUpdateOffsets(bool val) {
-        shouldUpdateOffsets = val;
-    }
 };
 #endif //POINTPARTICLE_H

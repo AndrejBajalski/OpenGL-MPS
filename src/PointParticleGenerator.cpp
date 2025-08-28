@@ -5,10 +5,10 @@
 #include<PointParticleGenerator.h>
 #include<ctime>
 #include <random>
-#include "emps.hpp"
 #include "Camera.hpp"
 #include "glad/glad.h"
 #include "Particle2d.h"
+#include "ParticleType.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <glm/gtc/type_ptr.hpp>
@@ -56,9 +56,6 @@ static std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now().time
 
 float PointParticleGenerator::P_RADIUS;
 int PointParticleGenerator::N_PARTICLES;
-glm::vec3 PointParticleGenerator::offsetWorld;
-bool PointParticleGenerator::shouldUpdateOffsets = false;
-
 
 template<typename V>
     void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, V *arrayPointer, int index, std::string type);
@@ -89,7 +86,6 @@ void PointParticleGenerator::init()
 {
     initGlConfigurations();
     generateTextures(&this->texture1);
-    configEmps();
     Particle2d::radius = PARTICLE_RADIUS;
     int counter = 0;
     for (int i=0; i<MAX_N_PARTICLES; i++){
@@ -97,13 +93,10 @@ void PointParticleGenerator::init()
         spawnParticle(particle);
         position_offsets.push_back(particle.position);
         particleTemperatures.push_back(particle.temperature);
-        empsPtr->setPosition(counter, particle.position.x, particle.position.y, particle.position.z);
-        empsPtr->setParticleType(counter, particle.particleType);
         this->particles.push_back(particle);
         counter++;
     }
     N_PARTICLES = counter;
-    this->empsPtr->setNumberOfParticles(MAX_N_PARTICLES);
     //instanced variables
     generateInstanceBuffers(N_PARTICLES, &this->positionVBO, &this->VAO, &position_offsets[0], 2, "vec3");
     generateInstanceBuffers(N_PARTICLES, &this->temperatureVBO, &this->VAO, &particleTemperatures[0], 3, "float");
@@ -149,10 +142,7 @@ void PointParticleGenerator::update()
         //update particle temperature
         updateTemperature(p);
         // update particle position and color respectively
-        if (!shouldUpdateOffsets)
-            position_offsets[i] = p.position;
-        else
-            updatePositionalOffsets(p, i);
+        position_offsets[i] = p.position;
         particleTemperatures[i] = p.temperature;
     }
     updateBuffers(this->positionVBO, &position_offsets[0], (int)particles.size(), "vec3");
@@ -244,7 +234,6 @@ void PointParticleGenerator::moveParticle(Particle2d &p, int index) {
     if(p.particleType==ParticleType::POINT_LIGHT) {
         wrapper.positions[j++] = p.position;
     }
-    empsPtr->setPosition(index, p.position.x, p.position.y, p.position.z);
 }
 
 void PointParticleGenerator::addNoise(Particle2d &p) {
@@ -261,15 +250,6 @@ void PointParticleGenerator::generatePointLights() {
         this->particles[j].particleType = ParticleType::FIRE;
         j++;
     }
-}
-
-void PointParticleGenerator::updatePositionalOffsets(Particle2d &p, int index) {
-    p.position += offsetWorld;
-    position_offsets[index] += offsetWorld;
-    // FIRE_TOP = FIRE_TOP_BASE + offsetWorld.y;
-    // FIRE_BOTTOM = FIRE_BOTTOM_BASE + offsetWorld.y;
-    // FIRE_LEFT = FIRE_LEFT_BASE + offsetWorld.x;
-    // FIRE_RIGHT = FIRE_RIGHT_BASE + offsetWorld.z;
 }
 
 void generateUBO(unsigned int *UBO, Shader &fireShader) {
@@ -347,10 +327,7 @@ void generateTextures(unsigned int *texture) {
     }
     stbi_image_free(data);
 }
-void PointParticleGenerator::configEmps() {
-    this->empsPtr = EmpsSingleton::getInstance(FIRE_TOP, FIRE_BOTTOM, FIRE_LEFT, FIRE_RIGHT, PARTICLE_DISTANCE, PARTICLE_RADIUS);
-    this->empsPtr->DT = DT;
-}
+
 void PointParticleGenerator::cleanup()
 {
     glDeleteBuffers(1, &this->VBO);

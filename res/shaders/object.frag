@@ -28,13 +28,15 @@ uniform vec3 viewPos;
 uniform Material material;
 uniform Light light;
 uniform float alpha;
+uniform mat4 fireModel;
 
 vec3 calculatePointLight(vec3 textureMapping, vec3 norm) {
     vec3 ambient, diffuse, specular;
     for (int i=0; i<MAX_LIGHT_POINTS; i++){
-        vec3 lightDir = normalize(pointPositions[i] - FragPos);
+        vec3 pPWorld = (fireModel * vec4(pointPositions[i], 1.0f)).xyz;
+        vec3 lightDir = normalize(pPWorld - FragPos);
         //attenuation
-        float dist = length(pointPositions[i] - FragPos);
+        float dist = length(pPWorld - FragPos);
         float attenuation = 1/(1.0 + 0.1*dist + 1.5*dist*dist);
         float coeff = 1/MAX_LIGHT_POINTS;
         // ambient

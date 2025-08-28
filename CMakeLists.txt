@@ -60,8 +60,6 @@ add_definitions(-DGLFW_INCLUDE_NONE
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${PROJECT_SHADERS} ${PROJECT_TEXTURES} ${PROJECT_CONFIGS}
                                ${VENDORS_SOURCES}
-        include/emps.hpp
-        src/emps.cpp
         src/Camera.cpp
         include/PointParticleGenerator.h
         src/PointParticleGenerator.cpp
