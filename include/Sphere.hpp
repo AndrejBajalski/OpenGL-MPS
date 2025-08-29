@@ -10,7 +10,7 @@
 
 class Sphere {
 public:
-    unsigned int sphereVAO, sphereVBO, sphereEBO;
+    unsigned int sphereVAO, sphereVBO, sphereEBO, texture;
     static std::vector<float> sphere_vertices;
     static std::vector<unsigned int> indices;
     static std::vector<int> lineIndices;

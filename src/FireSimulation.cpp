@@ -21,12 +21,13 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void moveFire(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
-void illuminate(Shader &objectShader, glm::vec3 ambient, int diffuse, glm::vec3 specular, float shininess);
+void illuminate(Shader &objectShader, glm::vec3 color, glm::vec3 ambient, int diffuse, glm::vec3 specular, float shininess);
 void updateLight(Shader &objectShader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
 void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> data);
 void drawEnvironment(unsigned int VAO);
 void generateTextures(unsigned int *texture, const std::string &path);
 void illuminateFloor(Shader &objectShader);
+void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position);
 void cleanup();
 
 // settings
@@ -39,15 +40,15 @@ static float lastY, lastFirePosY = SCR_HEIGHT / 2.0f;
 static float lastZ = 0.0f;
 static bool firstMouse = true, firstMove = true;
 static bool cameraProcessMouse = true;
-static glm::vec3 fireOffsets;
+static glm::vec3 fireOffsets, fire2_offsets;
 // timing
 static float deltaTime = 0.0f;
-// lighting
 static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
+// lighting
 glm::mat4 *instanceTransformations;
 glm::vec3 *instanceColors;
 //general
-unsigned int VBO, VAO, floorTexture;
+unsigned int VBO, VAO, floorTexture, woodTexture;
 
 int main() {
   // glfw: initialize and configure
@@ -95,6 +96,7 @@ int main() {
   // ------------------------------------
   std::string shader_location("../res/shaders/");
   std::string fire_shader("fire");
+  std::string floor_shader("floor");
   std::string object_shader("object");
 
   // build and compile our shader zprogram
@@ -102,6 +104,8 @@ int main() {
   Shader fireShader(
       shader_location + fire_shader + std::string(".vert"),
       shader_location + fire_shader + std::string(".frag"));
+  Shader floorShader(shader_location + floor_shader + std::string(".vert"),
+                  shader_location + floor_shader + std::string(".frag"));
   Shader objectShader(shader_location + object_shader + std::string(".vert"),
                     shader_location + object_shader + std::string(".frag"));
 
@@ -121,13 +125,20 @@ int main() {
     100.0f, -5.0f, 100.0f,     0.0f, 1.0f, 0.0f,    100.0f, 0.0f//bottom right
   };
   generateBuffers(&VBO, &VAO, floorVertices);
-  generateTextures(&floorTexture, "../res/textures/checkerboard.jpg");
-  //GENERATE PARTICLES
+
+  //GENERATE PARTICLES - MAIN FIRE
   PointParticleGenerator generator = PointParticleGenerator(DT, fireShader, objectShader);
   generator.init();
+  //OTHER FIRES
+  PointParticleGenerator fire2 = PointParticleGenerator(DT, fireShader, objectShader);
+  fire2.init();
   //GENERATE AN OBJECT
   Sphere sphere = Sphere(64, 64, 0.5f);
-//bug check
+  sphere.initGlConfig();
+  //GENERATE TEXTURES
+  generateTextures(&floorTexture, "../res/textures/checkerboard.jpg");
+  generateTextures(&sphere.texture, "../res/textures/wood-texture.jpeg");
+  //bug check
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
     std::cerr << "OpenGL Error after setup: " << err << std::endl;
@@ -139,6 +150,9 @@ int main() {
   fireShader.use();
   fireShader.setMat4("projection", projection);
   fireShader.setFloat("billboardSize", particleRadius);
+  //floor shader static uniforms
+  floorShader.use();
+  floorShader.setMat4("projection", projection);
   //object shader static uniforms
   objectShader.use();
   objectShader.setMat4("projection", projection);
@@ -147,6 +161,8 @@ int main() {
   glm::vec3 light_diffuse = glm::vec3(0.5f, 0.0f, 0.0f);
   glm::vec3 light_specular = glm::vec3(1.0f, .0f, .0f);
   updateLight(objectShader, light_ambient, light_diffuse, light_specular);
+  updateLight(floorShader, light_ambient, light_diffuse, light_specular);
+
   double lastTime = glfwGetTime();
   //----------------------------------------GAME LOOP-------------------------------------------------
   //----------------------------------------------------------------------------------------------------
@@ -176,24 +192,29 @@ int main() {
     generator.update();
     // draw fire
     generator.draw();
+    // draw other fires
+    startAFire(fireShader, fire2, glm::vec3(0.6f, 0.4f, -1.8f));
+    // update current time
     currentTime = glfwGetTime();
     lastTime = currentTime;
     //draw floor
     glm::mat4 objectModel = glm::mat4(1.0f);
-    // objectModel = glm::scale(objectModel, glm::vec3(100.0f, 0.0f, 100.0f));
+    floorShader.use();
+    floorShader.setMat4("model", objectModel);
+    floorShader.setMat4("fireModel", fireModel);
+    floorShader.setMat4("view", view);
+    floorShader.setVec3("viewPos", camera.Position);
+    illuminateFloor(floorShader);
+    drawEnvironment(VAO);
+    // // draw object
+    objectModel = glm::translate(objectModel, glm::vec3(1.73f, 0.0f, 0.0f));
     objectShader.use();
     objectShader.setMat4("model", objectModel);
     objectShader.setMat4("fireModel", fireModel);
     objectShader.setMat4("view", view);
     objectShader.setVec3("viewPos", camera.Position);
-    illuminateFloor(objectShader);
-    drawEnvironment(VAO);
-    // // draw object
-    // objectModel = glm::translate(objectModel, glm::vec3(0.73f, -0.78f, 0.0f));
-    // objectShader.use();
-    // objectShader.setMat4("model", objectModel);
-    // objectShader.setMat4("view", view);
-    // sphere.draw();
+    illuminate(objectShader, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.2f), static_cast<int>(woodTexture), glm::vec3(.5f, .5f, .5f), 8.0f);
+    sphere.draw();
     // end of game loop
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -211,12 +232,13 @@ int main() {
 
 //method definitions
 //----------------------------------------------------------------------------------------------------------
-void illuminate(Shader &objectShader, glm::vec3 ambient, int diffuse, glm::vec3 specular, float shininess) {
+void illuminate(Shader &objectShader, glm::vec3 color, glm::vec3 ambient, int diffuse, glm::vec3 specular, float shininess) {
   objectShader.use();
   objectShader.setVec3("material.ambient", ambient);
   objectShader.setInt("material.diffuse", diffuse);
   objectShader.setVec3("material.specular", specular);
   objectShader.setFloat("material.shininess", shininess);
+  objectShader.setVec3("material.color", color);
 }
 void illuminateFloor(Shader &objectShader) {
   objectShader.use();
@@ -290,7 +312,13 @@ void moveFire(GLFWwindow *window, double xposd, double yposd) {
   fireOffsets.x = x;
   lastX = static_cast<float>(xposd);
   lastY = static_cast<float>(yposd);
-  std::cout<<"Fire offset x,y: "<<x<<" "<<y<<" "<<std::endl;
+}
+void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position) {
+  fireInstance.update();
+  glm::mat4 fire2Model = glm::mat4(1.0f);
+  fire2Model = glm::translate(fire2Model, glm::vec3(0.6f, 0.4f, -1.8f));
+  shader.setMat4("model", fire2Model);
+  fireInstance.draw();
 }
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------

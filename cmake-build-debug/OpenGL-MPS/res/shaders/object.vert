@@ -13,9 +13,14 @@ uniform mat4 projection;
 
 void main()
 {
-    FragPos = vec3(model * vec4(oPos, 1.0));
-    Normal = mat3(transpose(inverse(model))) * oNormal;
+    vec3 camRight = normalize(vec3(view[0][0], view[1][0], view[2][0]));
+    vec3 camUp    = normalize(vec3(view[0][1], view[1][1], view[2][1]));
+    vec3 world = camRight*oPos.x + camUp*oPos.y;
+    FragPos = world;
+    Normal = normalize(-vec3(view[0][2], view[1][2], view[2][2])); // camera forward
+//    FragPos = vec3(model * vec4(oPos, 1.0));
+//    Normal = mat3(transpose(inverse(model))) * oNormal;
     TexCoord = texCoord;
-    gl_Position = projection * view * vec4(FragPos, 1.0);
+    gl_Position = projection * view * model * vec4(FragPos, 1.0);
 }
 

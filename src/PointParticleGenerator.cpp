@@ -78,7 +78,6 @@ int randIntRange(int a, int b) {
 
 PointParticleGenerator::PointParticleGenerator(double dt, Shader fireShader, Shader objectShader): dt(dt), fireShader(fireShader), objectShader(objectShader) {
     this->PARTICLE_DISTANCE = PARTICLE_RADIUS*2.0f;
-    this->FIRE_LENGTH = {(FIRE_RIGHT-FIRE_LEFT)/(this->PARTICLE_DISTANCE+PARTICLE_RADIUS*2), (FIRE_TOP-FIRE_BOTTOM)/(this->PARTICLE_DISTANCE+PARTICLE_RADIUS*2)};
     P_RADIUS = PARTICLE_RADIUS;
 }
 

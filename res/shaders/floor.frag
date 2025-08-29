@@ -11,7 +11,6 @@ struct Material {
     vec3 specular;
     float shininess;
     sampler2D diffuse;
-    vec3 color;
 };
 
 struct Light {
@@ -41,10 +40,10 @@ vec3 calculatePointLight(vec3 textureMapping, vec3 norm) {
         float attenuation = 1/(1.0 + 0.1*dist + 1.5*dist*dist);
         float coeff = 1/MAX_LIGHT_POINTS;
         // ambient
-        ambient += light.ambient * textureMapping * material.color * attenuation;
+        ambient += light.ambient * textureMapping * attenuation;
         // diffuse
         float diff = max(dot(norm, lightDir), 0.0);
-        diffuse += light.diffuse * diff * textureMapping * material.color * attenuation * coeff;
+        diffuse += light.diffuse * diff * textureMapping * attenuation * coeff;
         // specular
         vec3 viewDir = normalize(viewPos - FragPos);
         vec3 reflectDir = reflect(-lightDir, norm);

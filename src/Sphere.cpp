@@ -57,6 +57,11 @@ Sphere Sphere::generateSphere() {
             sphere_vertices.push_back(nx);
             sphere_vertices.push_back(ny);
             sphere_vertices.push_back(nz);
+            // tex coords
+            float s = (float) j/sectorCount;
+            float t = (float) i/stackCount;
+            sphere_vertices.push_back(s);
+            sphere_vertices.push_back(t);
         }
     }
     //generate indices for EBO
@@ -111,13 +116,17 @@ void Sphere::initGlConfig() {
     glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere_vertices.size(), sphere_vertices.data(), GL_STATIC_DRAW);
     //VAO
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
                           reinterpret_cast<void *>(0));
     glEnableVertexAttribArray(0);
     //normal attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
                           reinterpret_cast<void *>(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    //tex coords
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                      reinterpret_cast<void *>(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
     //EBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
@@ -125,6 +134,8 @@ void Sphere::initGlConfig() {
 
 void Sphere::draw() {
     glBindVertexArray(sphereVAO);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
     glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
