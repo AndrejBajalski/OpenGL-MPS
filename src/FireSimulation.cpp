@@ -29,7 +29,7 @@ void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> da
 void drawEnvironment(unsigned int VAO);
 void generateTextures(unsigned int *texture, const std::string &path);
 void illuminateFloor(Shader &objectShader);
-void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position, float radius);
+void burn(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position, float radius);
 void cleanup();
 
 // settings
@@ -49,9 +49,11 @@ static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 // lighting
 glm::mat4 *instanceTransformations;
 glm::vec3 *instanceColors;
-//offsets
+// offsets
 glm::vec3 woodPosition = glm::vec3(0.45f, -0.2f, 0.0f);
-//general
+// fire generators
+PointParticleGenerator fireGenerators[5];
+// general
 unsigned int VBO, VAO, floorTexture, woodTexture;
 
 int main() {
@@ -134,8 +136,8 @@ int main() {
   PointParticleGenerator generator = PointParticleGenerator(DT, fireShader, objectShader);
   generator.init();
   //OTHER FIRES
-  PointParticleGenerator fire2 = PointParticleGenerator(DT, fireShader, objectShader);
-  fire2.init();
+  // PointParticleGenerator fire2 = PointParticleGenerator(DT, fireShader, objectShader);
+  // fire2.init();
   //GENERATE AN OBJECT
   Sphere sphere = Sphere(64, 64, RADIUS1);
   sphere.initGlConfig();
@@ -197,8 +199,16 @@ int main() {
     // draw fire
     generator.draw();
     // draw other fires
-    if (generator.isParticleNearObject(woodPosition, RADIUS1, fireOffsets))
-      startAFire(fireShader, fire2, woodPosition, RADIUS1);
+    if (generator.isParticleNearObject(woodPosition, RADIUS1, fireOffsets)) {
+      if (!fireGenerators[1].isInitialized()) {
+        fireGenerators[1] = PointParticleGenerator(DT, fireShader, objectShader,
+                                                woodPosition.x-RADIUS1, woodPosition.x+RADIUS1, woodPosition.y-RADIUS1, woodPosition.y+2*RADIUS1,
+                                                woodPosition.z+RADIUS1, woodPosition.z-RADIUS1);
+        fireGenerators[1].init();
+      }
+    }
+    if (fireGenerators[1].isInitialized())
+      burn(fireShader, fireGenerators[1], woodPosition, RADIUS1);
     // update current time
     currentTime = glfwGetTime();
     lastTime = currentTime;
@@ -318,14 +328,13 @@ void moveFire(GLFWwindow *window, double xposd, double yposd) {
   lastX = static_cast<float>(xposd);
   lastY = static_cast<float>(yposd);
 }
-void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position, float radius) {
+void burn(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position, float radius) {
   fireInstance.update();
   glm::mat4 fire2Model = glm::mat4(1.0f);
   glm::vec3 scaling_coeff = glm::vec3(2*radius/1.0f, 1.0f, 1.0f);
   position.y += (1.0f-radius);
-  fire2Model = glm::translate(fire2Model, position);
-  fire2Model = glm::scale(fire2Model, scaling_coeff);
-
+  // fire2Model = glm::translate(fire2Model, position);
+  // fire2Model = glm::scale(fire2Model, scaling_coeff);
   shader.setMat4("model", fire2Model);
   fireInstance.draw();
 }

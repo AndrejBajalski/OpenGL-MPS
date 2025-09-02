@@ -1,5 +1,8 @@
 #include <Shader.hpp>
 
+
+Shader::Shader(): ID(NULL){}
+
 Shader::Shader(const char *vertexPath, const char *fragmentPath) {
 
   readShader(vertexPath, SHADER_TYPE::VERTEX);
