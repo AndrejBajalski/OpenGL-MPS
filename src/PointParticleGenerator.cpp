@@ -13,7 +13,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <glm/gtc/type_ptr.hpp>
 #include "stb_image.h"
-#include "Plane.h"
+#include "PlaneGenerator.h"
 
 #define FIRE_LEFT_BASE (-0.5f)
 #define FIRE_RIGHT_BASE 0.5f
@@ -85,6 +85,7 @@ void PointParticleGenerator::init()
 {
     initGlConfigurations();
     generateTextures(&this->texture1);
+    fireBoundary = PlaneGenerator(FIRE_BOTTOM, FIRE_TOP, FIRE_LEFT, FIRE_RIGHT,SPAWNING_OFFSET_Z_FAR, SPAWNING_OFFSET_Z_NEAR);
     Particle2d::radius = PARTICLE_RADIUS;
     int counter = 0;
     for (int i=0; i<MAX_N_PARTICLES; i++){
@@ -205,8 +206,7 @@ float PointParticleGenerator::updateTemperature(Particle2d &p) {
     float t0;
     float area = PARTICLE_RADIUS*PARTICLE_RADIUS*6;
     float delta_x = fabs(p.position.x);
-    if (Plane::isOnPyramidWall(p.position, FIRE_BOTTOM, FIRE_TOP, FIRE_LEFT, FIRE_RIGHT,
-        SPAWNING_OFFSET_Z_FAR, SPAWNING_OFFSET_Z_NEAR, PARTICLE_RADIUS)) {
+    if (fireBoundary.isOnPyramidWall(p.position, PARTICLE_RADIUS)) {
         t0 = (MIN_HEAT + AMBIENT_HEAT)/2;
         // t0 = AMBIENT_HEAT;
         p.particleType = ParticleType::OUTER_PARTICLE;
@@ -249,6 +249,15 @@ void PointParticleGenerator::generatePointLights() {
         this->particles[j].particleType = ParticleType::FIRE;
         j++;
     }
+}
+
+bool PointParticleGenerator::isObjectNearby(glm::vec3 object, float radius) {
+    for (int i=0; i<fireBoundary.planes.size(); i++) {
+        float d = fireBoundary.pointPlaneDist(object, fireBoundary.planes[i]);
+        if (d < radius)
+            return true;
+    }
+    return false;
 }
 
 void generateUBO(unsigned int *UBO, Shader &fireShader) {

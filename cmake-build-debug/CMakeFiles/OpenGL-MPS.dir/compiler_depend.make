@@ -772,6 +772,7 @@ CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj: C:/Users/admin/OneDrive/Do
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/OpenGLPrj.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle2d.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/PlaneGenerator.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/PointParticleGenerator.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Sphere.hpp \
@@ -977,7 +978,7 @@ CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.obj: C:/Users/admin/OneDrive/Do
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/vector_relational.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/stb/stb_image.h
 
-CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Plane.cpp \
+CMakeFiles/OpenGL-MPS.dir/src/PlaneGenerator.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/PlaneGenerator.cpp \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/adxintrin.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/amxbf16intrin.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/amxcomplexintrin.h \
@@ -1148,7 +1149,7 @@ CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.obj: C:/Users/admin/OneDrive/Dokumenti/O
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/stdlib.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/string.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/vadefs.h \
-  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Plane.h \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/PlaneGenerator.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/common.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/_fixes.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/_vectorize.hpp \
@@ -1689,7 +1690,7 @@ CMakeFiles/OpenGL-MPS.dir/src/PointParticleGenerator.cpp.obj: C:/Users/admin/One
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Camera.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Particle2d.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/ParticleType.h \
-  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Plane.h \
+  C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/PlaneGenerator.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/PointParticleGenerator.h \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp \
   C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glad/include/KHR/khrplatform.h \
@@ -3893,6 +3894,8 @@ C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/x86_64-w64-mingw32/include/time.h:
 
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/PlaneGenerator.h:
+
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Shader.hpp:
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/detail/type_float.hpp:
@@ -3945,9 +3948,7 @@ C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/quaternion_simd.
 
 C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/vendor/glm/glm/gtc/type_ptr.hpp:
 
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/Plane.cpp:
-
-C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/include/Plane.h:
+C:/Users/admin/OneDrive/Dokumenti/OpenGL-MPS/src/PlaneGenerator.cpp:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/random.tcc:
 

@@ -247,29 +247,29 @@ src/FireSimulation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/FireSimulation.cpp.s
 .PHONY : src/FireSimulation.cpp.s
 
-src/Plane.obj: src/Plane.cpp.obj
-.PHONY : src/Plane.obj
+src/PlaneGenerator.obj: src/PlaneGenerator.cpp.obj
+.PHONY : src/PlaneGenerator.obj
 
 # target to build an object file
-src/Plane.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.obj
-.PHONY : src/Plane.cpp.obj
+src/PlaneGenerator.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/PlaneGenerator.cpp.obj
+.PHONY : src/PlaneGenerator.cpp.obj
 
-src/Plane.i: src/Plane.cpp.i
-.PHONY : src/Plane.i
+src/PlaneGenerator.i: src/PlaneGenerator.cpp.i
+.PHONY : src/PlaneGenerator.i
 
 # target to preprocess a source file
-src/Plane.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.i
-.PHONY : src/Plane.cpp.i
+src/PlaneGenerator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/PlaneGenerator.cpp.i
+.PHONY : src/PlaneGenerator.cpp.i
 
-src/Plane.s: src/Plane.cpp.s
-.PHONY : src/Plane.s
+src/PlaneGenerator.s: src/PlaneGenerator.cpp.s
+.PHONY : src/PlaneGenerator.s
 
 # target to generate assembly for a file
-src/Plane.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/Plane.cpp.s
-.PHONY : src/Plane.cpp.s
+src/PlaneGenerator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-MPS.dir\build.make CMakeFiles/OpenGL-MPS.dir/src/PlaneGenerator.cpp.s
+.PHONY : src/PlaneGenerator.cpp.s
 
 src/PointParticleGenerator.obj: src/PointParticleGenerator.cpp.obj
 .PHONY : src/PointParticleGenerator.obj
@@ -388,9 +388,9 @@ help:
 	@echo ... src/FireSimulation.obj
 	@echo ... src/FireSimulation.i
 	@echo ... src/FireSimulation.s
-	@echo ... src/Plane.obj
-	@echo ... src/Plane.i
-	@echo ... src/Plane.s
+	@echo ... src/PlaneGenerator.obj
+	@echo ... src/PlaneGenerator.i
+	@echo ... src/PlaneGenerator.s
 	@echo ... src/PointParticleGenerator.obj
 	@echo ... src/PointParticleGenerator.i
 	@echo ... src/PointParticleGenerator.s

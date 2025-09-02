@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "Particle2d.h"
+#include "PlaneGenerator.h"
 #include "Shader.hpp"
 
 #ifndef POINTPARTICLE_H
@@ -24,6 +25,7 @@ class PointParticleGenerator
     glm::vec2 FIRE_LENGTH;
     static glm::vec3 offsetWorld;
     static bool shouldUpdateOffsets;
+    PlaneGenerator fireBoundary;
     void initGlConfigurations();
     public:
     static int N_PARTICLES;
@@ -39,6 +41,7 @@ class PointParticleGenerator
     float updateTemperature(Particle2d &p);
     void addNoise(Particle2d &p);
     void generatePointLights();
+    bool isObjectNearby(glm::vec3 object, float radius);
     void cleanup();
 };
 #endif //POINTPARTICLE_H

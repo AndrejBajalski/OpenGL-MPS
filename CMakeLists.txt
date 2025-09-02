@@ -65,8 +65,8 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
         src/PointParticleGenerator.cpp
         src/FireSimulation.cpp
         include/Particle2d.h
-        src/Plane.cpp
-        include/Plane.h
+        src/PlaneGenerator.cpp
+        include/PlaneGenerator.h
 )
 #add_executable(OpenGL-MPS-2
 #        res/shaders/fire.frag

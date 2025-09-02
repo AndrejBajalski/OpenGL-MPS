@@ -13,6 +13,7 @@
 #define PI 3.14159265359f
 #define DT 0.01f
 #define FIRE_MOVEMENT_SENSITIVITY 1.0f
+#define RADIUS1 0.25f
 
 const std::string program_name = ("Burning fire simulation");
 
@@ -47,6 +48,8 @@ static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 // lighting
 glm::mat4 *instanceTransformations;
 glm::vec3 *instanceColors;
+//offsets
+glm::vec3 woodPosition = glm::vec3(1.73f, 0.0f, 0.0f);
 //general
 unsigned int VBO, VAO, floorTexture, woodTexture;
 
@@ -133,7 +136,7 @@ int main() {
   PointParticleGenerator fire2 = PointParticleGenerator(DT, fireShader, objectShader);
   fire2.init();
   //GENERATE AN OBJECT
-  Sphere sphere = Sphere(64, 64, 0.5f);
+  Sphere sphere = Sphere(64, 64, RADIUS1);
   sphere.initGlConfig();
   //GENERATE TEXTURES
   generateTextures(&floorTexture, "../res/textures/checkerboard.jpg");
@@ -193,7 +196,8 @@ int main() {
     // draw fire
     generator.draw();
     // draw other fires
-    startAFire(fireShader, fire2, glm::vec3(0.6f, 0.4f, -1.8f));
+    if (generator.isObjectNearby(woodPosition, RADIUS1))
+      startAFire(fireShader, fire2, woodPosition);
     // update current time
     currentTime = glfwGetTime();
     lastTime = currentTime;
@@ -207,7 +211,7 @@ int main() {
     illuminateFloor(floorShader);
     drawEnvironment(VAO);
     // // draw object
-    objectModel = glm::translate(objectModel, glm::vec3(1.73f, 0.0f, 0.0f));
+    objectModel = glm::translate(objectModel, woodPosition);
     objectShader.use();
     objectShader.setMat4("model", objectModel);
     objectShader.setMat4("fireModel", fireModel);
@@ -316,7 +320,7 @@ void moveFire(GLFWwindow *window, double xposd, double yposd) {
 void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position) {
   fireInstance.update();
   glm::mat4 fire2Model = glm::mat4(1.0f);
-  fire2Model = glm::translate(fire2Model, glm::vec3(0.6f, 0.4f, -1.8f));
+  fire2Model = glm::translate(fire2Model, position);
   shader.setMat4("model", fire2Model);
   fireInstance.draw();
 }
