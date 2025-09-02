@@ -50,7 +50,6 @@ PointLightWrapper wrapper;
 static std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
 float PointParticleGenerator::P_RADIUS;
-int PointParticleGenerator::N_PARTICLES;
 
 template<typename V>
     void generateInstanceBuffers(int nParticles, unsigned int *VBO, unsigned int *VAO, V *arrayPointer, int index, std::string type);
@@ -82,10 +81,12 @@ PointParticleGenerator::PointParticleGenerator(float dt, Shader &fireShader, Sha
     this->FIRE_TOP = FIRE_TOP_BASE;
     this->FIRE_Z_NEAR = SPAWNING_OFFSET_Z_NEAR;
     this->FIRE_Z_FAR = SPAWNING_OFFSET_Z_FAR;
+    this->N_PARTICLES = MAX_N_PARTICLES; 
     initParticleDistribution();
+    init();
 }
 
-PointParticleGenerator::PointParticleGenerator(float dt, Shader &shader, Shader &objectShader, float x_left,
+PointParticleGenerator::PointParticleGenerator(float dt, Shader &shader, Shader &objectShader, float volumeRatio, float x_left,
                                                float x_right, float y_bottom, float y_top, float z_near, float z_far) :
                                                 dt(dt), fireShader(shader), objectShader(objectShader) {
     this->PARTICLE_DISTANCE = PARTICLE_RADIUS*2.0f;
@@ -96,7 +97,9 @@ PointParticleGenerator::PointParticleGenerator(float dt, Shader &shader, Shader 
     this->FIRE_TOP = y_top;
     this->FIRE_Z_NEAR = z_near;
     this->FIRE_Z_FAR = z_far;
+    this->N_PARTICLES = static_cast<int>(MAX_N_PARTICLES*volumeRatio);
     initParticleDistribution();
+    init();
 }
 
 void PointParticleGenerator::init()
@@ -106,7 +109,7 @@ void PointParticleGenerator::init()
     fireBoundary = PlaneGenerator(FIRE_BOTTOM, FIRE_TOP, FIRE_LEFT, FIRE_RIGHT,FIRE_Z_FAR, FIRE_Z_NEAR);
     Particle2d::radius = PARTICLE_RADIUS;
     int counter = 0;
-    for (int i=0; i<MAX_N_PARTICLES; i++){
+    for (int i=0; i<N_PARTICLES; i++){
         Particle2d particle = Particle2d(i);
         spawnParticle(particle);
         position_offsets.push_back(particle.position);
@@ -226,12 +229,11 @@ float PointParticleGenerator::updateTemperature(Particle2d &p) {
     float delta_x = fabs(p.position.x);
     if (fireBoundary.isOnPyramidWall(p.position, PARTICLE_RADIUS)) {
         t0 = (MIN_HEAT + AMBIENT_HEAT)/2;
-        // t0 = AMBIENT_HEAT;
         p.particleType = ParticleType::OUTER_PARTICLE;
     }
     else {
         //linear gradient for temperature for inner particles
-        t0 = p.temperature - (p.temperature+MIN_HEAT)/(2*FIRE_RIGHT) * delta_x * 0.33f;
+        t0 = p.temperature - (p.temperature+MIN_HEAT)/(2*abs(FIRE_RIGHT)) * delta_x * 0.33f;
         // t0 = MIN_HEAT + ((delta_x - FIRE_RIGHT)*(MAX_HEAT - MIN_HEAT))/(0.0f-FIRE_RIGHT);
         p.particleType = ParticleType::FIRE;
     }
@@ -261,7 +263,7 @@ void PointParticleGenerator::addNoise(Particle2d &p) {
 void PointParticleGenerator::generatePointLights() {
     int j = 0;
     for (int i=0; i<MAX_LIGHT_POINTS; i++) {
-        int index = randIntRange(0, MAX_PARTICLES-1);
+        int index = randIntRange(0, N_PARTICLES-1);
         wrapper.positions[j] = position_offsets[index];
         this->particles[index].particleType = ParticleType::POINT_LIGHT;
         this->particles[j].particleType = ParticleType::FIRE;
@@ -271,7 +273,7 @@ void PointParticleGenerator::generatePointLights() {
 
 bool PointParticleGenerator::isParticleNearObject(glm::vec3 object, float radius, glm::vec3 fireOffsets) {
     float smallest = 0.0f;
-    for (int i=0; i<MAX_PARTICLES; i++) {
+    for (int i=0; i<N_PARTICLES; i++) {
         float d = glm::distance(particles[i].position+fireOffsets, object);
         if (d <= radius) {
             std::cout<<"Something's burning"<<std::endl;
@@ -367,4 +369,8 @@ void PointParticleGenerator::initParticleDistribution() {
     float middle_x = (FIRE_RIGHT+FIRE_LEFT)/2.0f;
     float stdev = (FIRE_RIGHT-middle_x)/2.0f;
     distributionNormal = std::normal_distribution<float>(middle_x, stdev);
+}
+
+float PointParticleGenerator::getVolume() {
+    return (1.0f*1.7f*0.2f)/3;
 }

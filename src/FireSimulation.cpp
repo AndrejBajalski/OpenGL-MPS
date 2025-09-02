@@ -50,7 +50,7 @@ static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 glm::mat4 *instanceTransformations;
 glm::vec3 *instanceColors;
 // offsets
-glm::vec3 woodPosition = glm::vec3(0.45f, -0.2f, 0.0f);
+glm::vec3 woodPosition = glm::vec3(-.85f, -0.2f, -.2f);
 // fire generators
 PointParticleGenerator fireGenerators[5];
 // general
@@ -134,11 +134,7 @@ int main() {
 
   //GENERATE PARTICLES - MAIN FIRE
   PointParticleGenerator generator = PointParticleGenerator(DT, fireShader, objectShader);
-  generator.init();
-  //OTHER FIRES
-  // PointParticleGenerator fire2 = PointParticleGenerator(DT, fireShader, objectShader);
-  // fire2.init();
-  //GENERATE AN OBJECT
+  //GENERATE OBJECTS
   Sphere sphere = Sphere(64, 64, RADIUS1);
   sphere.initGlConfig();
   //GENERATE TEXTURES
@@ -201,10 +197,10 @@ int main() {
     // draw other fires
     if (generator.isParticleNearObject(woodPosition, RADIUS1, fireOffsets)) {
       if (!fireGenerators[1].isInitialized()) {
-        fireGenerators[1] = PointParticleGenerator(DT, fireShader, objectShader,
-                                                woodPosition.x-RADIUS1, woodPosition.x+RADIUS1, woodPosition.y-RADIUS1, woodPosition.y+2*RADIUS1,
+        float volumeRatio = sphere.getVolume()/generator.getVolume();
+        fireGenerators[1] = PointParticleGenerator(DT, fireShader, objectShader, volumeRatio,
+                                                woodPosition.x-RADIUS1, woodPosition.x+RADIUS1, woodPosition.y-RADIUS1, woodPosition.y+4*RADIUS1,
                                                 woodPosition.z+RADIUS1, woodPosition.z-RADIUS1);
-        fireGenerators[1].init();
       }
     }
     if (fireGenerators[1].isInitialized())

@@ -11,7 +11,7 @@ PlaneGenerator::PlaneGenerator(float yBase, float yTop, float xminBase, float xm
 }
 
 void PlaneGenerator::generatePlanes(float yBase, float yTop, float xminBase, float xmaxBase, float zminBase, float zmaxBase) {
-    glm::vec3 A(0, yTop, 0);
+    glm::vec3 A((xminBase+xmaxBase)/2, yTop, (zminBase+zmaxBase)/2);
     glm::vec3 B1(xminBase, yBase, zminBase);
     glm::vec3 B2(xmaxBase, yBase, zminBase);
     glm::vec3 B3(xmaxBase, yBase, zmaxBase);

@@ -24,6 +24,7 @@ public:
     static void setSectorAndStackCount(int sectorCount, int stackCount);
     void initGlConfig();
     void draw();
+    float getVolume();
 };
 
 #endif //PARTICLE_H

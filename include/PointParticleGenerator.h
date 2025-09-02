@@ -14,7 +14,6 @@
 #define MIN_HEAT 700
 #define MAX_HEAT 1500
 #define AMBIENT_HEAT 30
-#define MAX_PARTICLES 2000
 
 class PointParticleGenerator
 {
@@ -32,11 +31,11 @@ class PointParticleGenerator
     std::normal_distribution<float> distributionNormal;
     void initGlConfigurations();
     public:
-    static int N_PARTICLES;
+    int N_PARTICLES;
     static float P_RADIUS;
     PointParticleGenerator();
     PointParticleGenerator(float dt, Shader &shader, Shader &objectShader);
-    PointParticleGenerator(float dt, Shader &shader, Shader &objectShader, float x_left, float x_right, float y_bottom, float y_top, float z_near, float z_far);
+    PointParticleGenerator(float dt, Shader &shader, Shader &objectShader, float volumeRatio, float x_left, float x_right, float y_bottom, float y_top, float z_near, float z_far);
     void init();
     void update();
     void draw();
@@ -52,6 +51,10 @@ class PointParticleGenerator
     bool isInitialized() const {
         return this->initialized;
     }
+    void setNParticles(int n) {
+        this->N_PARTICLES = n;
+    }
     void initParticleDistribution();
+    float getVolume();
 };
 #endif //POINTPARTICLE_H

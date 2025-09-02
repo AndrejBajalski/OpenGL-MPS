@@ -139,3 +139,7 @@ void Sphere::draw() {
     glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
+
+float Sphere::getVolume() {
+    return 4.0f/3.0f*PI*radius*radius*radius;
+}
