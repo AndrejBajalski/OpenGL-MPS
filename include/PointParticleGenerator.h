@@ -31,7 +31,8 @@ class PointParticleGenerator
     static int N_PARTICLES;
     static float P_RADIUS;
     PointParticleGenerator();
-    PointParticleGenerator(double dt, Shader shader, Shader objectShader);
+    PointParticleGenerator(float dt, Shader &shader, Shader &objectShader);
+    PointParticleGenerator(float dt, Shader &shader, Shader &objectShader, float x_left, float x_right, float y_bottom, float y_top, float z_near, float z_far);
     void init();
     void update();
     void draw();
@@ -41,7 +42,6 @@ class PointParticleGenerator
     float updateTemperature(Particle2d &p);
     void addNoise(Particle2d &p);
     void generatePointLights();
-    bool isObjectNearby(glm::vec3 object, float radius);
     bool isParticleNearObject(glm::vec3 object, float radius, glm::vec3 fireOffsets);
     void cleanup();
 };

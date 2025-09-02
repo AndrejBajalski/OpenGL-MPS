@@ -14,6 +14,7 @@
 #define DT 0.01f
 #define FIRE_MOVEMENT_SENSITIVITY 1.0f
 #define RADIUS1 0.25f
+#define FIRE_VOLUME_INITIAL (1.0f*1.7f*0.2f)
 
 const std::string program_name = ("Burning fire simulation");
 
@@ -28,7 +29,7 @@ void generateBuffers(unsigned int *VBO, unsigned int *VAO, std::vector<float> da
 void drawEnvironment(unsigned int VAO);
 void generateTextures(unsigned int *texture, const std::string &path);
 void illuminateFloor(Shader &objectShader);
-void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position);
+void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position, float radius);
 void cleanup();
 
 // settings
@@ -197,7 +198,7 @@ int main() {
     generator.draw();
     // draw other fires
     if (generator.isParticleNearObject(woodPosition, RADIUS1, fireOffsets))
-      startAFire(fireShader, fire2, woodPosition);
+      startAFire(fireShader, fire2, woodPosition, RADIUS1);
     // update current time
     currentTime = glfwGetTime();
     lastTime = currentTime;
@@ -317,10 +318,14 @@ void moveFire(GLFWwindow *window, double xposd, double yposd) {
   lastX = static_cast<float>(xposd);
   lastY = static_cast<float>(yposd);
 }
-void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position) {
+void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position, float radius) {
   fireInstance.update();
-  glm::mat4 fire2Model = glm::mat4(0.0f);
+  glm::mat4 fire2Model = glm::mat4(1.0f);
+  glm::vec3 scaling_coeff = glm::vec3(2*radius/1.0f, 1.0f, 1.0f);
+  position.y += (1.0f-radius);
   fire2Model = glm::translate(fire2Model, position);
+  fire2Model = glm::scale(fire2Model, scaling_coeff);
+
   shader.setMat4("model", fire2Model);
   fireInstance.draw();
 }

@@ -76,7 +76,7 @@ int randIntRange(int a, int b) {
     return dist(rng);
 }
 
-PointParticleGenerator::PointParticleGenerator(double dt, Shader fireShader, Shader objectShader): dt(dt), fireShader(fireShader), objectShader(objectShader) {
+PointParticleGenerator::PointParticleGenerator(float dt, Shader &fireShader, Shader &objectShader): dt(dt), fireShader(fireShader), objectShader(objectShader) {
     this->PARTICLE_DISTANCE = PARTICLE_RADIUS*2.0f;
     P_RADIUS = PARTICLE_RADIUS;
 }
@@ -172,7 +172,6 @@ void PointParticleGenerator::spawnParticle(Particle2d &p) {
     float z = randRange(SPAWNING_OFFSET_Z_FAR, SPAWNING_OFFSET_Z_NEAR);
     float t = MAX_HEAT;
     float life = p.lifetime * randRange(0.65f, 1.0f);
-    // p.velocity = glm::vec3(randRange(-0.4f, 0.4f), randRange(1.2f, 2.6f), randRange(-0.4f,0.4f));
     p.velocity = glm::vec3(0.0f);
     p.position.x = x;
     p.position.y = y;
@@ -249,15 +248,6 @@ void PointParticleGenerator::generatePointLights() {
         this->particles[j].particleType = ParticleType::FIRE;
         j++;
     }
-}
-
-bool PointParticleGenerator::isObjectNearby(glm::vec3 object, float radius) {
-    for (int i=2; i<fireBoundary.planes.size(); i++) {
-        float d = fireBoundary.pointPlaneDist(object, fireBoundary.planes[i]);
-        if (d < radius)
-            return true;
-    }
-    return false;
 }
 
 bool PointParticleGenerator::isParticleNearObject(glm::vec3 object, float radius, glm::vec3 fireOffsets) {
