@@ -252,10 +252,23 @@ void PointParticleGenerator::generatePointLights() {
 }
 
 bool PointParticleGenerator::isObjectNearby(glm::vec3 object, float radius) {
-    for (int i=0; i<fireBoundary.planes.size(); i++) {
+    for (int i=2; i<fireBoundary.planes.size(); i++) {
         float d = fireBoundary.pointPlaneDist(object, fireBoundary.planes[i]);
         if (d < radius)
             return true;
+    }
+    return false;
+}
+
+bool PointParticleGenerator::isParticleNearObject(glm::vec3 object, float radius, glm::vec3 fireOffsets) {
+    float smallest = 0.0f;
+    for (int i=0; i<MAX_PARTICLES; i++) {
+        if (particles[i].particleType != ParticleType::OUTER_PARTICLE) continue;
+        float d = glm::distance(particles[i].position+fireOffsets, object);
+        if (d <= radius) {
+            std::cout<<"Something's burning"<<std::endl;
+            return true;
+        }
     }
     return false;
 }

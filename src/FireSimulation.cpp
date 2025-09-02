@@ -49,7 +49,7 @@ static glm::vec3 lightPos(0.0f, 0.5f, 1.0f);
 glm::mat4 *instanceTransformations;
 glm::vec3 *instanceColors;
 //offsets
-glm::vec3 woodPosition = glm::vec3(1.73f, 0.0f, 0.0f);
+glm::vec3 woodPosition = glm::vec3(0.45f, -0.2f, 0.0f);
 //general
 unsigned int VBO, VAO, floorTexture, woodTexture;
 
@@ -196,7 +196,7 @@ int main() {
     // draw fire
     generator.draw();
     // draw other fires
-    if (generator.isObjectNearby(woodPosition, RADIUS1))
+    if (generator.isParticleNearObject(woodPosition, RADIUS1, fireOffsets))
       startAFire(fireShader, fire2, woodPosition);
     // update current time
     currentTime = glfwGetTime();
@@ -319,7 +319,7 @@ void moveFire(GLFWwindow *window, double xposd, double yposd) {
 }
 void startAFire(Shader &shader, PointParticleGenerator &fireInstance, glm::vec3 position) {
   fireInstance.update();
-  glm::mat4 fire2Model = glm::mat4(1.0f);
+  glm::mat4 fire2Model = glm::mat4(0.0f);
   fire2Model = glm::translate(fire2Model, position);
   shader.setMat4("model", fire2Model);
   fireInstance.draw();

@@ -42,6 +42,7 @@ class PointParticleGenerator
     void addNoise(Particle2d &p);
     void generatePointLights();
     bool isObjectNearby(glm::vec3 object, float radius);
+    bool isParticleNearObject(glm::vec3 object, float radius, glm::vec3 fireOffsets);
     void cleanup();
 };
 #endif //POINTPARTICLE_H

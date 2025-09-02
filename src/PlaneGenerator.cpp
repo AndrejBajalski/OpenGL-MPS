@@ -30,6 +30,7 @@ Plane PlaneGenerator::makePlane(const glm::vec3 &a, const glm::vec3 &b, const gl
     float d = -glm::dot(n, a);
     return {n, d};
 }
+
 // Signed distance to plane
 float PlaneGenerator::pointPlaneDist(const glm::vec3 &p, const Plane &pl) {
     return abs(glm::dot(pl.normal, p) + pl.d);
