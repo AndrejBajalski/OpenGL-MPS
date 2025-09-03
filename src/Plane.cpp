@@ -29,13 +29,13 @@ bool Plane::isOnPyramidWall(const glm::vec3 &p, float yBase, float yTop,
 
     std::vector<Plane> planes = {
         makePlane(A, B1, B2),
+        makePlane(A, B3, B4),
         makePlane(A, B2, B3),
-        // makePlane(A, B3, B4),
         makePlane(A, B4, B1)
     };
 
-    for (auto &pl : planes) {
-        float dist = fabs(pointPlaneDist(p, pl));
+    for (int i=2; i<4; i++) {
+        float dist = abs(pointPlaneDist(p, planes[i]));
         if (dist < epsilon) {
             return true; // close to wall
         }
